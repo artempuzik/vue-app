@@ -57,7 +57,7 @@ const value = computed({
 @import '../../styles/variables.scss';
 
 .app_input {
-  padding: 3px 10px;
+  padding: 10px 12px;
   border-radius: $input-border-radius;
   &::placeholder {
     color: $placeholder;

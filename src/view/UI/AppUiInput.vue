@@ -4,10 +4,6 @@ import {computed} from "vue";
 const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
-  isError: {
-    type: Boolean,
-    default: false
-  },
   isInActive: {
     type: Boolean,
     default: false
@@ -16,9 +12,9 @@ const props = defineProps({
     type: String,
     default: ''
   },
-  errorMessage: {
-    type: String,
-    default: ''
+  withIcon: {
+    type: Boolean,
+    default: false
   },
   modelValue: {
     type: String,
@@ -38,17 +34,17 @@ const value = computed({
 </script>
 
 <template>
-  <div class="d-flex flex-column align-items-start m-1">
+  <div class="d-flex flex-row align-items-center m-1 position-relative">
+    <img v-if="withIcon" class="icon" :class="{'inactive': isInActive}" src="../../assets/svg/search.svg" width="24" height="24">
     <input
         style="width: 100%; height: 100%;"
         :placeholder="placeholder"
         class="app_input"
         :disabled="isInActive"
-        :class="{'active': !isInActive, 'inactive': isInActive}"
+        :class="{'active': !isInActive, 'inactive': isInActive, 'with_icon': withIcon}"
         type="text"
         v-model="value"
     />
-    <span v-if="isError" class="error_text mt-2 mb-1">{{errorMessage}}</span>
   </div>
 
 </template>
@@ -57,7 +53,7 @@ const value = computed({
 @import '../../styles/variables.scss';
 
 .app_input {
-  padding: 3px 10px;
+  padding: 10px 12px;
   border-radius: $input-border-radius;
   &::placeholder {
     color: $placeholder;
@@ -80,5 +76,21 @@ const value = computed({
     border-color: $grey-border;
   }
 }
+
+.icon {
+  position: absolute;
+  left: 5px;
+  width: 25px;
+  height: 25px;
+
+  &.inactive {
+    filter: invert(63%) sepia(0%) saturate(319%) hue-rotate(167deg) brightness(96%) contrast(91%);
+  }
+}
+
+.with_icon {
+  padding-left: 35px;
+}
+
 
 </style>
