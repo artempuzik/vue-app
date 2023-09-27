@@ -1,20 +1,18 @@
 <script setup lang="ts">
-import {ref} from "vue";
-
-const bool = ref(false)
-const string = ref('')
 
 </script>
 
 <template>
-  <app-ui-button :text="'Send'" :is-in-active="bool" :size="'normal'"/>
-  <app-ui-auth-input v-model="string" :is-in-active="bool" :is-error="false" :placeholder="'Enter something'"/>
-  <app-ui-input v-model="string" :withIcon="true" :is-in-active="false" :placeholder="'Search by SKU or product name ...'"/>
-  <div style="width: 200px; height: 50px">
-    <app-ui-input v-model="string" :is-in-active="!!!string" :placeholder="'Name'"/>
+  <div class="app_wrapper p-1">
+    <router-view></router-view>
   </div>
-
-  <h3>Text</h3>
-  <app-ui-select v-model="string" />
-  <app-ui-spinner />
 </template>
+
+<style lang="scss" scoped>
+.app_wrapper {
+  margin: 0 auto;
+  max-width: 1200px;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
