@@ -20,6 +20,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  label: {
+    type: String,
+    default: ''
+  },
   modelValue: {
     type: String,
     default: ''
@@ -38,7 +42,8 @@ const value = computed({
 </script>
 
 <template>
-  <div class="d-flex flex-column align-items-start m-1">
+  <div class="w-100 d-flex flex-column align-items-start m-1">
+    <label v-if="label" class="mb-1 main-text">{{ label }}</label>
     <input
         style="width: 100%; height: 100%;"
         :placeholder="placeholder"
@@ -59,6 +64,7 @@ const value = computed({
 .app_input {
   padding: 10px 12px;
   border-radius: $input-border-radius;
+  border-width: .7px;
   &::placeholder {
     color: $placeholder;
     opacity: 1;

@@ -1,17 +1,21 @@
 import AppAuthPage from "../view/pages/AppAuthPage.vue";
-import AppMainPage from "../view/pages/AppMainPage.vue";
 import AppSettingPage from "../view/pages/AppSettingPage.vue";
 
 const routes = [
     {
         path: '/',
-        component: AppMainPage,
+        component: () => import("../view/pages/AppMainPage.vue"),
         name: 'Main',
-        meta: { requiresAuth: true } },
+        meta: { requiresAuth: true }
+    },
     {
         path: '/auth',
-        component: AppAuthPage,
-        name: 'Auth'
+        name: 'Auth',
+        children: [
+            { path: 'sign-in', name: 'SignIn',  component: AppAuthPage },
+            { path: 'sign-up', name: 'SignUp', component: AppAuthPage },
+            { path: 'reset', name: 'ResetPassword', component: AppAuthPage },
+        ]
     },
     {
         path: '/settings',
@@ -21,7 +25,7 @@ const routes = [
     },
     {
         path: '/:pathMatch(.*)*',
-        redirect: to => '/'
+        redirect: '/',
     },
 ]
 

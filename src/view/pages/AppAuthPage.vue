@@ -1,13 +1,18 @@
 <script setup lang="ts">
+import {useRoute} from "vue-router";
+import {computed} from "vue";
 
-import AppLayoutAuth from "../layouts/AppLayoutAuth.vue";
-import AppStaticAuth from "../static/AppStaticAuth.vue";
+const rout = useRoute();
+
+const routName = computed(() => rout.name)
 </script>
 
 <template>
   <app-layout-auth>
     <template #left>
-      <h1>Here might be a page title</h1>
+      <app-auth-sign-in v-if="routName === 'SignIn'" />
+      <app-auth-sign-up v-if="routName === 'SignUp'" />
+      <app-auth-reset v-if="routName === 'ResetPassword'" />
     </template>
     <template #right>
       <app-static-auth />

@@ -11,7 +11,8 @@
 <style lang="scss" scoped>
 .app_wrapper {
   margin: 0 auto;
-  max-width: 1200px;
+  max-width: 1350px;
+  min-width: 1000px;
   width: 100vw;
   height: 100vh;
 }
