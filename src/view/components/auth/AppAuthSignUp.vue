@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import {PROJECT_NAME} from "../../../app/config/enviroments.ts";
+
 </script>
 
 <template>
   <div class="sign-in_box w-100 d-flex flex-column align-items-start justify-content-start">
-    <h1 class="main-title">Welcome to Relu</h1>
-    <h4 class="main-text">Sign up in Relu using your corporate email</h4>
+    <h1 class="main-title">Welcome to {{PROJECT_NAME}}</h1>
+    <h4 class="main-text">Sign up in {{PROJECT_NAME}} using your corporate email</h4>
     <br/>
     <br/>
     <app-ui-auth-input :is-error="false" :label="'New password'"/>

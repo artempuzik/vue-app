@@ -8,6 +8,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  label: {
+    type: String,
+    default: ''
+  },
   options: {
     type: Array as PropType<string[]>,
     default: [],
@@ -32,21 +36,24 @@ const value = computed({
 </script>
 
 <template>
-  <div class="d-flex flex-row align-items-center m-1 position-relative app_select"
-       @click="toggleSelect"
-  >
-    <div
-        style="width: 100%; height: 100%;"
-    >{{value}}</div>
-    <img src="../../assets/svg/chevron.svg" :class="{'rotate': isOpen}"/>
+  <div class="w-100 d-flex flex-column align-items-start m-1">
+    <label v-if="label" class="mb-1 main-text">{{ label }}</label>
+    <div class="w-100 d-flex flex-row align-items-center m-1 position-relative app_select"
+         @click="toggleSelect"
+    >
+      <div
+          style="width: 100%; height: 100%;"
+      >{{ value }}
+      </div>
+      <img src="../../assets/svg/chevron.svg" :class="{'rotate': isOpen}"/>
       <div v-if="isOpen" class="app_select_modal shadow">
         <div @click="selectValue('1')"><span>One</span></div>
         <div @click="selectValue('2')"><span>Two</span></div>
         <div @click="selectValue('3')"><span>Three</span></div>
         <div @click="selectValue('4')"><span>Four</span></div>
       </div>
+    </div>
   </div>
-
 </template>
 
 <style lang="scss" scoped>
@@ -54,7 +61,9 @@ const value = computed({
 
 .app_select {
   padding: 5px 5px;
+  min-height: 40px;
   border-radius: $input-border-radius;
+  background-color: $white-color;
   border: 1px solid $grey-app;
   cursor: pointer;
 }
@@ -63,6 +72,7 @@ const value = computed({
   position: absolute;
   padding: 16px 9px;
   background-color: $white-color;
+  left: -1px;
   top: 40px;
   width: 100%;
   z-index: 9999;
@@ -84,6 +94,7 @@ const value = computed({
 
 .active {
   border-color: $black-color;
+
   &:focus {
     outline: none !important;
     border-color: $black-color;
@@ -96,6 +107,7 @@ const value = computed({
 
 .inactive {
   border-color: $grey-border;
+
   &:focus {
     outline: none !important;
     border-color: $grey-border;

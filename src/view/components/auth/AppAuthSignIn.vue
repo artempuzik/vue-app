@@ -1,9 +1,11 @@
 <script setup lang="ts">
+import {PROJECT_NAME} from "../../../app/config/enviroments.ts";
+
 </script>
 
 <template>
   <div class="sign-in_box w-100 d-flex flex-column align-items-start justify-content-start">
-    <h1 class="main-title">Welcome to Relu</h1>
+    <h1 class="main-title">Welcome to {{PROJECT_NAME}}</h1>
     <h4 class="main-text">Sign in with your corporate email and password</h4>
     <app-ui-auth-input :is-error="false" :label="'Email'"/>
     <br/>
@@ -18,7 +20,7 @@
     <br/>
     <br/>
     <div class="w-100 d-flex flex-column align-items-start my-2">
-      <span class="main-text">Don’t have a Relu account yet? <router-link to="/auth/sign-up" class="link-text">Sign up</router-link></span>
+      <span class="main-text">Don’t have a {{PROJECT_NAME}} account yet? <router-link to="/auth/sign-up" class="link-text">Sign up</router-link></span>
     </div>
   </div>
 </template>

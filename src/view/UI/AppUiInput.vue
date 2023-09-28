@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  label: {
+    type: String,
+    default: ''
+  },
   withIcon: {
     type: Boolean,
     default: false
@@ -34,19 +38,21 @@ const value = computed({
 </script>
 
 <template>
-  <div class="d-flex flex-row align-items-center m-1 position-relative">
-    <img v-if="withIcon" class="icon" :class="{'inactive': isInActive}" src="../../assets/svg/search.svg" width="24" height="24">
-    <input
-        style="width: 100%; height: 100%;"
-        :placeholder="placeholder"
-        class="app_input"
-        :disabled="isInActive"
-        :class="{'active': !isInActive, 'inactive': isInActive, 'with_icon': withIcon}"
-        type="text"
-        v-model="value"
-    />
+  <div class="d-flex flex-column align-items-start m-1">
+    <label v-if="label" class="mb-1 main-text">{{ label }}</label>
+    <div class="d-flex flex-row align-items-center position-relative">
+      <img v-if="withIcon" class="icon" :class="{'inactive': isInActive}" src="../../assets/svg/search.svg" width="24" height="24">
+      <input
+          style="width: 100%; height: 100%;"
+          :placeholder="placeholder"
+          class="app_input"
+          :disabled="isInActive"
+          :class="{'active': !isInActive, 'inactive': isInActive, 'with_icon': withIcon}"
+          type="text"
+          v-model="value"
+      />
+    </div>
   </div>
-
 </template>
 
 <style lang="scss" scoped>

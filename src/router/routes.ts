@@ -19,9 +19,13 @@ const routes = [
     },
     {
         path: '/settings',
-        component: AppSettingPage,
         name: 'Settings',
-        meta: { requiresAuth: true }
+        component: AppSettingPage,
+        meta: { requiresAuth: true },
+        children: [
+            { path: 'profile', name: 'Profile', component: AppSettingPage },
+            { path: 'manager', name: 'Manager', component: AppSettingPage },
+        ]
     },
     {
         path: '/:pathMatch(.*)*',

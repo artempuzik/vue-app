@@ -1,24 +1,23 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {computed} from "vue";
+import {useRoute} from "vue-router";
 
-const bool = ref(false)
-const string = ref('')
+const rout = useRoute();
+
+const routName = computed(() => rout.name)
 </script>
 
 <template>
-  <div>
-    Settings
-  </div>
-  <app-ui-button :text="'Send'" :is-in-active="bool" :size="'normal'"/>
-  <app-ui-auth-input v-model="string" :is-in-active="bool" :is-error="false" :placeholder="'Enter something'"/>
-  <app-ui-input v-model="string" :withIcon="true" :is-in-active="false" :placeholder="'Search by SKU or product name ...'"/>
-  <div style="width: 200px; height: 50px">
-    <app-ui-input v-model="string" :is-in-active="!!!string" :placeholder="'Name'"/>
-  </div>
-
-  <h3>Text</h3>
-  <app-ui-select v-model="string" />
-  <app-ui-spinner />
+  <app-layout-settings>
+    <template #header>
+      <app-ui-header/>
+    </template>
+    <template #main>
+      <app-settings-settings v-if="routName === 'Settings'" />
+      <app-settings-profile v-if="routName === 'Profile'" />
+      <app-settings-manager v-if="routName === 'Manager'" />
+    </template>
+  </app-layout-settings>
 </template>
 
 <style scoped lang="scss">

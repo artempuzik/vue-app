@@ -1,11 +1,10 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
-  <div class="app_wrapper p-1">
+  <main class="app_wrapper p-1">
     <router-view></router-view>
-  </div>
+  </main>
 </template>
 
 <style lang="scss" scoped>
