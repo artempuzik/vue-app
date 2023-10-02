@@ -11,7 +11,7 @@
 </template>
 
 <style scoped lang="scss">
-@import '../../../../styles/variables';
+@import '../../../styles/variables';
 
 .layout {
   background-color: $grey-border;

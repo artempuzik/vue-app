@@ -83,8 +83,9 @@ const value = computed({
   }
 
   &.error {
+    border-width: 1px;
     border-color: $error-red;
-    background: lighten($error-red, 20%)
+    background: $error-bg;
   }
 }
 

@@ -11,15 +11,15 @@
         <h4 class="main-text fw-light">CEO, any-lamp.com</h4>
       </div>
       <div class="w-50 d-flex flex-row align-items-start justify-content-center">
-        <img src="../../../../assets/svg/star.svg" width="25" />
-        <img src="../../../../assets/svg/star.svg" width="25" />
-        <img src="../../../../assets/svg/star.svg" width="25" />
-        <img src="../../../../assets/svg/star.svg" width="25" />
-        <img src="../../../../assets/svg/star.svg" width="25" />
+        <img src="../../../assets/svg/star.svg" width="25" />
+        <img src="../../../assets/svg/star.svg" width="25" />
+        <img src="../../../assets/svg/star.svg" width="25" />
+        <img src="../../../assets/svg/star.svg" width="25" />
+        <img src="../../../assets/svg/star.svg" width="25" />
       </div>
     </div>
     <div class="static-block_img">
-      <img src="../../../../assets/png/auth_image.png">
+      <img src="../../../assets/png/auth_image.png">
     </div>
   </div>
 </template>
