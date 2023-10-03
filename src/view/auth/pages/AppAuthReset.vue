@@ -106,7 +106,7 @@ const submit = () => {
       if(data.status === 200) {
         steps.isSendEmailStep = true
         steps.isSendPasswordStep = false
-        router.replace('/')
+        router.replace('Main')
       }
     })
   }

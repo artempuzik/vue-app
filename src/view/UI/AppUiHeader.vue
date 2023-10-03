@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import {ref} from "vue";
 import {PROJECT_NAME} from "../../app/config/enviroments.ts";
+import {useRouter} from "vue-router";
+import {useAppStore} from "../../store";
+
+const router = useRouter();
+const appStore = useAppStore()
 
 const emit = defineEmits(['update:tab'])
 
@@ -15,13 +20,19 @@ const isOpen = ref(false)
 
 const toggleSelect = () => isOpen.value = !isOpen.value
 
+const logOut = () => {
+  localStorage.clear()
+  appStore.logOut()
+  router.replace('SingIn')
+}
+
 
 </script>
 
 <template>
   <header class="w-100 d-flex flex-row align-items-center justify-content-between p-4">
     <div class="d-flex flex-row align-items-center justify-content-start">
-      <div class="me-4 econd-title">
+      <div class="me-4 second-title">
           <h1>{{PROJECT_NAME}}</h1>
       </div>
       <div class="d-flex flex-row align-items-center justify-content-start">
@@ -49,10 +60,23 @@ const toggleSelect = () => isOpen.value = !isOpen.value
         <img src="../../assets/svg/chevron.svg" width="30" :class="{'rotate': isOpen}">
         <div v-if="isOpen" class="modal_wrapper d-flex flex-column align-items-end">
           <div class="app_select_modal shadow">
-            <div><span>Team Management</span></div>
-            <div><span>Settings</span></div>
-            <div><span>Profile</span></div>
-            <div><span>Logout</span></div>
+            <div class="my-2">
+              <img src="../../assets/svg/user.svg" />
+              <router-link to="Profile" class="mx-2 link">Account</router-link>
+            </div>
+            <div class="my-2">
+              <img src="../../assets/svg/settings.svg" />
+              <router-link to="Settings" class="mx-2 link">Settings</router-link>
+            </div>
+            <div class="my-2">
+              <img src="../../assets/svg/management.svg" />
+              <router-link to="Manager" class="mx-2 link">Team Management</router-link>
+            </div>
+            <hr>
+            <div class="mt-2" @click="logOut">
+              <img src="../../assets/svg/logout.svg" />
+              <span class="mx-2 link">Logout</span>
+            </div>
           </div>
         </div>
       </div>
@@ -92,11 +116,11 @@ div span {
 
 .app_select_modal {
   position: absolute;
-  padding: 16px 9px;
+  padding: 26px 26px 24px;
   background-color: $white-color;
   top: 80px;
+  width: 269px;
   right: 10px;
-  width: 250px;
   z-index: 9999;
 
   div {
@@ -108,6 +132,11 @@ div span {
       background-color: $blue-light-light;
     }
   }
+}
+
+.link {
+  color: $black-color;
+  text-decoration: none;
 }
 
 </style>

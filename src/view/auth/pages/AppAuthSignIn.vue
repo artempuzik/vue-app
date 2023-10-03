@@ -12,10 +12,6 @@ const router = useRouter()
 
 const appStore = useAppStore()
 
-if (appStore.isAuth) {
-  router.replace('/');
-}
-
 const errorMessage = ref('')
 const isLoading = ref(false)
 
@@ -40,7 +36,7 @@ const submit = () => {
   errorMessage.value = ''
   appStore.loginUser({email: email.value, password: password.value})
       .then(() =>{
-        router.replace('/');
+        router.replace('Main');
       })
       .catch((err: AxiosError<any>) => {
         if (err.response) {
@@ -74,7 +70,7 @@ const submit = () => {
             :error-message="password.error"
         />
         <div class="w-100 d-flex flex-column align-items-end my-2">
-          <router-link to="/auth/reset"><span class="link-text">Forgot your password?</span></router-link>
+          <router-link to="ResetPassword"><span class="link-text">Forgot your password?</span></router-link>
         </div>
         <br/>
         <br/>
@@ -86,7 +82,7 @@ const submit = () => {
         <br/>
         <br/>
         <div class="w-100 d-flex flex-column align-items-start my-2">
-          <span class="main-text">Don’t have a {{PROJECT_NAME}} account yet? <router-link to="/auth/sign-up" class="link-text">Sign up</router-link></span>
+          <span class="main-text">Don’t have a {{PROJECT_NAME}} account yet? <router-link to="SignUp" class="link-text">Sign up</router-link></span>
         </div>
       </div>
     </template>

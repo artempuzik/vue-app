@@ -13,9 +13,9 @@ router.beforeEach((to, from, next) => {
     appStore.checkAuth().then(() => {
         const isAuthenticated = appStore.isAuth;
         if (requiresAuth && !isAuthenticated) {
-            next('/auth'); // Redirect to login page if not authenticated
+            next('/sign-in');
         } else {
-            next(); // Proceed to the next route
+            next();
         }
     });
 

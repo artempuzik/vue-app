@@ -18,24 +18,26 @@ import {
     IUserResponse
 } from "../app/api/types.ts";
 
+const initAppStore = {
+    isAuth: false,
+    id: '',
+    isAdmin: false,
+    refreshToken: '',
+    accessToken: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    isStaff: false,
+    isConfirmed: false,
+    isActive: false,
+    isCompanyAdmin: false,
+    inConsideration: false,
+    company: '',
+    avatar: null,
+}
+
 export default defineStore('app', {
-    state: () => ({
-        isAuth: false,
-        id: '',
-        isAdmin: false,
-        refreshToken: '',
-        accessToken: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        isStaff: false,
-        isConfirmed: false,
-        isActive: false,
-        isCompanyAdmin: false,
-        inConsideration: false,
-        company: '',
-        avatar: null,
-    }),
+    state: () => ({...initAppStore}),
     actions: {
         async checkAuth() {
             if (!this.accessToken) {
@@ -118,9 +120,6 @@ export default defineStore('app', {
                         this.isAdmin = is_admin;
                         localStorage.setItem('refresh_token', this.refreshToken);
                         localStorage.setItem('access_token', this.accessToken);
-                        // checkUser(access).then((data) => {
-                        //     console.log('----data', data)
-                        // })
                     }
                 })
                 .catch(() => this.isAuth = false)
@@ -156,9 +155,12 @@ export default defineStore('app', {
                 }
                 return data
             })
+        },
+        logOut() {
+            this.$reset()
         }
     },
     getters: {
         getAuthStatus: (state) => state.isAuth
-    }
+    },
 })

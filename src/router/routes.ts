@@ -14,24 +14,37 @@ const routes = [
         meta: { requiresAuth: true }
     },
     {
-        path: '/auth',
-        name: 'Auth',
-        redirect: 'auth/sign-in',
-        children: [
-            { path: 'sign-in', name: 'SignIn',  component: AppAuthSignIn },
-            { path: 'sign-up', name: 'SignUp', component: AppAuthSignUp },
-            { path: 'reset', name: 'ResetPassword', component: AppAuthReset },
-        ]
+        path: '/sign-in',
+        name: 'SignIn',
+        component: AppAuthSignIn,
+    },
+    {
+        path: '/sign-up',
+        name: 'SignUp',
+        component: AppAuthSignUp,
+    },
+    {
+        path: '/reset-password',
+        name: 'ResetPassword',
+        component: AppAuthReset,
     },
     {
         path: '/settings',
         name: 'Settings',
+        component: AppSettingsSettings,
         meta: { requiresAuth: true },
-        children: [
-            { path: 'settings', name: 'Settings',  component: AppSettingsSettings },
-            { path: 'profile', name: 'Profile', component: AppSettingsProfile },
-            { path: 'manager', name: 'Manager', component: AppSettingsManager },
-        ]
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component: AppSettingsProfile,
+        meta: { requiresAuth: true },
+    },
+    {
+        path: '/manager',
+        name: 'Manager',
+        component: AppSettingsManager,
+        meta: { requiresAuth: true },
     },
     {
         path: '/:pathMatch(.*)*',

@@ -113,11 +113,6 @@ const submit = () => {
               :text="'Contact Sales'"
               :size="'normal'"
           />
-          <br/>
-          <br/>
-          <div class="w-100 d-flex flex-column align-items-start my-2">
-            <span class="main-text">Already have an account? <router-link to="/auth/sign-in" class="link-text">Sign in</router-link></span>
-          </div>
         </template>
         <template v-else>
           <h1 class="main-title">Welcome to {{PROJECT_NAME}}</h1>
@@ -171,12 +166,12 @@ const submit = () => {
               :is-in-active="!isCanSubmit"
               :size="'normal'"
           />
-          <br/>
-          <br/>
-          <div class="w-100 d-flex flex-column align-items-start my-2">
-            <span class="main-text">Already have an account? <router-link to="/auth/sign-in" class="link-text">Sign in</router-link></span>
-          </div>
         </template>
+        <br/>
+        <br/>
+        <div class="w-100 d-flex flex-column align-items-start my-2">
+          <span class="main-text">Already have an account? <router-link to="SignIn" class="link-text">Sign in</router-link></span>
+        </div>
       </div>
     </template>
     <template #right>
