@@ -8,6 +8,10 @@ const {isInActive, text, size} = defineProps({
     type: Boolean,
     default: false
   },
+  isLoading: {
+    type: Boolean,
+    default: false
+  },
   size: {
     type: String as PropType<'large'|'normal'|'small'>,
     default: "normal"
@@ -24,7 +28,8 @@ const {isInActive, text, size} = defineProps({
       style="width: 100%; height: 100%; min-height: 40px;"
       :class="`${isInActive ? 'inactive' : 'active'} ${size}`"
   >
-    {{text}}
+    <div v-if="isLoading" class="spinner-border text-secondary m-1" role="status" />
+    <span v-else>{{text}}</span>
   </button>
 </template>
 

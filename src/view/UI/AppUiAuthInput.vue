@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {computed} from "vue";
+import {bottom} from "@popperjs/core";
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -9,6 +10,10 @@ const props = defineProps({
     default: false
   },
   isInActive: {
+    type: Boolean,
+    default: false
+  },
+  isPassword: {
     type: Boolean,
     default: false
   },
@@ -50,10 +55,11 @@ const value = computed({
         class="app_input"
         :disabled="isInActive"
         :class="{'error': isError, 'active': !isInActive, 'inactive': isInActive}"
-        type="text"
+        :type="!isPassword ? 'text' : 'password'"
+        :style="{marginBottom: isError ? '0px' : '28px'}"
         v-model="value"
     />
-    <span v-if="isError" class="error_text mt-2 mb-1">{{errorMessage}}</span>
+    <span v-if="isError" class="error_text mt-1 mb-1">{{errorMessage}}</span>
   </div>
 
 </template>

@@ -6,10 +6,18 @@ import AppStaticAuth from "../layout/AppStaticAuth.vue";
 import {computed, reactive, ref} from "vue";
 import {useAppStore} from "../../../store";
 import {AxiosError} from "axios";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
 
 const appStore = useAppStore()
 
+if (appStore.isAuth) {
+  router.replace('/');
+}
+
 const errorMessage = ref('')
+const isLoading = ref(false)
 
 const email = reactive({
   value: '',
@@ -26,15 +34,22 @@ const password = reactive({
 const isCanSubmit = computed(() => !!email.value && !!password.value)
 
 const submit = () => {
+  isLoading.value = true
   email.isError = false
   password.isError = false
   errorMessage.value = ''
   appStore.loginUser({email: email.value, password: password.value})
-      .catch((err: AxiosError<any>) => {
-        errorMessage.value = err.response.data.message
-        email.isError = true
-        password.isError = true
+      .then(() =>{
+        router.replace('/');
       })
+      .catch((err: AxiosError<any>) => {
+        if (err.response) {
+          errorMessage.value = err.response.data.message
+          email.isError = true
+          password.isError = true
+        }
+      })
+      .finally(() => isLoading.value = false)
 }
 
 </script>
@@ -51,11 +66,11 @@ const submit = () => {
             :label="'Email'"
             :error-message="email.error"
         />
-        <br/>
         <app-ui-auth-input
             v-model="password.value"
             :is-error="password.isError"
             :label="'Password'"
+            :is-password="true"
             :error-message="password.error"
         />
         <div class="w-100 d-flex flex-column align-items-end my-2">
@@ -67,7 +82,7 @@ const submit = () => {
           <span class="error">{{errorMessage}}</span>
         </div>
         <br v-else/>
-        <app-ui-button @click="submit" :text="'Sign in'" :is-in-active="!isCanSubmit" :size="'normal'" />
+        <app-ui-button class="p-3" @click="submit" :text="'Sign in'" :is-loading="isLoading" :is-in-active="!isCanSubmit" :size="'normal'" />
         <br/>
         <br/>
         <div class="w-100 d-flex flex-column align-items-start my-2">
