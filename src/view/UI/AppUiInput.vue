@@ -38,16 +38,16 @@ const value = computed({
 </script>
 
 <template>
-  <div class="d-flex flex-column align-items-start m-1">
+  <div class="w-100 d-flex flex-column align-items-start m-1">
     <label v-if="label" class="mb-1 main-text">{{ label }}</label>
-    <div class="d-flex flex-row align-items-center position-relative">
+    <div class="w-100 d-flex flex-row align-items-center position-relative">
       <img v-if="withIcon" class="icon" :class="{'inactive': isInActive}" src="../../assets/svg/search.svg" width="24" height="24">
       <input
           style="width: 100%; height: 100%;"
           :placeholder="placeholder"
           class="app_input"
           :disabled="isInActive"
-          :class="{'active': !isInActive, 'inactive': isInActive, 'with_icon': withIcon}"
+          :class="{'active': !isInActive, 'inactive': isInActive || !value, 'with_icon': withIcon}"
           type="text"
           v-model="value"
       />
@@ -61,6 +61,7 @@ const value = computed({
 .app_input {
   padding: 10px 12px;
   border-radius: $input-border-radius;
+  background-color: $white-color;
   &::placeholder {
     color: $placeholder;
     opacity: 1;

@@ -80,6 +80,7 @@ const value = computed({
 
     &:hover {
       background-color: $blue-light-light;
+      color: $purple-light;
     }
   }
 }
