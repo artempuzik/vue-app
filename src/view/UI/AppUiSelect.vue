@@ -41,16 +41,12 @@ const value = computed({
     <div class="w-100 d-flex flex-row align-items-center m-1 position-relative app_select"
          @click="toggleSelect"
     >
-      <div
-          style="width: 100%; height: 100%;"
-      >{{ value }}
+      <div class="w-100 d-flex flex-column align-items-start justify-content-center px-2">
+        <span>{{ value }}</span>
       </div>
       <img src="../../assets/svg/chevron.svg" :class="{'rotate': isOpen}"/>
       <div v-if="isOpen" class="app_select_modal shadow">
-        <div @click="selectValue('1')"><span>One</span></div>
-        <div @click="selectValue('2')"><span>Two</span></div>
-        <div @click="selectValue('3')"><span>Three</span></div>
-        <div @click="selectValue('4')"><span>Four</span></div>
+        <div v-for="option in options" @click="selectValue(option)" :key="option"><span>{{ option }}</span></div>
       </div>
     </div>
   </div>
@@ -70,7 +66,7 @@ const value = computed({
 
 .app_select_modal {
   position: absolute;
-  padding: 16px 9px;
+  padding: 9px 9px;
   background-color: $white-color;
   left: -1px;
   top: 40px;

@@ -16,18 +16,26 @@ export interface IChangePassword {
     token: string;
 }
 
-export interface ICheckUserResponse {
+export interface IChangeUserPassword {
+    new_password: string;
+    password: string;
+}
+
+export interface IUser {
     avatar: null | string;
-    company: string;
-    email: string;
     first_name: string;
-    id: string;
-    in_consideration: boolean;
+    last_name: string;
     is_active: boolean;
     is_company_admin: boolean;
     is_confirmed: boolean;
+}
+
+export interface ICheckUserResponse extends IUser{
+    company: string;
+    email: string;
+    id: string;
+    in_consideration: boolean;
     is_staff: boolean;
-    last_name: string;
 }
 
 export interface IFirstCheckUserByEmail {

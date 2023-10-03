@@ -25,10 +25,11 @@ const {isInActive, text, size} = defineProps({
   <button
       @click="emit('click')"
       class="shadow border-radius"
+      :disabled="isInActive"
       style="width: 100%; height: 100%; min-height: 40px;"
       :class="`${isInActive ? 'inactive' : 'active'} ${size}`"
   >
-    <div v-if="isLoading" class="spinner-border text-secondary m-1" role="status" />
+    <div v-if="isLoading" class="spinner-border text-secondary" role="status" />
     <span v-else>{{text}}</span>
   </button>
 </template>

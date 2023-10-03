@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {checkUser} from "../app/api/user.api.ts";
+import {checkUser, changeProfilePassword, updateUser} from "../app/api/user.api.ts";
 import {
     checkExistUserByEmail,
     createUser,
@@ -10,11 +10,11 @@ import {
     changePassword
 } from "../app/api/auth.api.ts";
 import {
-    IChangePassword,
+    IChangePassword, IChangeUserPassword,
     ICheckUserResponse,
     ICreateUser,
     IFirstCheckUserByEmail,
-    ILoginUser,
+    ILoginUser, IUser,
     IUserResponse
 } from "../app/api/types.ts";
 
@@ -158,7 +158,13 @@ export default defineStore('app', {
         },
         logOut() {
             this.$reset()
-        }
+        },
+        async changeProfilePassword(dto: IChangeUserPassword) {
+            return changeProfilePassword(dto, this.accessToken)
+        },
+        async updateUser(dto: Partial<IUser>) {
+            return updateUser(dto, this.accessToken)
+        },
     },
     getters: {
         getAuthStatus: (state) => state.isAuth
