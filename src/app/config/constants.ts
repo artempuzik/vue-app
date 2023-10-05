@@ -1,8 +1,8 @@
-const LANGUAGES = {
-    'en': 'English',
-    'de': 'Deutch',
-    'pl': 'Polski',
-    'esp': 'Español'
+const LANGUAGES: { [key: string]: string } = {
+    'English': 'en',
+    'Deutch': 'de',
+    'Polski': 'pl',
+    'Español': 'esp'
 }
 
 const CURRENCY = ['USD', 'EUR', 'GBP']

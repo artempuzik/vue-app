@@ -6,7 +6,7 @@ import AppUiModal from "../../UI/AppUiModal.vue";
 import AppUiSelect from "../../UI/AppUiSelect.vue";
 import AppUiButton from "../../UI/AppUiButton.vue";
 import {USER_STATUSES} from "../../../app/config/constants.ts";
-import {AxiosError} from "axios/index";
+import {AxiosError} from "axios";
 
 const {member} = defineProps({
   member: Object as PropType<IUser>
@@ -22,7 +22,7 @@ const isLoading = ref(false)
 const errorMessage = ref('')
 
 const roles = reactive({
-  value: member.role ?? USER_STATUSES["0"],
+  value: member?.role ?? USER_STATUSES["0"],
   options: Object.values(USER_STATUSES),
 })
 

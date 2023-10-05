@@ -1,11 +1,13 @@
 import {defineStore} from 'pinia'
 import {companyApi} from "../app/api";
-import {reactive, Ref, ref} from "vue";
+import {reactive, Ref, ref, watch} from "vue";
 import {useAppStore} from "./index.ts";
 import {IUser} from "../app/api/types/types.ts";
 import {CURRENCY, DATE_TIME_FORMAT, LANGUAGES, TIME_ZONE} from "../app/config/constants.ts";
+import {useI18n} from "vue-i18n";
 
 export default defineStore('company', () => {
+    const {locale} = useI18n()
     const company = reactive({
         id: '',
         company: '',
@@ -19,7 +21,7 @@ export default defineStore('company', () => {
     })
 
     let settings = reactive({
-        lang: LANGUAGES.en,
+        lang: 'English',
         currency: CURRENCY[0],
         timezone: TIME_ZONE[0],
         datetime_format: DATE_TIME_FORMAT[0],
@@ -34,10 +36,10 @@ export default defineStore('company', () => {
             if(data.status === 200) {
                 company.id = data.data.id
                 company.company = data.data.company
-                settings.lang = data.data.lang && data.data.lang
-                settings.currency = data.data.currency && data.data.currency
-                settings.timezone = data.data.timezone && data.data.timezone
-                settings.datetime_format = data.data.datetime_format && data.data.datetime_format
+                settings.lang = data.data.lang ? data.data.lang : settings.lang
+                settings.currency = data.data.currency ? data.data.currency : settings.currency
+                settings.timezone = data.data.timezone ? data.data.timezone : settings.timezone
+                settings.datetime_format = data.data.datetime_format ? data.data.datetime_format : settings.datetime_format
             }
         })
     }
@@ -98,6 +100,8 @@ export default defineStore('company', () => {
                 }
             })
     }
+
+    watch(() => settings.lang, () => locale.value = LANGUAGES[settings.lang])
 
     return {
         company,

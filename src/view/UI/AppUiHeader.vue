@@ -41,7 +41,7 @@ const logOut = () => {
         <div class="m-1 p-2"
              :class="{'active': activeTab === 'Dashboard'}"
              @click="clickToTab('Dashboard')"
-        ><span class="main-text">Dashboard</span></div>
+        ><span class="main-text">{{$t('header.nav_dashboard')}}</span></div>
         <div class="m-1 p-2"
              :class="{'active': activeTab === 'List'}"
              @click="clickToTab('List')"

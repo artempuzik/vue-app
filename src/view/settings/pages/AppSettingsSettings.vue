@@ -8,7 +8,7 @@ const companyStore = useCompanyStore()
 
 const languages = reactive({
   value: companyStore.settings.lang,
-  options: Object.values(LANGUAGES)
+  options: Object.keys(LANGUAGES)
 })
 const currency = reactive({
   value: companyStore.settings.currency,
