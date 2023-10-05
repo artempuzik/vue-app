@@ -22,18 +22,20 @@ export interface IChangeUserPassword {
 }
 
 export interface IUser {
+    id: string;
     avatar: null | string;
     first_name: string;
     last_name: string;
     is_active: boolean;
     is_company_admin: boolean;
     is_confirmed: boolean;
+    email: string;
+    updated_at?: Date;
+    created_at?: Date;
 }
 
 export interface ICheckUserResponse extends IUser{
     company: string;
-    email: string;
-    id: string;
     in_consideration: boolean;
     is_staff: boolean;
 }

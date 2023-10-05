@@ -36,7 +36,7 @@ const submit = () => {
   errorMessage.value = ''
   userStore.loginUser({email: email.value, password: password.value})
       .then(() =>{
-        router.replace('Main');
+        router.replace('main');
       })
       .catch((err: AxiosError<any>) => {
         if (err.response) {

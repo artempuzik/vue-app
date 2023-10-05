@@ -3,11 +3,38 @@ import AppLayoutSettings from "../layout/AppLayoutSettings.vue";
 import AppUiInput from "../../UI/AppUiInput.vue";
 import AppUiSelect from "../../UI/AppUiSelect.vue";
 import AppUiButton from "../../UI/AppUiButton.vue";
-import {reactive, ref} from "vue";
-import {USER_STATUSES} from "../../../app/config/constants.ts";
 import AppMemberItem from "../components/AppMemberItem.vue";
+import {reactive, ref, computed} from "vue";
+import {USER_STATUSES} from "../../../app/config/constants.ts";
+import {useCompanyStore} from "../../../store";
+import {IUser} from "../../../app/api/types.ts";
+
+const companyStore = useCompanyStore()
 
 const query = ref('')
+const isModalHide = ref(true)
+const isLoading = ref(false)
+
+const inviteEmail = ref('')
+
+const members = computed(() => companyStore.companyMembers.filter((member: IUser) => {
+  if(member.role === roles.value || roles.value === 'All roles') {
+    return JSON.stringify(member).includes(query.value.trim())
+  }
+  return false;
+}))
+
+const sendInvite = () => {
+  isLoading.value = true
+  companyStore.inviteMember(inviteEmail.value).then(() => {
+    isModalHide.value = true
+    inviteEmail.value = ''
+  })
+      .finally(() => isLoading.value = false)
+
+}
+
+companyStore.getMemberListByCompanyId()
 
 const roles = reactive({
   value: 'All roles',
@@ -22,6 +49,13 @@ const roles = reactive({
       <app-ui-header/>
     </template>
     <template #main>
+      <app-ui-modal v-if="!isModalHide" @close="isModalHide = true">
+        <h4 class="main-text text-center">Please enter the user's email for invitation</h4>
+        <app-ui-input v-model="inviteEmail"/>
+        <br />
+        <app-ui-button @click="sendInvite" :is-in-active="!inviteEmail" :is-loading="isLoading" :text="'Send email'"/>
+
+      </app-ui-modal>
       <div class="w-100 d-flex flex-column align-items-start p-4">
         <h3 class="category-title">Team management</h3>
         <br>
@@ -40,10 +74,10 @@ const roles = reactive({
                 :options="roles.options"
             />
           </div>
-          <app-ui-button style="width: 150px" :text="'+ Invite Member'"/>
+          <app-ui-button @click="isModalHide = false" style="width: 150px" :text="'+ Invite Member'"/>
         </div>
         <br>
-        <h3 class="category-title">Members {{'6'}}</h3>
+        <h3 class="category-title">Members {{members.length}}</h3>
         <div class="w-100 table_body">
           <table class="table">
             <thead>
@@ -57,24 +91,9 @@ const roles = reactive({
             </tr>
             </thead>
             <tbody>
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-            <app-member-item />
-
+            <template v-for="member in members">
+              <app-member-item :member="member"/>
+            </template>
             </tbody>
           </table>
         </div>
@@ -93,7 +112,7 @@ const roles = reactive({
 
 .table_body {
   overflow-y: scroll;
-  max-height: 650px;
+  height: 650px;
 }
 
 </style>

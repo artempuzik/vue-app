@@ -1,12 +1,13 @@
 import {defineStore} from 'pinia'
 import {userApi, authApi} from "../app/api";
 import useAppStore from './app.ts'
+import useCompanyStore from './company.ts'
 import {
     IChangePassword, IChangeUserPassword,
     ICheckUserResponse,
     ICreateUser,
     IFirstCheckUserByEmail,
-    ILoginUser, IUser,
+    ILoginUser, IUser, IUserResponse,
 } from "../app/api/types.ts";
 import {reactive} from "vue";
 
@@ -22,10 +23,10 @@ export default defineStore('user', () => {
         isActive: false,
         isCompanyAdmin: false,
         inConsideration: false,
-        company: '',
         avatar: null,
     })
     const appStore = useAppStore();
+    const companyStore = useCompanyStore();
     const checkUser = async () => userApi.checkUserFetch(appStore.appConfig.accessToken)
         .then(data => {
             if (data.status === 200) {
@@ -43,7 +44,7 @@ export default defineStore('user', () => {
                     last_name,
                 } = data.data as ICheckUserResponse;
                 user.avatar = avatar;
-                user.company = company;
+                companyStore.company.company = company;
                 user.email = email;
                 user.firstName = first_name;
                 user.lastName = last_name;
@@ -56,9 +57,27 @@ export default defineStore('user', () => {
                 user.isStaff = is_staff;
                 appStore.appConfig.isAuth = true;
             }
+            return data;
         })
 
     const loginUser = (dto: ILoginUser) => authApi.loginUserFetch(dto)
+        .then((data) => {
+            if (data.status === 200) {
+                const {
+                    id_user,
+                    access,
+                    refresh,
+                    is_admin
+                } = data.data as IUserResponse;
+                appStore.appConfig.isAuth = true;
+                user.id = id_user;
+                appStore.appConfig.refreshToken = refresh;
+                appStore.appConfig.accessToken = access;
+                user.isAdmin = is_admin;
+                localStorage.setItem('refresh_token', refresh);
+                localStorage.setItem('access_token', access);
+            }
+    })
     const checkExistUserByEmail = async (dto: IFirstCheckUserByEmail) => {
         return authApi.checkExistUserByEmailFetch(dto).then((data) => {
                 if (data.status === 200) {

@@ -31,7 +31,7 @@ const setCompanySettingsFetch = (dto: ICompanySettings, id: string, token: strin
     }
 });
 
-const getMembersListByCompanyIdFetch = (token: string, id:string, {page = 0, limit = 0}: IApiQuery) => fetch.get(`/company/${id}/members/?page=${page}&limit=${limit}`, {
+const getMemberListByCompanyIdFetch = (token: string, id:string, {page = 0, limit = 0}: IApiQuery) => fetch.get(`/company/${id}/members/?page=${page}&limit=${limit}`, {
     headers: {
         'Authorization': `Bearer ${token}`
     }
@@ -68,7 +68,7 @@ export {
     deleteMemberFromCompanyFetch,
     sendInviteToMemberFetch,
     setCompanySettingsFetch,
-    getMembersListByCompanyIdFetch,
+    getMemberListByCompanyIdFetch,
     getSettingsListByCompanyIdFetch,
     getCompanyByIdFetch,
     updateCompanyByIdFetch,

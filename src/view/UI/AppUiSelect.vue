@@ -40,6 +40,8 @@ const value = computed({
     <label v-if="label" class="mb-1 main-text">{{ label }}</label>
     <div class="w-100 d-flex flex-row align-items-center m-1 position-relative app_select"
          @click="toggleSelect"
+         @focusout="isOpen = false"
+         tabindex="0"
     >
       <div class="w-100 d-flex flex-column align-items-start justify-content-center px-2">
         <span>{{ value }}</span>

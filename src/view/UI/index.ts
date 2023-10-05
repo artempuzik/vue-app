@@ -5,6 +5,7 @@ import AppUiSelect from "./AppUiSelect.vue";
 import AppUiInput from "./AppUiInput.vue";
 import AppUiSpinner from "./AppUiSpinner.vue";
 import AppUiHeader from "./AppUiHeader.vue";
+import AppUiModal from "./AppUiModal.vue";
 
 
 const components = [
@@ -14,6 +15,7 @@ const components = [
     { name: 'app-ui-select', component: AppUiSelect},
     { name: 'app-ui-spinner', component: AppUiSpinner},
     { name: 'app-ui-header', component: AppUiHeader},
+    { name: 'app-ui-modal', component: AppUiModal},
 ]
 export default {
     install(app: App) {

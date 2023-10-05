@@ -1,4 +1,13 @@
 <script setup lang="ts">
+import {useAppStore} from "./store";
+
+const appStore = useAppStore()
+
+const init = () => {
+  appStore.initApp()
+}
+
+init()
 </script>
 
 <template>

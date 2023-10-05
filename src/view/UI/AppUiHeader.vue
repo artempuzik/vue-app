@@ -2,12 +2,13 @@
 import {computed, ref} from "vue";
 import {PROJECT_NAME} from "../../app/config/enviroments.ts";
 import {useRouter} from "vue-router";
-import {useAppStore} from "../../store";
+import {useUserStore, useAppStore} from "../../store";
 
 const router = useRouter();
+const userStore = useUserStore()
 const appStore = useAppStore()
 
-const userName = computed(() => `${appStore.firstName} ${appStore.lastName}`)
+const userName = computed(() => `${userStore.user.firstName} ${userStore.user.lastName}`)
 
 const emit = defineEmits(['update:tab'])
 

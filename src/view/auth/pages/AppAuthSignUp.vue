@@ -12,7 +12,10 @@ const isUserIdExist = ref(!!userStore.user.id);
 
 const isLoading = ref(false)
 const errorMessage = ref('')
-const errorFirstScreen = ref(false)
+const error = reactive({
+  isError: false,
+  code: 400,
+})
 
 const email = reactive({
   value: '',
@@ -68,6 +71,8 @@ const submit = () => {
     })
         .catch((err: AxiosError<any>) => {
           if (err.response) {
+            error.isError = true
+            error.code = err.response.status
             errorMessage.value = err.response.data.message
           }
         })
@@ -83,8 +88,10 @@ const submit = () => {
           }
         })
       .catch((err: AxiosError<any>) => {
+        console.log(err)
         if (err.response) {
-          errorFirstScreen.value = true
+          error.isError = true
+          error.code = err.response.status
           errorMessage.value = err.response.data.message
           email.error = err.response.data.message
           email.isError = true
@@ -101,21 +108,28 @@ const submit = () => {
   <app-layout-auth>
     <template #left>
       <div class="sign-in_box w-100 d-flex flex-column align-items-start justify-content-start">
-        <template v-if="errorFirstScreen">
-          <h1 class="main-title">Ups ...</h1>
-          <br/>
-          <h4 class="main-text">Your company don’t use Relu right now. But you have a chance to fix it!</h4>
-          <br/>
-          <app-ui-button
-              class="p-3"
-              :text="'Demo?'"
-              :size="'normal'"
-          />
-          <app-ui-button
-              class="my-1 p-3"
-              :text="'Contact Sales'"
-              :size="'normal'"
-          />
+        <template v-if="error.isError">
+          <template v-if="error.code === 409">
+            <h1 class="main-title">Ups ...</h1>
+            <br/>
+            <h4 class="main-text">Your company don’t use Relu right now. But you have a chance to fix it!</h4>
+            <br/>
+            <app-ui-button
+                class="p-3"
+                :text="'Demo?'"
+                :size="'normal'"
+            />
+            <app-ui-button
+                class="my-1 p-3"
+                :text="'Contact Sales'"
+                :size="'normal'"
+            />
+          </template>
+          <template v-if="error.code === 400">
+            <h1 class="main-title">Ups ...</h1>
+            <br/>
+            <h4 class="main-text">You don’t have access to your corporate Relu account. Contact your admin team for this issue.</h4>
+          </template>
         </template>
         <template v-else>
           <h1 class="main-title">Welcome to {{PROJECT_NAME}}</h1>

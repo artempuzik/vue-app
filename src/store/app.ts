@@ -1,8 +1,8 @@
 import {defineStore} from 'pinia'
-import {userApi, authApi} from "../app/api";
+import {authApi} from "../app/api";
 import useUserStore from './user.ts'
+import useCompanyStore from './company.ts'
 import {reactive} from "vue";
-import {IUserResponse} from "../app/api/types.ts";
 
 export default defineStore('app', () => {
     const appConfig = reactive({
@@ -12,46 +12,37 @@ export default defineStore('app', () => {
     })
 
     const userStore = useUserStore();
+    const companyStore = useCompanyStore();
+
+    const initApp = () => {
+        checkAuth()
+            .then(() => {
+            companyStore.getSettings(appConfig.accessToken)
+            companyStore.getCompanyList(appConfig.accessToken)
+        })
+    }
     const checkAuth = async () => {
-            if (!appConfig.accessToken) {
-                const storage_token = localStorage.getItem('access_token')
-                if (!storage_token) {
-                    return;
-                }
-                appConfig.accessToken = storage_token;
+        if (!appConfig.accessToken) {
+            const storage_token = localStorage.getItem('access_token')
+            if (!storage_token) {
+                return;
             }
+            appConfig.accessToken = storage_token;
+        }
 
         return userStore.checkUser()
-            .then((data) => {
-                if (data.status === 200) {
-                    const {
-                        id_user,
-                        access,
-                        refresh,
-                        is_admin
-                    } = data.data as IUserResponse;
-                    appConfig.isAuth = true;
-                    userStore.user.id = id_user;
-                    appConfig.refreshToken = refresh;
-                    appConfig.accessToken = access;
-                    userStore.user.isAdmin = is_admin;
-                    localStorage.setItem('refresh_token', refresh);
-                    localStorage.setItem('access_token', access);
-                }
-            })
-            .catch(() => appConfig.isAuth = false)
-                .catch((err) => {
-                    if(err.response.status === 401) {
-                        if (!appConfig.refreshToken) {
-                            const storage_token = localStorage.getItem('refresh_token')
-                            if(!storage_token) {
-                                return
-                            }
-                            appConfig.refreshToken = localStorage.getItem('refresh_token') || '';
+            .catch((err) => {
+                if (err.response.status === 401) {
+                    if (!appConfig.refreshToken) {
+                        const storage_token = localStorage.getItem('refresh_token')
+                        if (!storage_token) {
+                            return
                         }
-                        authApi.refreshTokenFetch(appConfig.refreshToken)
-                            .then((data) => {
-                            if(data.status === 200) {
+                        appConfig.refreshToken = localStorage.getItem('refresh_token') || '';
+                    }
+                    authApi.refreshTokenFetch(appConfig.refreshToken)
+                        .then((data) => {
+                            if (data.status === 200) {
                                 const {access, refresh} = data.data;
                                 appConfig.refreshToken = refresh;
                                 appConfig.accessToken = access;
@@ -60,21 +51,23 @@ export default defineStore('app', () => {
                                 checkAuth();
                             }
                         })
-                    }
+                }
 
-                    appConfig.isAuth = false
-                })
-        }
-        const logOut = () => {
-            appConfig.accessToken = ''
-            appConfig.refreshToken = ''
-            appConfig.isAuth = false
-            localStorage.clear()
-            userStore.$reset()
-        }
-        return {
-            appConfig,
-            checkAuth,
-            logOut,
-        }
+                appConfig.isAuth = false
+            })
+    }
+    const logOut = () => {
+        appConfig.accessToken = ''
+        appConfig.refreshToken = ''
+        appConfig.isAuth = false
+        localStorage.clear()
+        userStore.$reset()
+        companyStore.$reset()
+    }
+    return {
+        appConfig,
+        initApp,
+        checkAuth,
+        logOut,
+    }
 })
