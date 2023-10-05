@@ -7,7 +7,9 @@ import AppMemberItem from "../components/AppMemberItem.vue";
 import {reactive, ref, computed} from "vue";
 import {USER_STATUSES} from "../../../app/config/constants.ts";
 import {useCompanyStore} from "../../../store";
-import {IUser} from "../../../app/api/types.ts";
+import {IUser} from "../../../app/api/types/types.ts";
+import {emailValidator} from "../../../app/helpers";
+import {AxiosError} from "axios";
 
 const companyStore = useCompanyStore()
 
@@ -16,6 +18,10 @@ const isModalHide = ref(true)
 const isLoading = ref(false)
 
 const inviteEmail = ref('')
+
+const errorMessage = ref('')
+
+const isValidEmail = computed(() => emailValidator(inviteEmail.value))
 
 const members = computed(() => companyStore.companyMembers.filter((member: IUser) => {
   if(member.role === roles.value || roles.value === 'All roles') {
@@ -26,10 +32,16 @@ const members = computed(() => companyStore.companyMembers.filter((member: IUser
 
 const sendInvite = () => {
   isLoading.value = true
-  companyStore.inviteMember(inviteEmail.value).then(() => {
+  errorMessage.value = ''
+      companyStore.inviteMember(inviteEmail.value).then(() => {
     isModalHide.value = true
     inviteEmail.value = ''
   })
+      .catch((err: AxiosError<any>) => {
+        if (err.response) {
+          errorMessage.value = err.response.data.message
+        }
+      })
       .finally(() => isLoading.value = false)
 
 }
@@ -52,8 +64,11 @@ const roles = reactive({
       <app-ui-modal v-if="!isModalHide" @close="isModalHide = true">
         <h4 class="main-text text-center">Please enter the user's email for invitation</h4>
         <app-ui-input v-model="inviteEmail"/>
-        <br />
-        <app-ui-button @click="sendInvite" :is-in-active="!inviteEmail" :is-loading="isLoading" :text="'Send email'"/>
+        <div v-if="errorMessage" class="w-100 text-center">
+          <span class="error">{{errorMessage}}</span>
+        </div>
+        <br v-else>
+        <app-ui-button @click="sendInvite" :is-in-active="!isValidEmail" :is-loading="isLoading" :text="'Send email'"/>
 
       </app-ui-modal>
       <div class="w-100 d-flex flex-column align-items-start p-4">
@@ -111,8 +126,12 @@ const roles = reactive({
 }
 
 .table_body {
-  overflow-y: scroll;
+  overflow-y: auto;
   height: 650px;
+}
+
+.error {
+  color: $error-red;
 }
 
 </style>

@@ -1,5 +1,5 @@
 import fetch from './axios.ts'
-import {IApiQuery, ICompanySettings, ICreateCompany, ISendInvite} from "./types.ts";
+import {IApiQuery, ICompanySettings, ICreateCompany, ISendInvite} from "./types/types.ts";
 
 const getCompanyListFetch = (token: string, {page = 0, limit = 0}: IApiQuery) => fetch.get(`/company/?page=${page}&limit=${limit}`, {
     headers: {
@@ -25,7 +25,7 @@ const sendInviteToMemberFetch = (dto: ISendInvite, token: string) => fetch.post(
     }
 });
 
-const setCompanySettingsFetch = (dto: ICompanySettings, id: string, token: string) => fetch.post(`/company/settings/${id}/`, dto,{
+const setCompanySettingsFetch = (dto: ICompanySettings, id: string, token: string) => fetch.put(`/company/settings/${id}/`, dto,{
     headers: {
         'Authorization': `Bearer ${token}`
     }

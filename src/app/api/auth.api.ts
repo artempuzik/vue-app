@@ -1,5 +1,5 @@
 import fetch from './axios.ts'
-import {IChangePassword, ICreateUser, IFirstCheckUserByEmail, ILoginUser} from "./types.ts";
+import {IChangePassword, ICreateUser, IFirstCheckUserByEmail, ILoginUser} from "./types/types.ts";
 
 const loginUserFetch = (dto: ILoginUser) => fetch.post('/auth/login/', dto);
 

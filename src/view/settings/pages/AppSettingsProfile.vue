@@ -2,9 +2,9 @@
 import AppLayoutSettings from "../layout/AppLayoutSettings.vue";
 import AppUiAuthInput from "../../UI/AppUiAuthInput.vue";
 import {computed, reactive, ref} from "vue";
-import {useAppStore} from "../../../store";
+import {useUserStore} from "../../../store";
 
-const appStore = useAppStore()
+const userStore = useUserStore()
 
 const isLoadingUser = ref(false)
 const isLoadingPassword = ref(false)
@@ -13,13 +13,13 @@ const errorUserMessage = ref('')
 const errorPasswordMessage = ref('')
 
 const firstName = reactive({
-  value: appStore.firstName,
+  value: userStore.user.firstName,
   error: '',
   isError: false
 })
 
 const lastName = reactive({
-  value: appStore.lastName,
+  value: userStore.user.lastName,
   error: '',
   isError: false
 })
@@ -48,7 +48,7 @@ const isConfirmPassword = computed(() => {
 })
 
 const isCanUserSubmit = computed(() => {
-    return lastName.value !== appStore.lastName || firstName.value !== appStore.firstName
+    return lastName.value !== userStore.user.lastName || firstName.value !== userStore.user.firstName
 })
 
 const isCanPasswordSubmit = computed(() => {
@@ -56,7 +56,7 @@ const isCanPasswordSubmit = computed(() => {
 })
 
 const submitUser = () => {
-  appStore.updateUser({
+  userStore.updateUser({
     first_name: firstName.value,
     last_name: lastName.value,
   })
@@ -69,7 +69,7 @@ const submitUser = () => {
 }
 
 const submitPassword = () => {
-  appStore.changeProfilePassword({
+  userStore.changeProfilePassword({
     password: password.password,
     new_password: password.value,
   })

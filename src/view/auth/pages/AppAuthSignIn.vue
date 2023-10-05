@@ -7,6 +7,7 @@ import {computed, reactive, ref} from "vue";
 import {useUserStore} from "../../../store";
 import {AxiosError} from "axios";
 import {useRouter} from "vue-router";
+import {emailValidator} from "../../../app/helpers";
 
 const router = useRouter()
 
@@ -27,7 +28,9 @@ const password = reactive({
   isError: false
 })
 
-const isCanSubmit = computed(() => !!email.value && !!password.value)
+const isValidEmail = computed(() => emailValidator(email.value))
+
+const isCanSubmit = computed(() => isValidEmail && !!password.value)
 
 const submit = () => {
   isLoading.value = true

@@ -8,8 +8,9 @@ import {
     ICreateUser,
     IFirstCheckUserByEmail,
     ILoginUser, IUser, IUserResponse,
-} from "../app/api/types.ts";
+} from "../app/api/types/types.ts";
 import {reactive} from "vue";
+import {updateUserFetch} from "../app/api/user.api.ts";
 
 export default defineStore('user', () => {
     const user = reactive({
@@ -106,7 +107,7 @@ export default defineStore('user', () => {
     }
     const changeProfilePassword = async (dto: IChangeUserPassword)=> userApi.changeProfilePasswordFetch(dto, appStore.appConfig.accessToken)
 
-    const updateUser = async (dto: Partial<IUser>) => userApi.checkUserFetch(dto, appStore.appConfig.accessToken)
+    const updateUser = async (dto: Partial<IUser>) => userApi.updateUserFetch(dto, appStore.appConfig.accessToken)
 
     return {
         user,

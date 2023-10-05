@@ -5,6 +5,7 @@ import AppStaticAuth from "../layout/AppStaticAuth.vue";
 import {computed, reactive, ref} from "vue";
 import {useUserStore} from "../../../store";
 import {AxiosError} from "axios";
+import {emailValidator} from "../../../app/helpers";
 
 const router = useRouter();
 const goBack = () => router.back()
@@ -41,6 +42,8 @@ const password = reactive({
   confirm: '',
 })
 
+const isValidEmail = computed(() => emailValidator(email.value))
+
 const isValidPassword = computed(() => {
   if(!password.confirm) {
     return true;
@@ -55,7 +58,7 @@ const isCanSubmit = computed(() => {
   if(steps.isSendCodeStep) {
     return !!code.value
   }
-  return !!email.value
+  return isValidEmail
 })
 
 const submit = () => {

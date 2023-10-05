@@ -7,9 +7,9 @@ const LANGUAGES = {
 
 const CURRENCY = ['USD', 'EUR', 'GBP']
 
-const DATE_FORMAT = ['DD-MM-YYYY', 'YYYY-MM-DD']
+const DATE_TIME_FORMAT = ['DD-MM-YYYY', 'YYYY-MM-DD']
 
-const TIME_ZONE = ['GMT+2', 'GMT+0', 'GMT+1', 'GMT+3']
+const TIME_ZONE = ['GMT+0', 'GMT+1', 'GMT+2', 'GMT+3']
 
 const USER_STATUSES = {
     '0': 'Admin',
@@ -20,7 +20,7 @@ const USER_STATUSES = {
 export {
     LANGUAGES,
     CURRENCY,
-    DATE_FORMAT,
+    DATE_TIME_FORMAT,
     TIME_ZONE,
     USER_STATUSES,
 }

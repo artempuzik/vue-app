@@ -1,5 +1,5 @@
 import fetch from './axios.ts'
-import {IChangeUserPassword, IUser} from "./types.ts";
+import {IChangeUserPassword, IUser} from "./types/types.ts";
 
 const checkUserFetch = (token: string) => fetch.get('/user/me/', {
     headers: {

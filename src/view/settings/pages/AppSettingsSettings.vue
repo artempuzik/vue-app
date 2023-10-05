@@ -1,24 +1,37 @@
 <script setup lang="ts">
 import AppLayoutSettings from "../layout/AppLayoutSettings.vue";
-import {CURRENCY, LANGUAGES, TIME_ZONE, DATE_FORMAT} from "../../../app/config/constants.ts";
+import {CURRENCY, LANGUAGES, TIME_ZONE, DATE_TIME_FORMAT} from "../../../app/config/constants.ts";
 import {reactive} from "vue";
+import {useCompanyStore} from "../../../store";
+
+const companyStore = useCompanyStore()
 
 const languages = reactive({
-  value: Object.values(LANGUAGES)[0],
+  value: companyStore.settings.lang,
   options: Object.values(LANGUAGES)
 })
 const currency = reactive({
-  value: CURRENCY[0],
+  value: companyStore.settings.currency,
   options: CURRENCY
 })
 const time_zone = reactive({
-  value: TIME_ZONE[0],
+  value: companyStore.settings.timezone,
   options: TIME_ZONE
 })
 const date_format = reactive({
-  value: DATE_FORMAT[0],
-  options: DATE_FORMAT
+  value: companyStore.settings.datetime_format,
+  options: DATE_TIME_FORMAT
 })
+
+const update = () => {
+  companyStore.updateSettings({
+    company: companyStore.company.company,
+    lang: languages.value,
+    currency: currency.value,
+    timezone: time_zone.value,
+    datetime_format: date_format.value,
+  })
+}
 
 </script>
 
@@ -39,7 +52,7 @@ const date_format = reactive({
         </div>
         <br>
         <div class="w-50">
-          <app-ui-button class="p-3" :text="'Save'" :is-in-active="false" :size="'normal'"/>
+          <app-ui-button @click="update" class="p-3" :text="'Save'" :is-in-active="false" :size="'normal'"/>
         </div>
       </div>
     </template>

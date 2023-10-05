@@ -2,7 +2,8 @@ import {defineStore} from 'pinia'
 import {companyApi} from "../app/api";
 import {reactive, Ref, ref} from "vue";
 import {useAppStore} from "./index.ts";
-import {IUser} from "../app/api/types.ts";
+import {IUser} from "../app/api/types/types.ts";
+import {CURRENCY, DATE_TIME_FORMAT, LANGUAGES, TIME_ZONE} from "../app/config/constants.ts";
 
 export default defineStore('company', () => {
     const company = reactive({
@@ -17,14 +18,14 @@ export default defineStore('company', () => {
         list: [],
     })
 
-    const settings = reactive({
-        lang: null,
-        currency: null,
-        timezone: null,
-        datetime_format: null,
+    let settings = reactive({
+        lang: LANGUAGES.en,
+        currency: CURRENCY[0],
+        timezone: TIME_ZONE[0],
+        datetime_format: DATE_TIME_FORMAT[0],
     })
 
-    const companyMembers = ref<Ref<IUser>>([])
+    const companyMembers = ref<Ref<IUser[]>>([])
 
     const appStore = useAppStore()
 
@@ -33,10 +34,10 @@ export default defineStore('company', () => {
             if(data.status === 200) {
                 company.id = data.data.id
                 company.company = data.data.company
-                settings.lang = data.data.lang
-                settings.currency = data.data.currency
-                settings.timezone = data.data.timezone
-                settings.datetime_format = data.data.datetime_format
+                settings.lang = data.data.lang && data.data.lang
+                settings.currency = data.data.currency && data.data.currency
+                settings.timezone = data.data.timezone && data.data.timezone
+                settings.datetime_format = data.data.datetime_format && data.data.datetime_format
             }
         })
     }
@@ -68,6 +69,27 @@ export default defineStore('company', () => {
             })
     }
 
+    const updateMemberById = (id: string, dto: Partial<IUser>) => {
+        return companyApi.updateCompanyByIdFetch(appStore.appConfig.accessToken, dto, id)
+            .then(data => {
+                if(data.status === 200) {
+                    const idx = companyMembers.value.findIndex(member => member.id === id)
+                    if(idx !== -1) {
+                        companyMembers.value[idx] = {...companyMembers.value[idx], ...dto}
+                    }
+                }
+            })
+    }
+
+    const updateSettings = (dto: ICompanySettings) => {
+        return companyApi.setCompanySettingsFetch(dto, company.company, appStore.appConfig.accessToken)
+            .then(data => {
+                if(data.status === 200) {
+                    settings = Object.assign(settings, dto)
+                }
+            })
+    }
+
     const inviteMember = (email: string) => {
         return companyApi.sendInviteToMemberFetch({company: company.company, email}, appStore.appConfig.accessToken)
             .then(data => {
@@ -86,5 +108,7 @@ export default defineStore('company', () => {
         getMemberListByCompanyId,
         inviteMember,
         removeMemberById,
+        updateMemberById,
+        updateSettings,
     }
 })

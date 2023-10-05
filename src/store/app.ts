@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import {authApi} from "../app/api";
+import {authApi, dashboardApi} from "../app/api";
 import useUserStore from './user.ts'
 import useCompanyStore from './company.ts'
 import {reactive} from "vue";
@@ -17,8 +17,10 @@ export default defineStore('app', () => {
     const initApp = () => {
         checkAuth()
             .then(() => {
-            companyStore.getSettings(appConfig.accessToken)
-            companyStore.getCompanyList(appConfig.accessToken)
+                if(appConfig.accessToken) {
+                    companyStore.getSettings(appConfig.accessToken)
+                    dashboardApi.getDashboardFetch(appConfig.accessToken, {page: 1, limit: 10})
+                }
         })
     }
     const checkAuth = async () => {
@@ -61,8 +63,6 @@ export default defineStore('app', () => {
         appConfig.refreshToken = ''
         appConfig.isAuth = false
         localStorage.clear()
-        userStore.$reset()
-        companyStore.$reset()
     }
     return {
         appConfig,

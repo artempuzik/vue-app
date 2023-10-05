@@ -25,7 +25,7 @@ const toggleSelect = () => isOpen.value = !isOpen.value
 
 const logOut = () => {
   appStore.logOut()
-  router.replace('SingIn')
+  router.replace('sign-in')
 }
 
 
@@ -52,7 +52,7 @@ const logOut = () => {
         ><span class="main-text">History</span></div>
       </div>
     </div>
-    <div class="d-flex flex-row align-items-center justify-content-start">
+    <div class="d-flex flex-row align-items-center justify-content-start position-relative">
       <img src="../../assets/svg/info.svg" width="25">
       <div
           @click="toggleSelect"
@@ -60,27 +60,28 @@ const logOut = () => {
           style="cursor: pointer">
         <span class="category-title mx-2">{{userName}}</span>
         <img src="../../assets/svg/chevron.svg" width="30" :class="{'rotate': isOpen}">
-        <div v-if="isOpen" class="modal_wrapper d-flex flex-column align-items-end">
-          <div class="app_select_modal shadow">
-            <div class="my-2">
+          <div
+              v-if="isOpen"
+              class="app_select_modal shadow d-flex flex-column"
+          >
+            <router-link to="profile">
               <img src="../../assets/svg/user.svg" />
-              <router-link to="profile" class="mx-2 link">Account</router-link>
-            </div>
-            <div class="my-2">
+              <span class="mx-2 link">Account</span>
+            </router-link>
+            <router-link to="settings">
               <img src="../../assets/svg/settings.svg" />
-              <router-link to="settings" class="mx-2 link">Settings</router-link>
-            </div>
-            <div class="my-2">
+              <span class="mx-2 link">Settings</span>
+            </router-link>
+            <router-link to="manager">
               <img src="../../assets/svg/management.svg" />
-              <router-link to="manager" class="mx-2 link">Team Management</router-link>
-            </div>
+              <span class="mx-2 link">Team Management</span>
+            </router-link>
             <hr>
             <div class="mt-2" @click="logOut">
               <img src="../../assets/svg/logout.svg" />
               <span class="mx-2 link">Logout</span>
             </div>
           </div>
-        </div>
       </div>
     </div>
   </header>
@@ -108,32 +109,34 @@ div span {
   transform: rotate(180deg);
 }
 
+.app_select_modal {
+  position: absolute;
+  padding: 26px 26px 24px;
+  background-color: $white-color;
+  top: 30px;
+  width: 269px;
+  right: -10px;
+  z-index: 9999;
+
+  a,
+  div{
+    padding: 7px 9px;
+    border-radius: $input-border-radius;
+    cursor: pointer;
+    text-decoration: none;
+
+    &:hover {
+      background-color: $blue-light-light;
+    }
+  }
+}
+
 .modal_wrapper {
   position: absolute;
   width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
-}
-
-.app_select_modal {
-  position: absolute;
-  padding: 26px 26px 24px;
-  background-color: $white-color;
-  top: 80px;
-  width: 269px;
-  right: 10px;
-  z-index: 9999;
-
-  div {
-    padding: 7px 9px;
-    border-radius: $input-border-radius;
-    cursor: pointer;
-
-    &:hover {
-      background-color: $blue-light-light;
-    }
-  }
 }
 
 .link {
