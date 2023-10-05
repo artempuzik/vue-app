@@ -4,13 +4,13 @@ import AppLayoutAuth from "../layout/AppLayoutAuth.vue";
 import AppStaticAuth from "../layout/AppStaticAuth.vue";
 
 import {computed, reactive, ref} from "vue";
-import {useAppStore} from "../../../store";
+import {useUserStore} from "../../../store";
 import {AxiosError} from "axios";
 import {useRouter} from "vue-router";
 
 const router = useRouter()
 
-const appStore = useAppStore()
+const userStore = useUserStore()
 
 const errorMessage = ref('')
 const isLoading = ref(false)
@@ -34,7 +34,7 @@ const submit = () => {
   email.isError = false
   password.isError = false
   errorMessage.value = ''
-  appStore.loginUser({email: email.value, password: password.value})
+  userStore.loginUser({email: email.value, password: password.value})
       .then(() =>{
         router.replace('Main');
       })
@@ -70,7 +70,7 @@ const submit = () => {
             :error-message="password.error"
         />
         <div class="w-100 d-flex flex-column align-items-end my-2">
-          <router-link to="ResetPassword"><span class="link-text">Forgot your password?</span></router-link>
+          <router-link to="reset-password"><span class="link-text">Forgot your password?</span></router-link>
         </div>
         <br/>
         <br/>
@@ -82,7 +82,7 @@ const submit = () => {
         <br/>
         <br/>
         <div class="w-100 d-flex flex-column align-items-start my-2">
-          <span class="main-text">Don’t have a {{PROJECT_NAME}} account yet? <router-link to="SignUp" class="link-text">Sign up</router-link></span>
+          <span class="main-text">Don’t have a {{PROJECT_NAME}} account yet? <router-link to="sign-up" class="link-text">Sign up</router-link></span>
         </div>
       </div>
     </template>

@@ -48,3 +48,26 @@ export interface ICreateUser {
     first_name: string;
     last_name: string;
 }
+
+export interface IApiQuery {
+    page: number;
+    limit: number;
+}
+
+export interface ICreateCompany {
+    name: string;
+    email: string;
+}
+
+export interface ISendInvite {
+    company: string;
+    email: string;
+}
+
+export interface ICompanySettings {
+    company: string;
+    lang: string;
+    currency: string;
+    timezone: string;
+    datetime_format: string;
+}

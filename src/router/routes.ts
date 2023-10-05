@@ -10,39 +10,39 @@ const routes = [
     {
         path: '/',
         component: () => import("../view/main/AppMainPage.vue"),
-        name: 'Main',
+        name: 'main',
         meta: { requiresAuth: true }
     },
     {
         path: '/sign-in',
-        name: 'SignIn',
+        name: 'sign-in',
         component: AppAuthSignIn,
     },
     {
         path: '/sign-up',
-        name: 'SignUp',
+        name: 'sign-up',
         component: AppAuthSignUp,
     },
     {
         path: '/reset-password',
-        name: 'ResetPassword',
+        name: 'reset-password',
         component: AppAuthReset,
     },
     {
         path: '/settings',
-        name: 'Settings',
+        name: 'settings',
         component: AppSettingsSettings,
         meta: { requiresAuth: true },
     },
     {
         path: '/profile',
-        name: 'Profile',
+        name: 'profile',
         component: AppSettingsProfile,
         meta: { requiresAuth: true },
     },
     {
         path: '/manager',
-        name: 'Manager',
+        name: 'manager',
         component: AppSettingsManager,
         meta: { requiresAuth: true },
     },

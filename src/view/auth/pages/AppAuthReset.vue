@@ -3,13 +3,13 @@ import {useRouter} from "vue-router";
 import AppLayoutAuth from "../layout/AppLayoutAuth.vue";
 import AppStaticAuth from "../layout/AppStaticAuth.vue";
 import {computed, reactive, ref} from "vue";
-import {useAppStore} from "../../../store";
+import {useUserStore} from "../../../store";
 import {AxiosError} from "axios";
 
 const router = useRouter();
 const goBack = () => router.back()
 
-const appStore = useAppStore()
+const userStore = useUserStore()
 
 const errorMessage = ref('')
 const isLoading = ref(false)
@@ -63,7 +63,7 @@ const submit = () => {
   errorMessage.value = ''
   if(steps.isSendEmailStep) {
     email.isError = false
-    appStore.resetPasswordByEmail(email.value)
+    userStore.resetPasswordByEmail(email.value)
         .then((data) => {
           if(data.status === 200) {
             steps.isSendEmailStep = false
@@ -81,7 +81,7 @@ const submit = () => {
 
   if(steps.isSendCodeStep) {
     code.isError = false
-    appStore.sendVerifyCodeToResetPassword(code.value)
+    userStore.sendVerifyCodeToResetPassword(code.value)
         .then((data) => {
           if(data.status === 200) {
             steps.isSendCodeStep = false
@@ -98,8 +98,8 @@ const submit = () => {
   }
 
   if(steps.isSendPasswordStep) {
-    appStore.changePassword({
-      user_id: appStore.id,
+    userStore.changeUserPassword({
+      user_id: userStore.user.id,
       new_password: password.value,
       token: token.value,
     }).then((data) => {

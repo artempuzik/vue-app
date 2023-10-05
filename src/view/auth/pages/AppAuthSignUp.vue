@@ -2,16 +2,17 @@
 import {PROJECT_NAME} from "../../../app/config/enviroments.ts";
 import AppLayoutAuth from "../layout/AppLayoutAuth.vue";
 import AppStaticAuth from "../layout/AppStaticAuth.vue";
-import {useAppStore} from "../../../store";
+import {useUserStore} from "../../../store";
 import {computed, reactive, ref} from "vue";
 import {AxiosError} from "axios";
 
-const appStore = useAppStore()
+const userStore = useUserStore()
 
-const isUserIdExist = ref(!!appStore.id);
+const isUserIdExist = ref(!!userStore.user.id);
 
 const isLoading = ref(false)
 const errorMessage = ref('')
+const errorFirstScreen = ref(false)
 
 const email = reactive({
   value: '',
@@ -59,8 +60,8 @@ const submit = () => {
     firstName.isError = false
     lastName.isError = false
     password.isError = false
-    appStore.createUser({
-      user_id: appStore.id,
+    userStore.createUser({
+      user_id: userStore.user.id,
       password: password.value,
       first_name: firstName.value,
       last_name: lastName.value,
@@ -73,7 +74,7 @@ const submit = () => {
         .finally(() => isLoading.value = false)
   } else {
     email.isError = false
-    appStore.checkExistUserByEmail({
+    userStore.checkExistUserByEmail({
       email: email.value,
     })
         .then((data) =>{
@@ -83,6 +84,8 @@ const submit = () => {
         })
       .catch((err: AxiosError<any>) => {
         if (err.response) {
+          errorFirstScreen.value = true
+          errorMessage.value = err.response.data.message
           email.error = err.response.data.message
           email.isError = true
         }
@@ -98,7 +101,7 @@ const submit = () => {
   <app-layout-auth>
     <template #left>
       <div class="sign-in_box w-100 d-flex flex-column align-items-start justify-content-start">
-        <template v-if="false">
+        <template v-if="errorFirstScreen">
           <h1 class="main-title">Ups ...</h1>
           <br/>
           <h4 class="main-text">Your company don’t use Relu right now. But you have a chance to fix it!</h4>
@@ -170,7 +173,7 @@ const submit = () => {
         <br/>
         <br/>
         <div class="w-100 d-flex flex-column align-items-start my-2">
-          <span class="main-text">Already have an account? <router-link to="SignIn" class="link-text">Sign in</router-link></span>
+          <span class="main-text">Already have an account? <router-link to="sign-in" class="link-text">Sign in</router-link></span>
         </div>
       </div>
     </template>

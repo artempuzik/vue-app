@@ -11,7 +11,7 @@ router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     const appStore = useAppStore()
     appStore.checkAuth().then(() => {
-        const isAuthenticated = appStore.isAuth;
+        const isAuthenticated = appStore.appConfig.isAuth;
         if (requiresAuth && !isAuthenticated) {
             next('/sign-in');
         } else {

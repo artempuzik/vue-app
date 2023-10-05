@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {PROJECT_NAME} from "../../app/config/enviroments.ts";
 import {useRouter} from "vue-router";
 import {useAppStore} from "../../store";
 
 const router = useRouter();
 const appStore = useAppStore()
+
+const userName = computed(() => `${appStore.firstName} ${appStore.lastName}`)
 
 const emit = defineEmits(['update:tab'])
 
@@ -21,7 +23,6 @@ const isOpen = ref(false)
 const toggleSelect = () => isOpen.value = !isOpen.value
 
 const logOut = () => {
-  localStorage.clear()
   appStore.logOut()
   router.replace('SingIn')
 }
@@ -56,21 +57,21 @@ const logOut = () => {
           @click="toggleSelect"
           class="d-flex flex-row align-items-center justify-content-start ms-3"
           style="cursor: pointer">
-        <span class="category-title mx-2">Artem Pushko</span>
+        <span class="category-title mx-2">{{userName}}</span>
         <img src="../../assets/svg/chevron.svg" width="30" :class="{'rotate': isOpen}">
         <div v-if="isOpen" class="modal_wrapper d-flex flex-column align-items-end">
           <div class="app_select_modal shadow">
             <div class="my-2">
               <img src="../../assets/svg/user.svg" />
-              <router-link to="Profile" class="mx-2 link">Account</router-link>
+              <router-link to="profile" class="mx-2 link">Account</router-link>
             </div>
             <div class="my-2">
               <img src="../../assets/svg/settings.svg" />
-              <router-link to="Settings" class="mx-2 link">Settings</router-link>
+              <router-link to="settings" class="mx-2 link">Settings</router-link>
             </div>
             <div class="my-2">
               <img src="../../assets/svg/management.svg" />
-              <router-link to="Manager" class="mx-2 link">Team Management</router-link>
+              <router-link to="manager" class="mx-2 link">Team Management</router-link>
             </div>
             <hr>
             <div class="mt-2" @click="logOut">
