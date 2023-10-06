@@ -11,17 +11,16 @@ init()
 </script>
 
 <template>
-  <main class="app_wrapper p-1">
+  <main class="app_wrapper p-1 position-relative">
+    <app-ui-header />
     <router-view></router-view>
   </main>
 </template>
 
 <style lang="scss" scoped>
 .app_wrapper {
-  margin: 0 auto;
-  max-width: 1350px;
-  min-width: 1000px;
   width: 100vw;
   height: 100vh;
+  min-width: 1000px;
 }
 </style>

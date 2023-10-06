@@ -101,7 +101,11 @@ export default defineStore('company', () => {
             })
     }
 
-    watch(() => settings.lang, () => locale.value = LANGUAGES[settings.lang])
+    watch(
+        () => settings.lang,
+        () => locale.value = LANGUAGES[settings.lang],
+        {immediate: true}
+    )
 
     return {
         company,

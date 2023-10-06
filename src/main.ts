@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import i18n from './i18n'
 
+import "/node_modules/flag-icons/css/flag-icons.min.css";
 import 'bootstrap/dist/css/bootstrap.css'
 import './styles/main.scss'
 

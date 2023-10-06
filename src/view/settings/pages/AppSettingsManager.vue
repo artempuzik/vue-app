@@ -57,29 +57,26 @@ const roles = reactive({
 
 <template>
   <app-layout-settings>
-    <template #header>
-      <app-ui-header/>
-    </template>
     <template #main>
       <app-ui-modal v-if="!isModalHide" @close="isModalHide = true">
-        <h4 class="main-text text-center">Please enter the user's email for invitation</h4>
+        <h4 class="main-text text-center">{{ $t('team.invite_text') }}</h4>
         <app-ui-input v-model="inviteEmail"/>
         <div v-if="errorMessage" class="w-100 text-center">
           <span class="error">{{errorMessage}}</span>
         </div>
         <br v-else>
-        <app-ui-button @click="sendInvite" :is-in-active="!isValidEmail" :is-loading="isLoading" :text="'Send email'"/>
+        <app-ui-button @click="sendInvite" :is-in-active="!isValidEmail" :is-loading="isLoading" :text="$t('buttons.send')"/>
 
       </app-ui-modal>
       <div class="w-100 d-flex flex-column align-items-start p-4">
-        <h3 class="category-title">Team management</h3>
+        <h3 class="category-title">{{ $t('team.title') }}</h3>
         <br>
         <div class="w-100 d-flex flex-row align-items-center justify-content-between">
           <div class="w-50 d-flex flex-row align-items-center justify-content-start">
             <app-ui-input
                 class="w-100"
                 v-model="query"
-                :placeholder="'Search for member ...'"
+                :placeholder="$t('team.search_placeholder')"
                 :with-icon="true"
             />
             <app-ui-select
@@ -89,19 +86,19 @@ const roles = reactive({
                 :options="roles.options"
             />
           </div>
-          <app-ui-button @click="isModalHide = false" style="width: 150px" :text="'+ Invite Member'"/>
+          <app-ui-button @click="isModalHide = false" style="width: 150px" :text="$t('buttons.invite_member')"/>
         </div>
         <br>
-        <h3 class="category-title">Members {{members.length}}</h3>
+        <h3 class="category-title">{{$t('team.members')}} {{members.length}}</h3>
         <div class="w-100 table_body">
           <table class="table">
             <thead>
             <tr class="table_header">
-              <th scope="col">Name, Surname</th>
-              <th scope="col">Email</th>
-              <th scope="col">Role</th>
-              <th scope="col">Last use</th>
-              <th scope="col">Created</th>
+              <th scope="col">{{$t('team.name')}}</th>
+              <th scope="col">{{$t('team.email')}}</th>
+              <th scope="col">{{$t('team.role')}}</th>
+              <th scope="col">{{$t('team.last_use')}}</th>
+              <th scope="col">{{$t('team.created')}}</th>
               <th scope="col"></th>
             </tr>
             </thead>

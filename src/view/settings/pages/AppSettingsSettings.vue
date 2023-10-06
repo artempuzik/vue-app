@@ -37,18 +37,15 @@ const update = () => {
 
 <template>
   <app-layout-settings>
-    <template #header>
-      <app-ui-header/>
-    </template>
     <template #main>
       <div class="w-100 d-flex flex-column align-items-start p-4">
-        <h3 class="category-title">Settings</h3>
+        <h3 class="category-title">{{ $t('settings.settings') }}</h3>
         <br>
         <div class="w-25 d-flex flex-column align-items-start">
-          <app-ui-select :label="'Language'" v-model="languages.value" :options="languages.options"/>
-          <app-ui-select :label="'Currency'" v-model="currency.value" :options="currency.options"/>
-          <app-ui-select :label="'Timezone'" v-model="time_zone.value" :options="time_zone.options"/>
-          <app-ui-select :label="'Date Format'" v-model="date_format.value" :options="date_format.options"/>
+          <app-ui-select :label="$t('settings.language')" v-model="languages.value" :options="languages.options"/>
+          <app-ui-select :label="$t('settings.currency')" v-model="currency.value" :options="currency.options"/>
+          <app-ui-select :label="$t('settings.timezone')" v-model="time_zone.value" :options="time_zone.options"/>
+          <app-ui-select :label="$t('settings.date_format')" v-model="date_format.value" :options="date_format.options"/>
         </div>
         <br>
         <div class="w-50">

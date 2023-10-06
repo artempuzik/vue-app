@@ -9,8 +9,26 @@ import AppSettingsManager from "../view/settings/pages/AppSettingsManager.vue";
 const routes = [
     {
         path: '/',
-        component: () => import("../view/main/AppMainPage.vue"),
+        redirect: 'dashboard',
         name: 'main',
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/dashboard',
+        component: () => import("../view/main/AppMainDashboard.vue"),
+        name: 'dashboard',
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/list',
+        component: () => import("../view/main/AppMainList.vue"),
+        name: 'list',
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/history',
+        component: () => import("../view/main/AppMainHistory.vue"),
+        name: 'history',
         meta: { requiresAuth: true }
     },
     {

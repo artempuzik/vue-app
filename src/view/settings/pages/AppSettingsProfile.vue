@@ -85,24 +85,21 @@ const submitPassword = () => {
 
 <template>
   <app-layout-settings>
-    <template #header>
-      <app-ui-header/>
-    </template>
     <template #main>
       <div class="w-100 d-flex flex-column align-items-start p-4">
-        <h3 class="category-title">Profile</h3>
+        <h3 class="category-title">{{ $t('profile.profile') }}</h3>
         <br>
         <div class="w-50">
           <app-ui-auth-input
               v-model="firstName.value"
               :is-error="firstName.isError"
-              :label="'First name'"
+              :label="$t('profile.first_name')"
               :error-message="firstName.error"
           />
           <app-ui-auth-input
               v-model="lastName.value"
               :is-error="lastName.isError"
-              :label="'Last name'"
+              :label="$t('profile.last_name')"
               :error-message="lastName.error"
           />
           <div v-if="errorUserMessage" class="w-100 text-center">
@@ -112,26 +109,26 @@ const submitPassword = () => {
             <app-ui-button
                 class="p-3"
                 @click="submitUser"
-                :text="'Save'"
+                :text="$t('buttons.save')"
                 :is-loading="isLoadingUser"
                 :is-in-active="!isCanUserSubmit"
                 :size="'normal'"
             />
           </div>
           <br>
-          <h3 class="category-title">Change password</h3>
+          <h3 class="category-title">{{ $t('profile.change_password') }}</h3>
           <br>
           <app-ui-auth-input
               v-model="password.password"
               :is-error="password.isError"
-              :label="'Password'"
+              :label="$t('profile.password')"
               :is-password="true"
               :error-message="password.error"
           />
           <app-ui-auth-input
               v-model="password.value"
               :is-error="!isValidNewPassword"
-              :label="'New password'"
+              :label="$t('profile.new_password')"
               :is-password="true"
               :error-message="'Please enter a new password'"
           />
@@ -139,7 +136,7 @@ const submitPassword = () => {
               v-model="password.confirm"
               :is-error="!isConfirmPassword"
               :error-message="'Password must be confirmed'"
-              :label="'Confirm password'"
+              :label="$t('profile.confirm')"
               :is-password="true"
           />
           <div v-if="errorPasswordMessage" class="w-100 text-center">
@@ -149,7 +146,7 @@ const submitPassword = () => {
             <app-ui-button
                 class="p-3"
                 @click="submitPassword"
-                :text="'Save'"
+                :text="$t('buttons.save')"
                 :is-loading="isLoadingPassword"
                 :is-in-active="!isCanPasswordSubmit"
                 :size="'normal'"

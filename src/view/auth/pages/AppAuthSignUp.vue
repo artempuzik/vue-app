@@ -56,7 +56,7 @@ const isCanSubmit = computed(() => {
   if(isUserIdExist.value) {
     return !!password.value && !!lastName.value && !!firstName.value && isValidPassword.value
   }
-  return isValidEmail
+  return isValidEmail.value
 })
 
 const submit = () => {
@@ -91,7 +91,6 @@ const submit = () => {
           }
         })
       .catch((err: AxiosError<any>) => {
-        console.log(err)
         if (err.response) {
           error.isError = true
           error.code = err.response.status
@@ -115,34 +114,34 @@ const submit = () => {
           <template v-if="error.code === 409">
             <h1 class="main-title">Ups ...</h1>
             <br/>
-            <h4 class="main-text">Your company don’t use Relu right now. But you have a chance to fix it!</h4>
+            <h4 class="main-text">{{ $t('auth.sign_up_error_two') }}</h4>
             <br/>
             <app-ui-button
                 class="p-3"
-                :text="'Demo?'"
+                :text="$t('auth.demo')"
                 :size="'normal'"
             />
             <app-ui-button
                 class="my-1 p-3"
-                :text="'Contact Sales'"
+                :text="$t('auth.contact_sales')"
                 :size="'normal'"
             />
           </template>
           <template v-if="error.code === 400">
-            <h1 class="main-title">Ups ...</h1>
+            <h1 class="main-title">{{ $t('auth.ups') }}</h1>
             <br/>
-            <h4 class="main-text">You don’t have access to your corporate Relu account. Contact your admin team for this issue.</h4>
+            <h4 class="main-text">{{ $t('auth.sign_up_error_one') }}</h4>
           </template>
         </template>
         <template v-else>
-          <h1 class="main-title">Welcome to {{PROJECT_NAME}}</h1>
-          <h4 class="main-text">Sign up in {{PROJECT_NAME}} using your corporate email</h4>
+          <h1 class="main-title">{{ $t('auth.sign_in_title') }}</h1>
+          <h4 class="main-text">{{ $t('auth.sign_up_sub_email_title') }}</h4>
           <br/>
           <template v-if="isUserIdExist">
             <app-ui-auth-input
                 v-model="password.value"
                 :is-error="password.isError"
-                :label="'New password'"
+                :label="$t('auth.new_password')"
                 :is-password="true"
                 :error-message="password.error"
             />
@@ -150,19 +149,19 @@ const submit = () => {
                 v-model="password.confirm"
                 :is-error="!isValidPassword"
                 :error-message="'Password must be confirmed'"
-                :label="'Confirm password'"
+                :label="$t('auth.confirm')"
                 :is-password="true"
             />
             <app-ui-auth-input
                 v-model="firstName.value"
                 :is-error="firstName.isError"
-                :label="'First name'"
+                :label="$t('auth.first_name')"
                 :error-message="firstName.error"
             />
             <app-ui-auth-input
                 v-model="lastName.value"
                 :is-error="lastName.isError"
-                :label="'Last name'"
+                :label="$t('auth.last_name')"
                 :error-message="lastName.error"
             />
           </template>
@@ -170,7 +169,7 @@ const submit = () => {
             <app-ui-auth-input
                 v-model="email.value"
                 :is-error="email.isError"
-                :label="'Email'"
+                :label="$t('auth.email')"
                 :error-message="email.error"
             />
           </template>
@@ -181,7 +180,7 @@ const submit = () => {
           <app-ui-button
               class="p-3"
               @click="submit"
-              :text="'Get started'"
+              :text="$t('auth.get_started')"
               :is-loading="isLoading"
               :is-in-active="!isCanSubmit"
               :size="'normal'"
@@ -190,7 +189,7 @@ const submit = () => {
         <br/>
         <br/>
         <div class="w-100 d-flex flex-column align-items-start my-2">
-          <span class="main-text">Already have an account? <router-link to="sign-in" class="link-text">Sign in</router-link></span>
+          <span class="main-text">{{ $t('auth.exist_account_text') }} <router-link to="sign-in" class="link-text">{{ $t('auth.sign_in') }}</router-link></span>
         </div>
       </div>
     </template>

@@ -58,7 +58,7 @@ const isCanSubmit = computed(() => {
   if(steps.isSendCodeStep) {
     return !!code.value
   }
-  return isValidEmail
+  return isValidEmail.value
 })
 
 const submit = () => {
@@ -109,7 +109,7 @@ const submit = () => {
       if(data.status === 200) {
         steps.isSendEmailStep = true
         steps.isSendPasswordStep = false
-        router.replace('Main')
+        router.replace('main')
       }
     })
   }
@@ -124,9 +124,9 @@ const submit = () => {
         <span @click="goBack" class="link-text">Back</span>
         <br/>
         <br/>
-        <h1 class="main-title">Reset your password</h1>
+        <h1 class="main-title">{{ $t('auth.reset_password_title') }}</h1>
         <br/>
-        <h4 class="main-text">You will get a reset code on your corporate email</h4>
+        <h4 class="main-text">{{ $t('auth.reset_password_sub_title') }}</h4>
         <br/>
         <br/>
         <app-ui-auth-input
@@ -134,28 +134,28 @@ const submit = () => {
             v-model="email.value"
             :is-error="email.isError"
             :error-message="email.error"
-            :label="'Email'"/>
+            :label="$t('auth.email')"/>
         <app-ui-auth-input
             v-if="steps.isSendCodeStep"
             v-model="code.value"
             :is-error="code.isError"
             :error-message="code.error"
-            :label="'Code'"/>
+            :label="$t('auth.code')"/>
         <app-ui-auth-input
             v-if="steps.isSendPasswordStep"
             v-model="password.value"
             :is-error="password.isError"
             :error-message="password.error"
-            :label="'New password'"/>
+            :label="$t('auth.new_password')"/>
         <app-ui-auth-input
             v-if="steps.isSendPasswordStep"
             v-model="password.confirm"
             :is-error="!isValidPassword"
-            :label="'Confirm password'"
+            :label="$t('auth.confirm')"
             :error-message="'Password must be confirmed'"
         />
         <br/>
-        <app-ui-button class="p-3" @click="submit" :is-loading="isLoading" :text="'Send'" :is-in-active="!isCanSubmit" :size="'normal'" />
+        <app-ui-button class="p-3" @click="submit" :is-loading="isLoading" :text="$t('auth.send')" :is-in-active="!isCanSubmit" :size="'normal'" />
       </div>
     </template>
     <template #right>

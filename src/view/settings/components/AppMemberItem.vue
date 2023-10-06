@@ -71,7 +71,7 @@ const remove = () => {
     <app-ui-button @click="edit" :is-loading="isLoading" :text="'Save'"/>
   </app-ui-modal>
   <app-ui-modal v-if="isShowModalRemove" @close="isShowModalRemove = false">
-    <h4>Remove member?</h4>
+    <h4>{{ $t('team.remove_member') }}</h4>
     <div v-if="errorMessage" class="w-100 text-center">
       <span class="error">{{errorMessage}}</span>
     </div>
@@ -88,10 +88,10 @@ const remove = () => {
       <span class="fw-bold fs-5 cursor">...</span>
       <div v-if="isShowingMenu" class="setting_modal">
         <div @click="isShowModalRole = true">
-          <span>Change role</span>
+          <span>{{ $t('buttons.change_role') }}</span>
         </div>
         <div @click="isShowModalRemove = true">
-          <span class="warning">Delete</span>
+          <span class="warning">{{ $t('buttons.delete') }}</span>
         </div>
       </div>
     </td>

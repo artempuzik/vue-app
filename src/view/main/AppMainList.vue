@@ -1,0 +1,16 @@
+<script setup lang="ts">
+import AppLayoutMain from "./layout/AppLayoutMain.vue";
+
+</script>
+
+<template>
+  <app-layout-main>
+    <template #main>
+      List
+    </template>
+  </app-layout-main>
+</template>
+
+<style scoped lang="scss">
+
+</style>

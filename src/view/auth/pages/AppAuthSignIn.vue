@@ -30,7 +30,7 @@ const password = reactive({
 
 const isValidEmail = computed(() => emailValidator(email.value))
 
-const isCanSubmit = computed(() => isValidEmail && !!password.value)
+const isCanSubmit = computed(() => isValidEmail.value && !!password.value)
 
 const submit = () => {
   isLoading.value = true
@@ -57,23 +57,23 @@ const submit = () => {
   <app-layout-auth>
     <template #left>
       <div class="sign-in_box w-100 d-flex flex-column align-items-start justify-content-start">
-        <h1 class="main-title">Welcome to {{PROJECT_NAME}}</h1>
-        <h4 class="main-text">Sign in with your corporate email and password</h4>
+        <h1 class="main-title">{{$t('auth.sign_in_title')}}</h1>
+        <h4 class="main-text">{{$t('auth.sign_in_sub_title')}}</h4>
         <app-ui-auth-input
             v-model="email.value"
             :is-error="email.isError"
-            :label="'Email'"
+            :label="$t('auth.email')"
             :error-message="email.error"
         />
         <app-ui-auth-input
             v-model="password.value"
             :is-error="password.isError"
-            :label="'Password'"
+            :label="$t('auth.password')"
             :is-password="true"
             :error-message="password.error"
         />
         <div class="w-100 d-flex flex-column align-items-end my-2">
-          <router-link to="reset-password"><span class="link-text">Forgot your password?</span></router-link>
+          <router-link to="reset-password"><span class="link-text">{{ $t('auth.forgot_password') }}</span></router-link>
         </div>
         <br/>
         <br/>
@@ -85,7 +85,7 @@ const submit = () => {
         <br/>
         <br/>
         <div class="w-100 d-flex flex-column align-items-start my-2">
-          <span class="main-text">Don’t have a {{PROJECT_NAME}} account yet? <router-link to="sign-up" class="link-text">Sign up</router-link></span>
+          <span class="main-text">{{ $t('auth.not_exist_account_text') }}<router-link to="sign-up" class="link-text">{{ $t('auth.sign_up') }}</router-link></span>
         </div>
       </div>
     </template>

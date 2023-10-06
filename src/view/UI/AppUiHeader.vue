@@ -32,60 +32,71 @@ const logOut = () => {
 </script>
 
 <template>
-  <header class="w-100 d-flex flex-row align-items-center justify-content-between p-4">
-    <div class="d-flex flex-row align-items-center justify-content-start">
-      <div class="me-4 second-title">
-          <h1>{{PROJECT_NAME}}</h1>
-      </div>
+  <div @click.self="isOpen = false" v-if="isOpen" class="modal_wrapper"></div>
+  <header v-if="appStore.appConfig.isAuth" class="d-flex flex-column align-items-center justify-content-start header_wrapper header position-relative">
+    <div class="w-100 d-flex flex-row align-items-center justify-content-between p-4">
       <div class="d-flex flex-row align-items-center justify-content-start">
-        <div class="m-1 p-2"
-             :class="{'active': activeTab === 'Dashboard'}"
-             @click="clickToTab('Dashboard')"
-        ><span class="main-text">{{$t('header.nav_dashboard')}}</span></div>
-        <div class="m-1 p-2"
-             :class="{'active': activeTab === 'List'}"
-             @click="clickToTab('List')"
-        ><span class="main-text">List</span></div>
-        <div class="m-1 p-2"
-             :class="{'active': activeTab === 'History'}"
-             @click="clickToTab('History')"
-        ><span class="main-text">History</span></div>
+        <div class="me-4 second-title">
+          <h1>{{PROJECT_NAME}}</h1>
+        </div>
+        <div class="d-flex flex-row align-items-center justify-content-start">
+          <router-link
+              to="dashboard"
+              class="m-1 p-2 link"
+              :class="{'active': activeTab === 'Dashboard'}"
+              @click="clickToTab('Dashboard')"
+          ><span class="main-text">{{$t('header.nav_dashboard')}}</span></router-link>
+          <router-link
+              to="list"
+              class="m-1 p-2 link"
+              :class="{'active': activeTab === 'List'}"
+              @click="clickToTab('List')"
+          ><span class="main-text">{{$t('header.nav_list')}}</span></router-link>
+          <router-link
+              to="history"
+              class="m-1 p-2 link"
+              :class="{'active': activeTab === 'History'}"
+              @click="clickToTab('History')"
+          ><span class="main-text">{{$t('header.nav_history')}}</span></router-link>
+        </div>
       </div>
-    </div>
-    <div class="d-flex flex-row align-items-center justify-content-start position-relative">
-      <img src="../../assets/svg/info.svg" width="25">
-      <div
-          @click="toggleSelect"
-          class="d-flex flex-row align-items-center justify-content-start ms-3"
-          style="cursor: pointer">
-        <span class="category-title mx-2">{{userName}}</span>
-        <img src="../../assets/svg/chevron.svg" width="30" :class="{'rotate': isOpen}">
-          <div
-              v-if="isOpen"
-              class="app_select_modal shadow d-flex flex-column"
-          >
-            <router-link to="profile">
-              <img src="../../assets/svg/user.svg" />
-              <span class="mx-2 link">Account</span>
-            </router-link>
-            <router-link to="settings">
-              <img src="../../assets/svg/settings.svg" />
-              <span class="mx-2 link">Settings</span>
-            </router-link>
-            <router-link to="manager">
-              <img src="../../assets/svg/management.svg" />
-              <span class="mx-2 link">Team Management</span>
-            </router-link>
-            <hr>
-            <div class="mt-2" @click="logOut">
-              <img src="../../assets/svg/logout.svg" />
-              <span class="mx-2 link">Logout</span>
-            </div>
+      <div class="d-flex flex-row align-items-center justify-content-start position-relative">
+        <img src="../../assets/svg/info.svg" width="25">
+        <div
+            @click="toggleSelect"
+            class="d-flex flex-row align-items-center justify-content-start ms-3"
+            style="cursor: pointer">
+          <span class="category-title mx-2">{{userName}}</span>
+          <img src="../../assets/svg/chevron.svg" width="30" :class="{'rotate': isOpen}">
+        </div>
+      </div>
+        <div
+            v-if="isOpen"
+            class="app_select_modal shadow d-flex flex-column"
+            tabindex="0"
+            @click="isOpen = false"
+            @focusout="isOpen = false"
+        >
+          <router-link to="profile">
+            <img src="../../assets/svg/user.svg" />
+            <span class="mx-2 link">{{$t('menu.account')}}</span>
+          </router-link>
+          <router-link to="settings">
+            <img src="../../assets/svg/settings.svg" />
+            <span class="mx-2 link">{{$t('menu.settings')}}</span>
+          </router-link>
+          <router-link to="manager">
+            <img src="../../assets/svg/management.svg" />
+            <span class="mx-2 link">{{$t('menu.management')}}</span>
+          </router-link>
+          <hr>
+          <div class="mt-2" @click="logOut">
+            <img src="../../assets/svg/logout.svg" />
+            <span class="mx-2 link">{{$t('menu.logout')}}</span>
           </div>
+        </div>
       </div>
-    </div>
   </header>
-
 </template>
 
 <style lang="scss" scoped>
@@ -93,6 +104,11 @@ const logOut = () => {
 
 header {
   background-color: $white-color;
+}
+
+.link {
+  color: $black-color;
+  text-decoration: none;
 }
 
 .active {
@@ -113,9 +129,9 @@ div span {
   position: absolute;
   padding: 26px 26px 24px;
   background-color: $white-color;
-  top: 30px;
+  top: 80px;
   width: 269px;
-  right: -10px;
+  right: 15px;
   z-index: 9999;
 
   a,
@@ -133,6 +149,8 @@ div span {
 
 .modal_wrapper {
   position: absolute;
+  max-width: 2000px;
+  min-width: 1000px;
   width: 100vw;
   height: 100vh;
   top: 0;
@@ -142,6 +160,16 @@ div span {
 .link {
   color: $black-color;
   text-decoration: none;
+}
+
+.header_wrapper {
+  margin: 0 auto;
+  max-width: 1350px;
+  min-width: 1000px;
+
+  &.header {
+    background-color: $white-color;
+  }
 }
 
 </style>
