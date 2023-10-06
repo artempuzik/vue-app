@@ -14,8 +14,8 @@ export default defineStore('app', () => {
     const userStore = useUserStore();
     const companyStore = useCompanyStore();
 
-    const initApp = () => {
-        checkAuth()
+    const initApp = async () => {
+        return checkAuth()
             .then(() => {
                 if(appConfig.accessToken) {
                     companyStore.getSettings(appConfig.accessToken)

@@ -1,17 +1,25 @@
 <script setup lang="ts">
 import {useAppStore} from "./store";
+import AppUiSpinner from "./view/UI/AppUiSpinner.vue";
+import {ref} from "vue";
 
 const appStore = useAppStore()
 
+const isLoading = ref(false)
+
 const init = () => {
-  appStore.initApp()
+  isLoading.value = true
+  appStore.initApp().finally(() => isLoading.value = false)
 }
 
 init()
 </script>
 
 <template>
-  <main class="app_wrapper p-1 position-relative">
+  <div v-if="isLoading" class="d-flex flex-column align-items-center justify-content-center app_wrapper">
+    <app-ui-spinner />
+  </div>
+  <main v-else class="app_wrapper p-1 position-relative">
     <app-ui-header />
     <router-view></router-view>
   </main>
