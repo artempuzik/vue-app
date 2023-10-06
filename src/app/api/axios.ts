@@ -1,7 +1,8 @@
 import axios from "axios";
+import {API_HOST} from "../config/enviroments.ts";
 
 export default axios.create({
-    baseURL: 'http://104.248.24.125:8000/api/',
+    baseURL: API_HOST,
     timeout: 1000,
     headers: {
         'Content-Type': 'application/json'

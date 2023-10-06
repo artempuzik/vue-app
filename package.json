@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mathieustan/intercom": "^1.0.0-alpha.0",
     "axios": "^1.5.1",
     "flag-icons": "^6.11.1",
     "pinia": "^2.1.6",

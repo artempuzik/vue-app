@@ -2,14 +2,19 @@
 import {useAppStore} from "./store";
 import AppUiSpinner from "./view/UI/AppUiSpinner.vue";
 import {ref} from "vue";
+import {intercom, startIntercomMessenger} from "./intercom";
 
 const appStore = useAppStore()
 
 const isLoading = ref(false)
 
+intercom.show()
+
 const init = () => {
   isLoading.value = true
-  appStore.initApp().finally(() => isLoading.value = false)
+  appStore.initApp().then(() => {
+    startIntercomMessenger()
+  }).finally(() => isLoading.value = false)
 }
 
 init()

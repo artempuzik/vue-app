@@ -49,7 +49,7 @@ const value = computed({
           :disabled="isInActive"
           :class="{'active': !isInActive, 'inactive': isInActive || !value, 'with_icon': withIcon}"
           type="text"
-          v-model="value"
+          v-model.trim="value"
       />
     </div>
   </div>

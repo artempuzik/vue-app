@@ -16,12 +16,14 @@ export default defineStore('app', () => {
 
     const initApp = async () => {
         return checkAuth()
-            .then(() => {
+            .then((data) => {
                 if(appConfig.accessToken) {
                     companyStore.getSettings(appConfig.accessToken)
                     dashboardApi.getDashboardFetch(appConfig.accessToken, {page: 1, limit: 10})
                 }
+                return data;
         })
+            .catch((error) => error)
     }
     const checkAuth = async () => {
         if (!appConfig.accessToken) {

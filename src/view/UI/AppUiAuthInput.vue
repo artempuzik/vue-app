@@ -57,7 +57,7 @@ const value = computed({
         :class="{'error': isError, 'active': !isInActive, 'inactive': isInActive}"
         :type="!isPassword ? 'text' : 'password'"
         :style="{marginBottom: isError ? '0px' : '28px'}"
-        v-model="value"
+        v-model.trim="value"
     />
     <span v-if="isError" class="error_text mt-1 mb-1">{{errorMessage}}</span>
   </div>
