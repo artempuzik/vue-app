@@ -6,5 +6,6 @@ export default axios.create({
   timeout: 1000,
   headers: {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'Content-Security-Policy': 'upgrade-insecure-requests',
   },
 });
