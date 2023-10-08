@@ -1,21 +1,43 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="w-100 static-block">
-    <h2 class="second-title text-start static-block_title_margin">Absolutely new vision of making pricing in my business!</h2>
-    <div class="w-100 d-flex flex-row align-items-center justify-content-between">
+    <h2 class="second-title text-start static-block_title_margin">
+      Absolutely new vision of making pricing in my business!
+    </h2>
+    <div
+      class="w-100 d-flex flex-row align-items-center justify-content-between"
+      style="max-width: 800px"
+    >
       <div class="w-50 d-flex flex-column align-items-start">
-        <h3 class="category-title">- Dirk Burger</h3>
-        <h4 class="main-text fw-light">CEO, any-lamp.com</h4>
+        <h3 class="category-title">
+          - Dirk Burger
+        </h3>
+        <h4 class="main-text fw-light">
+          CEO, any-lamp.com
+        </h4>
       </div>
       <div class="w-50 d-flex flex-row align-items-start justify-content-center">
-        <img src="../../../assets/svg/star.svg" width="25" />
-        <img src="../../../assets/svg/star.svg" width="25" />
-        <img src="../../../assets/svg/star.svg" width="25" />
-        <img src="../../../assets/svg/star.svg" width="25" />
-        <img src="../../../assets/svg/star.svg" width="25" />
+        <img
+          src="../../../assets/svg/star.svg"
+          width="25"
+        >
+        <img
+          src="../../../assets/svg/star.svg"
+          width="25"
+        >
+        <img
+          src="../../../assets/svg/star.svg"
+          width="25"
+        >
+        <img
+          src="../../../assets/svg/star.svg"
+          width="25"
+        >
+        <img
+          src="../../../assets/svg/star.svg"
+          width="25"
+        >
       </div>
     </div>
     <div class="static-block_img">
@@ -33,8 +55,14 @@
   }
 
   &_img {
-    padding: 87px 0 0 95px;
+    position: relative;
+    height: 514px;
+    right: 0;
+    margin: 87px 0 0 95px;
+    & img {
+      position: absolute;
+      right: 0;
+    }
   }
 }
-
 </style>

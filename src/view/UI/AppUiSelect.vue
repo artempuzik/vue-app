@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {computed, PropType, ref} from "vue";
+import { computed, PropType, ref } from 'vue';
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
   modelValue: {
@@ -14,41 +14,56 @@ const props = defineProps({
   },
   options: {
     type: Array as PropType<string[]>,
-    default: [],
+    default: () => []
   }
-})
+});
 
-const isOpen = ref(false)
+const isOpen = ref(false);
 
-const toggleSelect = () => isOpen.value = !isOpen.value
+const toggleSelect = () => (isOpen.value = !isOpen.value);
 
-const selectValue = (v: string) => value.value = v
+const selectValue = (v: string) => (value.value = v);
 
 const value = computed({
   get() {
     return props.modelValue;
   },
   set(value) {
-    emit("update:modelValue", value);
-  },
+    emit('update:modelValue', value);
+  }
 });
-
 </script>
 
 <template>
-  <div class="w-100 d-flex flex-column align-items-start m-1">
-    <label v-if="label" class="mb-1 main-text">{{ label }}</label>
-    <div class="w-100 d-flex flex-row align-items-center m-1 position-relative app_select"
-         @click="toggleSelect"
-         @focusout="isOpen = false"
-         tabindex="0"
+  <div class="w-100 d-flex flex-column align-items-start">
+    <label
+      v-if="label"
+      class="mb-1 main-text"
+    >{{ label }}</label>
+    <div
+      class="w-100 d-flex flex-row align-items-center m-1 position-relative app_select"
+      tabindex="0"
+      @click="toggleSelect"
+      @focusout="isOpen = false"
     >
       <div class="w-100 d-flex flex-column align-items-start justify-content-center px-2">
         <span>{{ value }}</span>
       </div>
-      <img src="../../assets/svg/chevron.svg" :class="{'rotate': isOpen}"/>
-      <div v-if="isOpen" class="app_select_modal shadow">
-        <div v-for="option in options" @click="selectValue(option)" :key="option"><span>{{ option }}</span></div>
+      <img
+        src="../../assets/svg/chevron.svg"
+        :class="{ rotate: isOpen }"
+      >
+      <div
+        v-if="isOpen"
+        class="app_select_modal shadow"
+      >
+        <div
+          v-for="option in options"
+          :key="option"
+          @click="selectValue(option)"
+        >
+          <span>{{ option }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -59,7 +74,7 @@ const value = computed({
 
 .app_select {
   padding: 5px 5px;
-  min-height: 40px;
+  min-height: 50px;
   border-radius: $input-border-radius;
   background-color: $white-color;
   border: 1px solid $grey-app;
@@ -71,7 +86,7 @@ const value = computed({
   padding: 9px 9px;
   background-color: $white-color;
   left: -1px;
-  top: 40px;
+  top: 60px;
   width: 100%;
   z-index: 9999;
 
@@ -127,6 +142,4 @@ const value = computed({
 .with_icon {
   padding-left: 35px;
 }
-
-
 </style>

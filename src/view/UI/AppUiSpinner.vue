@@ -1,10 +1,8 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="spinner-container">
-    <div class="spinner"></div>
+    <div class="spinner" />
   </div>
 </template>
 

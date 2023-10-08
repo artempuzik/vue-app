@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import {computed} from "vue";
-import {bottom} from "@popperjs/core";
+import { computed } from 'vue';
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
   isError: {
@@ -32,45 +31,51 @@ const props = defineProps({
   modelValue: {
     type: String,
     default: ''
-  },
-})
+  }
+});
 
 const value = computed({
   get() {
     return props.modelValue;
   },
   set(value) {
-    emit("update:modelValue", value);
-  },
+    emit('update:modelValue', value);
+  }
 });
-
 </script>
 
 <template>
   <div class="w-100 d-flex flex-column align-items-start m-1">
-    <label v-if="label" class="mb-1 main-text">{{ label }}</label>
+    <label
+      v-if="label"
+      class="mb-1 main-text"
+    >{{ label }}</label>
     <input
-        style="width: 100%; height: 100%;"
-        :placeholder="placeholder"
-        class="app_input"
-        :disabled="isInActive"
-        :class="{'error': isError, 'active': !isInActive, 'inactive': isInActive}"
-        :type="!isPassword ? 'text' : 'password'"
-        :style="{marginBottom: isError ? '0px' : '28px'}"
-        v-model.trim="value"
-    />
-    <span v-if="isError" class="error_text mt-1 mb-1">{{errorMessage}}</span>
+      v-model.trim="value"
+      style="width: 100%; height: 100%"
+      :placeholder="placeholder"
+      class="app_input"
+      :disabled="isInActive"
+      :class="{ error: isError, active: !isInActive, inactive: isInActive }"
+      :type="!isPassword ? 'text' : 'password'"
+      :style="{ marginBottom: isError ? '0px' : '28px' }"
+    >
+    <span
+      v-if="isError"
+      class="error_text mt-1 mb-1"
+    >{{ errorMessage }}</span>
   </div>
-
 </template>
 
 <style lang="scss" scoped>
 @import '../../styles/variables.scss';
 
 .app_input {
+  border-style: solid;
   padding: 10px 12px;
   border-radius: $input-border-radius;
-  border-width: .7px;
+  border-width: 1px;
+  height: 50px;
   &::placeholder {
     color: $placeholder;
     opacity: 1;
@@ -85,6 +90,7 @@ const value = computed({
   border-color: $grey-border;
   &:focus {
     outline: none !important;
+    border-width: 1px;
     border-color: $purple-normal;
   }
 
@@ -92,6 +98,7 @@ const value = computed({
     border-width: 1px;
     border-color: $error-red;
     background: $error-bg;
+    opacity: 0.4;
   }
 }
 
@@ -102,5 +109,4 @@ const value = computed({
     border-color: $grey-border;
   }
 }
-
 </style>

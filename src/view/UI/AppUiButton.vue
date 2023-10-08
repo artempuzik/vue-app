@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {PropType} from "vue";
+import { PropType } from 'vue';
 
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click']);
 
-const {isInActive, text, size} = defineProps({
+const { isInActive, text, size } = defineProps({
   isInActive: {
     type: Boolean,
     default: false
@@ -13,24 +13,30 @@ const {isInActive, text, size} = defineProps({
     default: false
   },
   size: {
-    type: String as PropType<'large'|'normal'|'small'>,
-    default: "normal"
+    type: String as PropType<'large' | 'normal' | 'small'>,
+    default: 'normal'
   },
-  text: String,
-})
-
+  text: {
+    type: String,
+    default: ''
+  },
+});
 </script>
 
 <template>
   <button
-      @click="emit('click')"
-      class="shadow border-radius"
-      :disabled="isInActive"
-      style="width: 100%; height: 100%; min-height: 40px;"
-      :class="`${isInActive ? 'inactive' : 'active'} ${size}`"
+    class="border-radius"
+    :disabled="isInActive"
+    style="width: 100%; height: 100%; min-height: 40px"
+    :class="`${isInActive ? 'inactive' : 'active'} ${size}`"
+    @click="emit('click')"
   >
-    <div v-if="isLoading" class="spinner-border text-secondary" role="status" />
-    <span v-else>{{text}}</span>
+    <div
+      v-if="isLoading"
+      class="spinner-border text-secondary"
+      role="status"
+    />
+    <span v-else>{{ text }}</span>
   </button>
 </template>
 
@@ -86,12 +92,7 @@ const {isInActive, text, size} = defineProps({
   }
 }
 
-.shadow {
-  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-}
-
 .border-radius {
   border-radius: $button-border-radius;
 }
-
 </style>

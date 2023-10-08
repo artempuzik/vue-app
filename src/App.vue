@@ -1,32 +1,40 @@
 <script setup lang="ts">
-import {useAppStore} from "./store";
-import AppUiSpinner from "./view/UI/AppUiSpinner.vue";
-import {ref} from "vue";
-import {intercom, startIntercomMessenger} from "./intercom";
+import { useAppStore, useUserStore } from './store';
+import AppUiSpinner from './view/UI/AppUiSpinner.vue';
+import { ref } from 'vue';
+import { startIntercomMessenger } from './intercom';
 
-const appStore = useAppStore()
+const appStore = useAppStore();
+const userStore = useUserStore();
 
-const isLoading = ref(false)
-
-intercom.show()
+const isLoading = ref(false);
 
 const init = () => {
-  isLoading.value = true
-  appStore.initApp().then(() => {
-    startIntercomMessenger()
-  }).finally(() => isLoading.value = false)
-}
+  isLoading.value = true;
+  appStore
+    .initApp()
+    .then(() => {
+      startIntercomMessenger(userStore.user.email);
+    })
+    .finally(() => (isLoading.value = false));
+};
 
-init()
+init();
 </script>
 
 <template>
-  <div v-if="isLoading" class="d-flex flex-column align-items-center justify-content-center app_wrapper">
+  <div
+    v-if="isLoading"
+    class="d-flex flex-column align-items-center justify-content-center app_wrapper"
+  >
     <app-ui-spinner />
   </div>
-  <main v-else class="app_wrapper p-1 position-relative">
+  <main
+    v-else
+    class="app_wrapper p-1 position-relative"
+  >
     <app-ui-header />
-    <router-view></router-view>
+    <router-view />
   </main>
 </template>
 

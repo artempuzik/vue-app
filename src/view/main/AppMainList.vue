@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import AppLayoutMain from "./layout/AppLayoutMain.vue";
-
+import AppLayoutMain from './layout/AppLayoutMain.vue';
 </script>
 
 <template>
@@ -11,6 +10,4 @@ import AppLayoutMain from "./layout/AppLayoutMain.vue";
   </app-layout-main>
 </template>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {computed} from "vue";
+import { computed } from 'vue';
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
   isInActive: {
@@ -23,34 +23,47 @@ const props = defineProps({
   modelValue: {
     type: String,
     default: ''
-  },
-})
+  }
+});
 
 const value = computed({
   get() {
     return props.modelValue;
   },
   set(value) {
-    emit("update:modelValue", value);
-  },
+    emit('update:modelValue', value);
+  }
 });
-
 </script>
 
 <template>
-  <div class="w-100 d-flex flex-column align-items-start m-1">
-    <label v-if="label" class="mb-1 main-text">{{ label }}</label>
+  <div class="w-100 d-flex flex-column align-items-start">
+    <label
+      v-if="label"
+      class="mb-1 main-text"
+    >{{ label }}</label>
     <div class="w-100 d-flex flex-row align-items-center position-relative">
-      <img v-if="withIcon" class="icon" :class="{'inactive': isInActive}" src="../../assets/svg/search.svg" width="24" height="24">
+      <img
+        v-if="withIcon"
+        class="icon"
+        :class="{ inactive: isInActive }"
+        src="../../assets/svg/search.svg"
+        width="24"
+        height="24"
+      >
       <input
-          style="width: 100%; height: 100%;"
-          :placeholder="placeholder"
-          class="app_input"
-          :disabled="isInActive"
-          :class="{'active': !isInActive, 'inactive': isInActive || !value, 'with_icon': withIcon}"
-          type="text"
-          v-model.trim="value"
-      />
+        v-model.trim="value"
+        style="width: 100%"
+        :placeholder="placeholder"
+        class="app_input"
+        :disabled="isInActive"
+        :class="{
+          active: !isInActive,
+          inactive: isInActive || !value,
+          with_icon: withIcon
+        }"
+        type="text"
+      >
     </div>
   </div>
 </template>
@@ -59,7 +72,10 @@ const value = computed({
 @import '../../styles/variables.scss';
 
 .app_input {
+  height: 50px;
+  border-style: solid;
   padding: 10px 12px;
+  border-width: 1px;
   border-radius: $input-border-radius;
   background-color: $white-color;
   &::placeholder {
@@ -98,6 +114,4 @@ const value = computed({
 .with_icon {
   padding-left: 35px;
 }
-
-
 </style>

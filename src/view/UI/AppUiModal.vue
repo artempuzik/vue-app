@@ -2,23 +2,31 @@
 defineProps({
   width: {
     type: String,
-    default: '450px',
-  },
-})
-const emit = defineEmits(['close'])
-
+    default: '450px'
+  }
+});
+const emit = defineEmits(['close']);
 </script>
 
 <template>
   <Teleport to="#app">
-  <div @click.self="emit('close')" class="modal_wrapper">
-    <div class="modal_body d-flex flex-column align-items-center justify-content-center" :style="{width: width}">
-      <div class="w-100 d-flex flex-row align-items-center justify-content-end">
-        <span @click="emit('close')" class="close">&times;</span>
+    <div
+      class="modal_wrapper"
+      @click.self="emit('close')"
+    >
+      <div
+        class="modal_body d-flex flex-column align-items-center justify-content-center"
+        :style="{ width: width }"
+      >
+        <div class="w-100 d-flex flex-row align-items-center justify-content-end">
+          <span
+            class="close"
+            @click="emit('close')"
+          >&times;</span>
+        </div>
+        <slot />
       </div>
-      <slot />
     </div>
-  </div>
   </Teleport>
 </template>
 
@@ -33,8 +41,8 @@ const emit = defineEmits(['close'])
   left: 0;
   top: 0;
   overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal_body {
@@ -59,5 +67,4 @@ const emit = defineEmits(['close'])
     cursor: pointer;
   }
 }
-
 </style>
