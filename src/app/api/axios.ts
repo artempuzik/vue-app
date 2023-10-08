@@ -5,6 +5,6 @@ export default axios.create({
   baseURL: API_HOST,
   timeout: 1000,
   headers: {
-    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'Content-Type': 'application/json; charset=utf8',
   },
 });
