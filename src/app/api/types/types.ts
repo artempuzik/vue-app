@@ -74,3 +74,75 @@ export interface ICompanySettings {
   timezone: string;
   datetime_format: string;
 }
+
+export interface IPostDashboard {
+  company: string;
+  marketplace: string;
+  data_json: string;
+  id?: string;
+  create_at?: string;
+}
+
+export interface IPostMarketplace {
+  name: string;
+  id?: string;
+}
+
+export interface ICreateProduct {
+  name: string;
+}
+
+export interface IProductSerializer {
+  id: string;
+  sku: string;
+  name: string;
+  category: string;
+  company: string;
+  marketplace: string;
+  price: number;
+  potencial: number;
+  margin: number;
+  sales: number;
+  discount: number;
+  cost: number;
+  link: string;
+  photos: string[];
+  count_up_price: number;
+  count_low_price: number;
+  create_at: string;
+}
+
+export interface IPostProduct {
+  id: string;
+  product: string;
+  date: string;
+  created_by: string;
+  last_price: number;
+  new_price: number;
+  change: number;
+  rule: number;
+}
+
+export interface IProductHistory {
+  id: string;
+  product: string;
+  price: number;
+  sales: number;
+  revenue: number;
+  profit: number;
+  cost: number;
+  create_at: string;
+  made_by: string;
+}
+
+export interface IStatisticSerializer {
+  id: string;
+  type: string;
+  price: number;
+  potencial: number;
+  margin: number;
+  name_x: string;
+  x: string;
+  name_y: string;
+  y: string;
+}
