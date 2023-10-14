@@ -8,7 +8,7 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    https: true,
+    http: true,
     hot: true,
   },
 });
