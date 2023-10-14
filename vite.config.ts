@@ -8,7 +8,9 @@ export default defineConfig({
   },
   server: {
     port: 5173,
-    http: true,
+    proxy: {
+      '/': 'http://104.248.24.125:8000/api/'
+    },
     hot: true,
   },
 });
