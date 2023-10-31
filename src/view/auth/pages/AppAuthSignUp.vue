@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import AppLayoutAuth from '../layout/AppLayoutAuth.vue';
 import AppStaticAuth from '../layout/AppStaticAuth.vue';
-import { useUserStore } from '../../../store';
+import { useUserStore, useAppStore } from '../../../store';
 import { computed, reactive, ref } from 'vue';
 import { AxiosError } from 'axios';
 import { checkPassword, emailValidator } from '../../../app/helpers';
 
 const userStore = useUserStore();
+const appStore = useAppStore();
 
-const isUserIdExist = ref(!!userStore.user.user_id);
+const isUserExist = ref(!!appStore.appConfig.accessToken);
 
 const isLoading = ref(false);
 const errorMessage = ref('');
@@ -54,7 +55,7 @@ const isValidPassword = computed(() => {
 });
 
 const isCanSubmit = computed(() => {
-  if (isUserIdExist.value) {
+  if (isUserExist.value) {
     return isValidPasswordLength.value && !!lastName.value && !!firstName.value && isValidPassword.value;
   }
   return isValidEmail.value;
@@ -63,12 +64,13 @@ const isCanSubmit = computed(() => {
 const submit = () => {
   isLoading.value = true;
   errorMessage.value = '';
-  if (isUserIdExist.value) {
+  if (isUserExist.value) {
     firstName.isError = false;
     lastName.isError = false;
     password.isError = false;
     userStore
       .createUser({
+        Bearer_Auth: appStore.appConfig.Bearer_Auth,
         password: password.value,
         surname: firstName.value,
         name: lastName.value
@@ -89,7 +91,7 @@ const submit = () => {
       })
       .then(data => {
         if (data.status === 200) {
-          isUserIdExist.value = true;
+          isUserExist.value = true;
         }
       })
       .catch((err: AxiosError<any>) => {
@@ -144,7 +146,7 @@ const submit = () => {
             {{ $t('auth.sign_up_sub_email_title') }}
           </h4>
           <br>
-          <template v-if="isUserIdExist">
+          <template v-if="isUserExist">
             <app-ui-auth-input
               v-model="password.value"
               :is-error="password.isError"

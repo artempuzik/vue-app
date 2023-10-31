@@ -48,10 +48,12 @@ export default defineStore('user', () => {
   const checkExistUserByEmail = async (dto: IFirstCheckUserByEmail) => {
     return authApi.checkExistUserByEmailFetch(dto).then(data => {
       if (data.status === 200) {
-        user.user_id = data.data.user_id;
+        appStore.appConfig.Bearer_Auth = data.data.Bearer_Auth;
+        localStorage.setItem('Bearer_Auth', appStore.appConfig.Bearer_Auth);
       }
       return data;
-    });
+    })
+    .then(() => checkUser());
   };
   const createUser = async (dto: ICreateUser) => {
     return authApi.createUserFetch(dto).then(data => {
