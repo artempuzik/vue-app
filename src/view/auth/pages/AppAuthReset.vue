@@ -16,8 +16,8 @@ const errorMessage = ref('');
 const isLoading = ref(false);
 
 const steps = reactive({
-  isSendEmailStep: false,
-  isSendCodeStep: true,
+  isSendEmailStep: true,
+  isSendCodeStep: false,
   isSendPasswordStep: false
 });
 
