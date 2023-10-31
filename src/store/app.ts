@@ -28,7 +28,7 @@ export default defineStore('app', () => {
     return checkAuth()
       .then(data => {
         if (appConfig.Bearer_Auth) {
-          companyStore.getSettings(appConfig.Bearer_Auth);
+          companyStore.getSettings();
           getRoleOptions()
         }
         return data;

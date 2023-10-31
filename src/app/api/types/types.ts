@@ -147,3 +147,13 @@ export interface IAppConfig {
   Bearer_Auth: string,
   roles: {[key: number]: string}
 }
+
+export interface IOption {
+  option_id: number,
+  option_name: string,
+}
+
+export interface ISettingsOptions {
+  settings_name: string,
+  settings_options: IOption[]
+}

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { authApi } from '../app/api';
 import { reactive, Ref, ref, watch } from 'vue';
 import { useAppStore } from './index.ts';
-import { ICompanySettings, IUser } from '../app/api/types/types.ts';
+import {ICompanySettings, ISettingsOptions, IUser} from '../app/api/types/types.ts';
 import { LANGUAGES } from '../app/config/constants.ts';
 import { useI18n } from 'vue-i18n';
 
@@ -28,12 +28,19 @@ export default defineStore('company', () => {
     date_format_id: 0,
   });
 
+  const settingsOptions: Ref<ISettingsOptions[]> = ref([]);
+
   const companyMembers: Ref<IUser[]> = ref([]);
 
   const appStore = useAppStore();
 
-  const getSettings = async (token: string) => {
-    return authApi.getSettingsListFetch(token).then(data => {
+  const getSettings = async () =>
+    authApi.getSettingsOptionsListFetch(appStore.appConfig.Bearer_Auth).then(response => {
+      if (response.status === 200) {
+        settingsOptions.value = response.data.data;
+      }
+    })
+    .then(() => authApi.getSettingsListFetch(appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
         company.id = data.data.company_id;
         settings.language_id = data.data.settings.language_id;
@@ -41,8 +48,7 @@ export default defineStore('company', () => {
         settings.timezone_id = data.data.settings.timezone_id;
         settings.date_format_id = data.data.settings.date_format_id;
       }
-    });
-  };
+    }))
 
   const getCompanyList = async () => {
     return authApi.getCompanyFetch(appStore.appConfig.Bearer_Auth).then(data => {
@@ -98,6 +104,7 @@ export default defineStore('company', () => {
     company,
     settings,
     companyMembers,
+    settingsOptions,
     getSettings,
     getCompanyList,
     getMemberList,
