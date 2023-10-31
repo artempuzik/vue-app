@@ -14,7 +14,6 @@ const userStore = useUserStore();
 
 const errorMessage = ref('');
 const isLoading = ref(false);
-const token = ref('');
 
 const steps = reactive({
   isSendEmailStep: false,
@@ -87,7 +86,7 @@ const submit = () => {
   if (steps.isSendCodeStep) {
     code.isError = false;
     userStore
-      .sendVerifyCodeToResetPassword(code.value)
+      .sendVerifyCodeToResetPassword(email.value, code.value)
       .then(data => {
         if (data.status === 200) {
           steps.isSendCodeStep = false;
@@ -106,9 +105,7 @@ const submit = () => {
   if (steps.isSendPasswordStep) {
     userStore
       .changeUserPassword({
-        user_id: userStore.user.id,
         new_password: password.value,
-        token: token.value
       })
       .then(data => {
         if (data.status === 200) {

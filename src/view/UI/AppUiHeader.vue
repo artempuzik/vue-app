@@ -8,7 +8,7 @@ const router = useRouter();
 const userStore = useUserStore();
 const appStore = useAppStore();
 
-const userName = computed(() => `${userStore.user.firstName} ${userStore.user.lastName}`);
+const userName = computed(() => `${userStore.user.name} ${userStore.user.surname}`);
 
 const emit = defineEmits(['update:tab']);
 

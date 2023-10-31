@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { PropType, ref, reactive } from 'vue';
 import { IUser } from '../../../app/api/types/types.ts';
-import { useCompanyStore, useUserStore } from '../../../store';
+import { useCompanyStore, useUserStore, useAppStore } from '../../../store';
 import AppUiModal from '../../UI/AppUiModal.vue';
 import AppUiSelect from '../../UI/AppUiSelect.vue';
 import AppUiButton from '../../UI/AppUiButton.vue';
-import { USER_STATUSES } from '../../../app/config/constants.ts';
 import { AxiosError } from 'axios';
+import {getKeyByRoleValue} from "../../../app/helpers";
 
 const { member } = defineProps({
   member: {
@@ -17,6 +17,7 @@ const { member } = defineProps({
 
 const companyStore = useCompanyStore();
 const userStore = useUserStore();
+const appStore = useAppStore();
 
 const isShowingMenu = ref(false);
 const isShowModalRole = ref(false);
@@ -26,8 +27,8 @@ const isLoading = ref(false);
 const errorMessage = ref('');
 
 const roles = reactive({
-  value: member.role ?? USER_STATUSES['0'],
-  options: Object.values(USER_STATUSES)
+  value: appStore.appConfig.roles[member?.role_id],
+  options: Object.values(appStore.appConfig.roles) as string[]
 });
 
 const toggleShowMenu = () => (isShowingMenu.value = !isShowingMenu.value);
@@ -36,7 +37,7 @@ const edit = () => {
   isLoading.value = true;
   errorMessage.value = '';
   userStore
-    .updateMemberById(member.id, { role: roles.value })
+    .updateMemberById(member.user_id, { role_id: +getKeyByRoleValue(appStore.appConfig.roles, roles.value) })
     .then(() => {
       isShowModalRemove.value = false;
     })
@@ -52,7 +53,7 @@ const remove = () => {
   isLoading.value = true;
   errorMessage.value = '';
   companyStore
-    .removeMemberById(member.id)
+    .removeMemberById(member.user_id)
     .then(() => {
       isShowModalRemove.value = false;
     })
@@ -106,10 +107,10 @@ const remove = () => {
     />
   </app-ui-modal>
   <tr class="item">
-    <td>{{ member.first_name }} {{ member.last_name }}</td>
+    <td>{{ member.name }} {{ member.surname }}</td>
     <td>{{ member.email }}</td>
-    <td>{{ member.role }}</td>
-    <td>{{ member.updated_at }}</td>
+    <td>{{ appStore.appConfig.roles[member.role_id] }}</td>
+    <td>{{ member.logged_at }}</td>
     <td>{{ member.created_at }}</td>
     <td
       tabindex="0"

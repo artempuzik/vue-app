@@ -1,69 +1,53 @@
 import { defineStore } from 'pinia';
-import { authApi, dashboardApi } from '../app/api';
 import useUserStore from './user.ts';
 import useCompanyStore from './company.ts';
 import { reactive } from 'vue';
+import {authApi} from "../app/api";
+import {convertRoles} from "../app/helpers";
+import {ReactiveVariable} from "vue/macros";
+import {IAppConfig} from "../app/api/types/types.ts";
 
 export default defineStore('app', () => {
-  const appConfig = reactive({
+  const appConfig: ReactiveVariable<IAppConfig> = reactive({
     isAuth: false,
-    refreshToken: '',
-    accessToken: ''
+    Bearer_Auth: '',
+    roles: {}
   });
 
   const userStore = useUserStore();
   const companyStore = useCompanyStore();
 
+  const getRoleOptions = async () =>
+      authApi.getRoleOptionsListFetch(appConfig.Bearer_Auth).then(data => {
+        if (data.status === 200) {
+          appConfig.roles = convertRoles(data.data)
+        }
+      });
+
   const initApp = async () => {
     return checkAuth()
       .then(data => {
-        if (appConfig.accessToken) {
-          companyStore.getSettings(appConfig.accessToken);
-          dashboardApi.getDashboardFetch(appConfig.accessToken, {
-            page: 1,
-            limit: 10
-          });
+        if (appConfig.Bearer_Auth) {
+          companyStore.getSettings(appConfig.Bearer_Auth);
+          getRoleOptions()
         }
         return data;
       })
       .catch(error => error);
   };
   const checkAuth = async () => {
-    if (!appConfig.accessToken) {
-      const storage_token = localStorage.getItem('access_token');
+    if (!appConfig.Bearer_Auth) {
+      const storage_token = localStorage.getItem('Bearer_Auth');
       if (!storage_token) {
         return;
       }
-      appConfig.accessToken = storage_token;
+      appConfig.Bearer_Auth = storage_token;
     }
 
-    return userStore.checkUser().catch(err => {
-      if (err.response.status === 401) {
-        if (!appConfig.refreshToken) {
-          const storage_token = localStorage.getItem('refresh_token');
-          if (!storage_token) {
-            return;
-          }
-          appConfig.refreshToken = localStorage.getItem('refresh_token') || '';
-        }
-        authApi.refreshTokenFetch(appConfig.refreshToken).then(data => {
-          if (data.status === 200) {
-            const { access, refresh } = data.data;
-            appConfig.refreshToken = refresh;
-            appConfig.accessToken = access;
-            localStorage.setItem('refresh_token', appConfig.refreshToken);
-            localStorage.setItem('access_token', appConfig.accessToken);
-            checkAuth();
-          }
-        });
-      }
-
-      appConfig.isAuth = false;
-    });
-  };
+    return userStore.checkUser()
+    };
   const logOut = () => {
-    appConfig.accessToken = '';
-    appConfig.refreshToken = '';
+    appConfig.Bearer_Auth = '';
     appConfig.isAuth = false;
     localStorage.clear();
   };

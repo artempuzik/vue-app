@@ -8,7 +8,7 @@ import { checkPassword, emailValidator } from '../../../app/helpers';
 
 const userStore = useUserStore();
 
-const isUserIdExist = ref(!!userStore.user.id);
+const isUserIdExist = ref(!!userStore.user.user_id);
 
 const isLoading = ref(false);
 const errorMessage = ref('');
@@ -69,10 +69,9 @@ const submit = () => {
     password.isError = false;
     userStore
       .createUser({
-        user_id: userStore.user.id,
         password: password.value,
-        first_name: firstName.value,
-        last_name: lastName.value
+        surname: firstName.value,
+        name: lastName.value
       })
       .catch((err: AxiosError<any>) => {
         if (err.response) {
@@ -86,7 +85,7 @@ const submit = () => {
     email.isError = false;
     userStore
       .checkExistUserByEmail({
-        email: email.value
+        login: email.value
       })
       .then(data => {
         if (data.status === 200) {
@@ -127,7 +126,7 @@ const submit = () => {
               :size="'normal'"
             />
           </template>
-          <template v-if="error.code === 400">
+          <template v-if="error.code === 404">
             <h1 class="main-title">
               {{ $t('auth.ups') }}
             </h1>

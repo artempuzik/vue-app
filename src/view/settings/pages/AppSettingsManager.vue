@@ -4,14 +4,15 @@ import AppUiInput from '../../UI/AppUiInput.vue';
 import AppUiSelect from '../../UI/AppUiSelect.vue';
 import AppUiButton from '../../UI/AppUiButton.vue';
 import AppMemberItem from '../components/AppMemberItem.vue';
-import { reactive, ref, computed } from 'vue';
-import { USER_STATUSES } from '../../../app/config/constants.ts';
-import { useCompanyStore } from '../../../store';
+import {reactive, ref, computed, onMounted} from 'vue';
+import { useCompanyStore, useAppStore } from '../../../store';
 import { IUser } from '../../../app/api/types/types.ts';
 import { emailValidator } from '../../../app/helpers';
 import { AxiosError } from 'axios';
+import AppUiSpinner from "../../UI/AppUiSpinner.vue";
 
 const companyStore = useCompanyStore();
+const appStore = useAppStore();
 
 const query = ref('');
 const isModalHide = ref(true);
@@ -25,7 +26,7 @@ const isValidEmail = computed(() => emailValidator(inviteEmail.value));
 
 const members = computed(() =>
   companyStore.companyMembers.filter((member: IUser) => {
-    if (member.role === roles.value || roles.value === 'All roles') {
+    if (appStore.appConfig.roles[member.role_id] === roles.value || roles.value === 'All roles') {
       return JSON.stringify(member).toLowerCase().includes(query.value.trim().toLowerCase());
     }
     return false;
@@ -49,16 +50,36 @@ const sendInvite = () => {
     .finally(() => (isLoading.value = false));
 };
 
-companyStore.getMemberListByCompanyId();
-
 const roles = reactive({
   value: 'All roles',
-  options: ['All roles', ...Object.values(USER_STATUSES)] as string[]
+  options: ['All roles', ...Object.values(appStore.appConfig.roles)] as string[]
 });
+
+onMounted(() => {
+  isLoading.value = true;
+  errorMessage.value = '';
+  companyStore.getMemberList()
+    .then(() => {
+    isModalHide.value = true;
+    inviteEmail.value = '';
+  })
+      .catch((err: AxiosError<any>) => {
+        if (err.response) {
+          errorMessage.value = err.response.data.message;
+        }
+      })
+      .finally(() => (isLoading.value = false));
+})
 </script>
 
 <template>
-  <app-layout-settings>
+  <div
+      v-if="isLoading"
+      class="d-flex flex-column align-items-center justify-content-center app_wrapper"
+  >
+    <app-ui-spinner />
+  </div>
+  <app-layout-settings v-else>
     <template #main>
       <app-ui-modal
         v-if="!isModalHide"

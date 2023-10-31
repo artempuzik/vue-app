@@ -15,7 +15,7 @@ const userStore = useUserStore();
 const errorMessage = ref('');
 const isLoading = ref(false);
 
-const email = reactive({
+const login = reactive({
   value: '',
   error: '',
   isError: false
@@ -27,18 +27,26 @@ const password = reactive({
   isError: false
 });
 
-const isValidEmail = computed(() => emailValidator(email.value));
+const isValidLogin = computed(() => emailValidator(login.value));
 const isValidPassword = computed(() => checkPassword(password.value));
 
-const isCanSubmit = computed(() => isValidEmail.value && isValidPassword.value);
+const isCanSubmit = computed(() => {
+  if(login.value) {
+    return isValidPassword.value && password.value
+  }
+  if(password.value) {
+    return isValidLogin.value && login.value
+  }
+  return isValidLogin.value && isValidPassword.value
+});
 
 const submit = () => {
   isLoading.value = true;
-  email.isError = false;
+  login.isError = false;
   password.isError = false;
   errorMessage.value = '';
   userStore
-    .loginUser({ email: email.value, password: password.value })
+    .loginUser({ login: login.value, password: password.value })
     .then(() => {
       userStore.checkUser().then(() => {
         router.replace('main');
@@ -46,8 +54,7 @@ const submit = () => {
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
-        errorMessage.value = err.response.data.message;
-        email.isError = true;
+        login.isError = true;
         password.isError = true;
       }
     })
@@ -66,10 +73,10 @@ const submit = () => {
           {{ $t('auth.sign_in_sub_title') }}
         </h4>
         <app-ui-auth-input
-          v-model="email.value"
-          :is-error="email.isError"
+          v-model="login.value"
+          :is-error="login.isError"
           :label="$t('auth.email')"
-          :error-message="email.error"
+          :error-message="login.error"
         />
         <app-ui-auth-input
           v-model="password.value"

@@ -1,19 +1,16 @@
 export interface ILoginUser {
-  email: string;
+  login: string;
   password: string;
 }
 
 export interface IUserResponse {
-  id_user: string;
-  access: string;
-  refresh: string;
-  is_admin: boolean;
+  user_id: number;
+  Bearer_Auth: string;
+  company_id: string;
 }
 
 export interface IChangePassword {
-  user_id: string;
   new_password: string;
-  token: string;
 }
 
 export interface IChangeUserPassword {
@@ -22,17 +19,17 @@ export interface IChangeUserPassword {
 }
 
 export interface IUser {
-  id: string;
-  avatar: null | string;
-  first_name: string;
-  last_name: string;
-  is_active: boolean;
-  is_company_admin: boolean;
-  is_confirmed: boolean;
+  user_id: string;
+  name: string;
+  surname: string;
   email: string;
-  role: string;
-  updated_at?: Date;
+  role_id: number;
+  logged_at?: Date;
   created_at?: Date;
+}
+
+export interface IUpdateMember {
+  role_id: number;
 }
 
 export interface ICheckUserResponse extends IUser {
@@ -42,14 +39,14 @@ export interface ICheckUserResponse extends IUser {
 }
 
 export interface IFirstCheckUserByEmail {
-  email: string;
+  login: string;
 }
 
 export interface ICreateUser {
-  user_id: string;
   password: string;
-  first_name: string;
-  last_name: string;
+  surname: string;
+  name: string;
+  Bearer_Auth?: string;
 }
 
 export interface IApiQuery {
@@ -63,16 +60,14 @@ export interface ICreateCompany {
 }
 
 export interface ISendInvite {
-  company: string;
   email: string;
 }
 
 export interface ICompanySettings {
-  company: string;
-  lang: string;
-  currency: string;
-  timezone: string;
-  datetime_format: string;
+  language_id: number;
+  timezone_id: number;
+  date_format_id: number;
+  currency_id: number;
 }
 
 export interface IPostDashboard {
@@ -145,4 +140,10 @@ export interface IStatisticSerializer {
   x: string;
   name_y: string;
   y: string;
+}
+
+export interface IAppConfig {
+  isAuth: boolean,
+  Bearer_Auth: string,
+  roles: {[key: number]: string}
 }

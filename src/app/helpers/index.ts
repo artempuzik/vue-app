@@ -27,3 +27,14 @@ export const convertDate = (time: Date, format: string) => {
       return new Date(time);
   }
 };
+
+export const convertRoles = (roles: Array<{role_id: number, role_name: string}>) => {
+  const result: {[key: number]: string} = {}
+  roles.forEach(r => result[r.role_id] = r.role_name)
+  return result;
+}
+
+export const getKeyByRoleValue = (object: {[key: string]: string}, value: string) => {
+  const result =  Object.keys(object).find((key: string) => object[key] === value);
+  return result as string
+}

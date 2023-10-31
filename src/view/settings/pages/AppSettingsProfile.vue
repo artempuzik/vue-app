@@ -13,14 +13,14 @@ const isLoadingPassword = ref(false);
 const errorUserMessage = ref('');
 const errorPasswordMessage = ref('');
 
-const firstName = reactive({
-  value: userStore.user.firstName,
+const name = reactive({
+  value: userStore.user.name,
   error: '',
   isError: false
 });
 
-const lastName = reactive({
-  value: userStore.user.lastName,
+const surname = reactive({
+  value: userStore.user.surname,
   error: '',
   isError: false
 });
@@ -55,7 +55,7 @@ const isConfirmPassword = computed(() => {
 });
 
 const isCanUserSubmit = computed(() => {
-  return lastName.value !== userStore.user.lastName || firstName.value !== userStore.user.firstName;
+  return name.value !== userStore.user.name || surname.value !== userStore.user.surname;
 });
 
 const isCanPasswordSubmit = computed(() => {
@@ -65,8 +65,8 @@ const isCanPasswordSubmit = computed(() => {
 const submitUser = () => {
   userStore
     .updateUser({
-      first_name: firstName.value,
-      last_name: lastName.value
+      name: name.value,
+      surname: surname.value
     })
     .catch(err => {
       if (err.response) {
@@ -101,16 +101,16 @@ const submitPassword = () => {
         <br>
         <div class="w-50">
           <app-ui-auth-input
-            v-model="firstName.value"
-            :is-error="firstName.isError"
+            v-model="name.value"
+            :is-error="name.isError"
             :label="$t('profile.first_name')"
-            :error-message="firstName.error"
+            :error-message="name.error"
           />
           <app-ui-auth-input
-            v-model="lastName.value"
-            :is-error="lastName.isError"
+            v-model="surname.value"
+            :is-error="surname.isError"
             :label="$t('profile.last_name')"
-            :error-message="lastName.error"
+            :error-message="surname.error"
           />
           <div
             v-if="errorUserMessage"

@@ -11,25 +11,32 @@ const languages = reactive({
   options: Object.keys(LANGUAGES)
 });
 const currency = reactive({
-  value: companyStore.settings.currency,
+  value: CURRENCY[companyStore.settings.currency_id],
   options: CURRENCY
 });
 const time_zone = reactive({
-  value: companyStore.settings.timezone,
+  value: TIME_ZONE[companyStore.settings.timezone_id],
   options: TIME_ZONE
 });
 const date_format = reactive({
-  value: companyStore.settings.datetime_format,
+  value: DATE_TIME_FORMAT[companyStore.settings.date_format_id],
   options: DATE_TIME_FORMAT
 });
 
+const convertFormatToIndex = (value: string, array: string[]) => {
+  const index = array.findIndex(v => v === value)
+  if (index === -1) {
+    return 0
+  }
+  return index
+}
+
 const update = () => {
   companyStore.updateSettings({
-    company: companyStore.company.company,
-    lang: languages.value,
-    currency: currency.value,
-    timezone: time_zone.value,
-    datetime_format: date_format.value
+    language_id: convertFormatToIndex(languages.value, Object.keys(LANGUAGES)),
+    timezone_id: convertFormatToIndex(currency.value, CURRENCY),
+    date_format_id: convertFormatToIndex(time_zone.value, TIME_ZONE),
+    currency_id: convertFormatToIndex(date_format.value, CURRENCY)
   });
 };
 </script>

@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
-import { companyApi } from '../app/api';
+import { authApi } from '../app/api';
 import { reactive, Ref, ref, watch } from 'vue';
 import { useAppStore } from './index.ts';
 import { ICompanySettings, IUser } from '../app/api/types/types.ts';
-import { CURRENCY, DATE_TIME_FORMAT, LANGUAGES, TIME_ZONE } from '../app/config/constants.ts';
+import { LANGUAGES } from '../app/config/constants.ts';
 import { useI18n } from 'vue-i18n';
 
 export default defineStore('company', () => {
@@ -22,30 +22,30 @@ export default defineStore('company', () => {
 
   let settings = reactive({
     lang: 'English',
-    currency: CURRENCY[0],
-    timezone: TIME_ZONE[0],
-    datetime_format: DATE_TIME_FORMAT[0]
+    language_id: 0,
+    currency_id: 0,
+    timezone_id: 0,
+    date_format_id: 0,
   });
 
   const companyMembers: Ref<IUser[]> = ref([]);
 
   const appStore = useAppStore();
 
-  const getSettings = (token: string) => {
-    return companyApi.getSettingsListByCompanyIdFetch(token, company.company).then(data => {
+  const getSettings = async (token: string) => {
+    return authApi.getSettingsListFetch(token).then(data => {
       if (data.status === 200) {
-        company.id = data.data.id;
-        company.company = data.data.company;
-        settings.lang = data.data.lang ? data.data.lang : settings.lang;
-        settings.currency = data.data.currency ? data.data.currency : settings.currency;
-        settings.timezone = data.data.timezone ? data.data.timezone : settings.timezone;
-        settings.datetime_format = data.data.datetime_format ? data.data.datetime_format : settings.datetime_format;
+        company.id = data.data.company_id;
+        settings.language_id = data.data.settings.language_id;
+        settings.lang = Object.keys(LANGUAGES)[settings.language_id];
+        settings.timezone_id = data.data.settings.timezone_id;
+        settings.date_format_id = data.data.settings.date_format_id;
       }
     });
   };
 
-  const getCompanyList = (token: string) => {
-    return companyApi.getCompanyListFetch(token, { page: 1, limit: 10 }).then(data => {
+  const getCompanyList = async () => {
+    return authApi.getCompanyFetch(appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
         companyList.list = data.data.result;
         companyList.count = data.data.count;
@@ -53,32 +53,32 @@ export default defineStore('company', () => {
     });
   };
 
-  const getMemberListByCompanyId = (page = 1, limit = 10) => {
-    return companyApi.getMemberListByCompanyIdFetch(appStore.appConfig.accessToken, company.company, { page, limit }).then(data => {
+  const getMemberList = async () => {
+    return authApi.getMemberListFetch(appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
-        companyMembers.value = data.data;
+        companyMembers.value = data.data.users;
       }
     });
   };
 
-  const removeMemberById = (id: string) => {
-    return companyApi.deleteMemberFromCompanyFetch(id, appStore.appConfig.accessToken).then(data => {
+  const removeMemberById = async (id: string) => {
+    return authApi.deleteMemberFromCompanyFetch(id, appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
-        companyMembers.value = companyMembers.value.filter(member => member.id !== id);
+        companyMembers.value = companyMembers.value.filter(member => member.user_id !== id);
       }
     });
   };
 
-  const updateSettings = (dto: ICompanySettings) => {
-    return companyApi.setCompanySettingsFetch(dto, company.company, appStore.appConfig.accessToken).then(data => {
+  const updateSettings = async (dto: ICompanySettings) => {
+    return authApi.setCompanySettingsFetch(dto, appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
         settings = Object.assign(settings, dto);
       }
     });
   };
 
-  const inviteMember = (email: string) => {
-    return companyApi.sendInviteToMemberFetch({ company: company.company, email }, appStore.appConfig.accessToken).then(data => {
+  const inviteMember = async (email: string) => {
+    return authApi.sendInviteToMemberFetch({ email }, appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
         console.log(data);
       }
@@ -86,8 +86,11 @@ export default defineStore('company', () => {
   };
 
   watch(
-    () => settings.lang,
-    () => (locale.value = LANGUAGES[settings.lang]),
+    () => settings.language_id,
+    () => {
+      settings.lang = Object.keys(LANGUAGES)[settings.language_id]
+      locale.value = LANGUAGES[settings.lang]
+    },
     { immediate: true }
   );
 
@@ -97,7 +100,7 @@ export default defineStore('company', () => {
     companyMembers,
     getSettings,
     getCompanyList,
-    getMemberListByCompanyId,
+    getMemberList,
     inviteMember,
     removeMemberById,
     updateSettings

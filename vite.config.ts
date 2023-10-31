@@ -5,6 +5,8 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     port: 5173,
-    hot: true,
+    watch: {
+      usePolling: true,
+    },
   },
 });
