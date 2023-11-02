@@ -72,7 +72,7 @@ const value = computed({
 @import '../../styles/variables.scss';
 
 .app_input {
-  height: 50px;
+  min-height: 50px;
   border-style: solid;
   padding: 10px 12px;
   border-width: 1px;

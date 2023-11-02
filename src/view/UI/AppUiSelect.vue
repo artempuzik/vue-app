@@ -91,7 +91,7 @@ const value = computed({
   z-index: 9999;
 
   div {
-    padding: 7px 9px;
+    padding: 13px;
     border-radius: $input-border-radius;
     cursor: pointer;
 

@@ -9,7 +9,7 @@ import { checkPassword, emailValidator } from '../../../app/helpers';
 const userStore = useUserStore();
 const appStore = useAppStore();
 
-const isUserExist = ref(!!appStore.appConfig.accessToken);
+const isUserExist = ref(!!appStore.appConfig.Bearer_Auth);
 
 const isLoading = ref(false);
 const errorMessage = ref('');
@@ -24,13 +24,13 @@ const email = reactive({
   isError: false
 });
 
-const firstName = reactive({
+const name = reactive({
   value: '',
   error: '',
   isError: false
 });
 
-const lastName = reactive({
+const surname = reactive({
   value: '',
   error: '',
   isError: false
@@ -56,7 +56,7 @@ const isValidPassword = computed(() => {
 
 const isCanSubmit = computed(() => {
   if (isUserExist.value) {
-    return isValidPasswordLength.value && !!lastName.value && !!firstName.value && isValidPassword.value;
+    return isValidPasswordLength.value && !!surname.value && !!name.value && isValidPassword.value;
   }
   return isValidEmail.value;
 });
@@ -65,15 +65,15 @@ const submit = () => {
   isLoading.value = true;
   errorMessage.value = '';
   if (isUserExist.value) {
-    firstName.isError = false;
-    lastName.isError = false;
+    name.isError = false;
+    surname.isError = false;
     password.isError = false;
     userStore
       .createUser({
         Bearer_Auth: appStore.appConfig.Bearer_Auth,
         password: password.value,
-        surname: firstName.value,
-        name: lastName.value
+        surname: name.value,
+        name: surname.value
       })
       .catch((err: AxiosError<any>) => {
         if (err.response) {
@@ -98,8 +98,7 @@ const submit = () => {
         if (err.response) {
           error.isError = true;
           error.code = err.response.status;
-          errorMessage.value = err.response.data.message;
-          email.error = err.response.data.message;
+          email.error = err.response.data.detail || 'Invalid data'
           email.isError = true;
         }
       })
@@ -121,6 +120,7 @@ const submit = () => {
             <h4 class="main-text">
               {{ $t('auth.sign_up_error_two') }}
             </h4>
+            <br>
             <br>
             <app-ui-button
               class="p-3"
@@ -146,6 +146,7 @@ const submit = () => {
             {{ $t('auth.sign_up_sub_email_title') }}
           </h4>
           <br>
+          <br>
           <template v-if="isUserExist">
             <app-ui-auth-input
               v-model="password.value"
@@ -162,16 +163,16 @@ const submit = () => {
               :is-password="true"
             />
             <app-ui-auth-input
-              v-model="firstName.value"
-              :is-error="firstName.isError"
+              v-model="name.value"
+              :is-error="name.isError"
               :label="$t('auth.first_name')"
-              :error-message="firstName.error"
+              :error-message="name.error"
             />
             <app-ui-auth-input
-              v-model="lastName.value"
-              :is-error="lastName.isError"
+              v-model="surname.value"
+              :is-error="surname.isError"
               :label="$t('auth.last_name')"
-              :error-message="lastName.error"
+              :error-message="surname.error"
             />
           </template>
           <template v-else>

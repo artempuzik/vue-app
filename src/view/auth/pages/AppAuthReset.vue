@@ -76,7 +76,7 @@ const submit = () => {
       })
       .catch((err: AxiosError<any>) => {
         if (err.response) {
-          email.error = err.response.data.message;
+          email.error = err.response.data.detail;
           email.isError = true;
         }
       })
@@ -95,7 +95,7 @@ const submit = () => {
       })
       .catch((err: AxiosError<any>) => {
         if (err.response) {
-          code.error = err.response.data.message;
+          code.error = err.response.data.detail;
           code.isError = true;
         }
       })
@@ -113,7 +113,14 @@ const submit = () => {
           steps.isSendPasswordStep = false;
           router.replace('main');
         }
-      });
+      })
+        .catch((err: AxiosError<any>) => {
+          if (err.response) {
+            password.error = err.response.data.detail;
+            password.isError = true;
+          }
+        })
+        .finally(() => (isLoading.value = false));
   }
 };
 </script>
@@ -155,6 +162,7 @@ const submit = () => {
           v-if="steps.isSendPasswordStep"
           v-model="password.value"
           :is-error="password.isError"
+          is-password
           :error-message="password.error"
           :label="$t('auth.new_password')"
         />
@@ -162,6 +170,7 @@ const submit = () => {
           v-if="steps.isSendPasswordStep"
           v-model="password.confirm"
           :is-error="!isValidPassword"
+          is-password
           :label="$t('auth.confirm')"
           :error-message="'Password must be confirmed'"
         />

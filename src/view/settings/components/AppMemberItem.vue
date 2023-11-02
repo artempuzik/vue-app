@@ -109,9 +109,13 @@ const remove = () => {
   <tr class="item">
     <td>{{ member.name }} {{ member.surname }}</td>
     <td>{{ member.email }}</td>
-    <td>{{ appStore.appConfig.roles[member.role_id] }}</td>
-    <td>{{ member.logged_at }}</td>
-    <td>{{ member.created_at }}</td>
+    <td class="pe-2">
+      <div class="alert alert-primary py-0 px-1 border-0 text-center mt-1 mb-0 alert_color" role="alert">
+        {{ appStore.appConfig.roles[member.role_id] }}
+      </div>
+    </td>
+    <td>{{ member.logged_at && new Date(member.logged_at).toLocaleString() }}</td>
+    <td>{{ member.created_at && new Date(member.created_at).toLocaleString() }}</td>
     <td
       tabindex="0"
       class="position-relative"
@@ -151,16 +155,18 @@ const remove = () => {
 
 .setting_modal {
   position: absolute;
-  padding: 17px 18px;
+  padding: 13px;
+  border-radius: $input-border-radius;
   background-color: $white-color;
   border: 1px solid $grey-border;
   top: 30px;
   width: 169px;
-  right: 0px;
+  right: 25px;
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
   z-index: 9999;
 
   div {
-    padding: 7px 9px;
+    padding: 13px;
     border-radius: $input-border-radius;
     cursor: pointer;
 
@@ -168,6 +174,15 @@ const remove = () => {
       background-color: $blue-light-light;
     }
   }
+}
+
+td {
+  padding: 10px 0 7px;
+  border-bottom: 2px solid $grey-border;
+}
+
+.alert_color {
+  color: $purple-normal;
 }
 
 .error {

@@ -64,9 +64,15 @@ export default defineStore('user', () => {
     });
   };
   const resetPasswordByEmail = async (email: string) => authApi.resetPasswordByEmailFetch(email);
-  const sendVerifyCodeToResetPassword = (email: string, code: string) => authApi.sendVerifyCodeToResetPasswordFetch(email, code);
+  const sendVerifyCodeToResetPassword = (email: string, code: string) => authApi.sendVerifyCodeToResetPasswordFetch(email, code).then((response) => {
+      if(response.status === 200) {
+        user.user_id = response.data.user_id;
+        appStore.appConfig.Bearer_Auth = response.data.Bearer_Auth;
+      }
+      return response;
+  });
   const changeUserPassword = async (dto: IChangePassword) => {
-    return authApi.changePasswordFetch(dto).then(data => {
+    return authApi.changePasswordFetch(dto, appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
         appStore.appConfig.isAuth = true;
       }

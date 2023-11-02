@@ -15,7 +15,7 @@ const emit = defineEmits(['close']);
       @click.self="emit('close')"
     >
       <div
-        class="modal_body d-flex flex-column align-items-center justify-content-center"
+        class="modal_body shadow d-flex flex-column align-items-center justify-content-center"
         :style="{ width: width }"
       >
         <div class="w-100 d-flex flex-row align-items-center justify-content-end">
@@ -41,17 +41,21 @@ const emit = defineEmits(['close']);
   left: 0;
   top: 0;
   overflow: auto;
-  background-color: rgb(0, 0, 0);
   background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal_body {
   background-color: $white-color;
+  border-radius: $input-border-radius;
   margin: 15% auto;
   padding: 0 10px 10px;
   border: 1px solid $grey-border;
   min-width: 350px;
   max-width: 600px;
+}
+
+.shadow {
+  box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
 }
 
 .close {

@@ -56,6 +56,7 @@ const submit = () => {
       if (err.response) {
         login.isError = true;
         password.isError = true;
+        login.error = err.response.data.detail || 'Invalid data'
       }
     })
     .finally(() => (isLoading.value = false));
@@ -72,6 +73,8 @@ const submit = () => {
         <h4 class="main-text">
           {{ $t('auth.sign_in_sub_title') }}
         </h4>
+        <br>
+        <br>
         <app-ui-auth-input
           v-model="login.value"
           :is-error="login.isError"

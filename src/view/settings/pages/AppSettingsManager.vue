@@ -17,6 +17,7 @@ const appStore = useAppStore();
 const query = ref('');
 const isModalHide = ref(true);
 const isLoading = ref(false);
+const isLoadingInvite = ref(false)
 
 const inviteEmail = ref('');
 
@@ -34,7 +35,7 @@ const members = computed(() =>
 );
 
 const sendInvite = () => {
-  isLoading.value = true;
+  isLoadingInvite.value = true;
   errorMessage.value = '';
   companyStore
     .inviteMember(inviteEmail.value)
@@ -47,7 +48,7 @@ const sendInvite = () => {
         errorMessage.value = err.response.data.message;
       }
     })
-    .finally(() => (isLoading.value = false));
+    .finally(() => (isLoadingInvite.value = false));
 };
 
 const roles = reactive({
@@ -73,13 +74,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div
-      v-if="isLoading"
-      class="d-flex flex-column align-items-center justify-content-center app_wrapper"
-  >
-    <app-ui-spinner />
-  </div>
-  <app-layout-settings v-else>
+  <app-layout-settings>
     <template #main>
       <app-ui-modal
         v-if="!isModalHide"
@@ -98,7 +93,7 @@ onMounted(() => {
         <br v-else>
         <app-ui-button
           :is-in-active="!isValidEmail"
-          :is-loading="isLoading"
+          :is-loading="isLoadingInvite"
           :text="$t('buttons.send')"
           @click="sendInvite"
         />
@@ -133,7 +128,13 @@ onMounted(() => {
           {{ $t('team.members') }} ({{ members.length }})
         </h3>
         <div class="w-100 table_body">
-          <table class="table">
+          <div
+              v-if="isLoading"
+              class="d-flex h-100 flex-column align-items-center justify-content-center app_wrapper"
+          >
+            <app-ui-spinner />
+          </div>
+          <table v-else class="table">
             <thead>
               <tr class="table_header">
                 <th scope="col">
@@ -179,7 +180,19 @@ onMounted(() => {
 
 .table_body {
   overflow-y: auto;
+  padding: 5px 15px;
   height: 650px;
+  border: 1px solid $grey-border;
+  border-radius: $input-border-radius;
+  background-color: $white-color;
+}
+
+tr {
+  border-bottom: 2px solid $grey-border;
+}
+
+th {
+  padding: 15px 0;
 }
 
 .error {

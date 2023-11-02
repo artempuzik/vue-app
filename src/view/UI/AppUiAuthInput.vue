@@ -75,7 +75,7 @@ const value = computed({
   padding: 10px 12px;
   border-radius: $input-border-radius;
   border-width: 1px;
-  height: 50px;
+  min-height: 50px;
   &::placeholder {
     color: $placeholder;
     opacity: 1;
@@ -98,7 +98,6 @@ const value = computed({
     border-width: 1px;
     border-color: $error-red;
     background: $error-bg;
-    opacity: 0.4;
   }
 }
 

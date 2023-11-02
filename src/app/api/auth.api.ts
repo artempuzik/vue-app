@@ -24,7 +24,11 @@ const resetPasswordByEmailFetch = (email: string) =>
 
 const sendVerifyCodeToResetPasswordFetch = (email: string, code: string) => fetch.post('/auth/reset_password/code', {email, code});
 
-const changePasswordFetch = (dto: IChangePassword) => fetch.post('/auth/reset_password/new_password', dto);
+const changePasswordFetch = (dto: IChangePassword, token: string) => fetch.post('/auth/reset_password/new_password', dto,{
+    headers: {
+        auth: `Bearer ${token}`
+    }
+});
 
 const checkUserFetch = (token: string) =>
     fetch.get('/auth/profile/', {

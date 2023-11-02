@@ -160,7 +160,7 @@ div span {
 
   a,
   div {
-    padding: 7px 9px;
+    padding: 13px;
     border-radius: $input-border-radius;
     cursor: pointer;
     text-decoration: none;
