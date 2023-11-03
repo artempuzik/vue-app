@@ -3,6 +3,7 @@ import { createPinia } from 'pinia';
 import i18n from './i18n';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import 'vue3-toastify/dist/index.css';
 import './styles/main.scss';
 
 import router from './router/router.ts';

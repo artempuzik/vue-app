@@ -8,6 +8,7 @@ import {reactive, ref, computed, onMounted} from 'vue';
 import { useCompanyStore, useAppStore } from '../../../store';
 import { IUser } from '../../../app/api/types/types.ts';
 import { emailValidator } from '../../../app/helpers';
+import toastAlert from '../../../app/helpers/toast.ts';
 import { AxiosError } from 'axios';
 import AppUiSpinner from "../../UI/AppUiSpinner.vue";
 
@@ -42,10 +43,12 @@ const sendInvite = () => {
     .then(() => {
       isModalHide.value = true;
       inviteEmail.value = '';
+      toastAlert('Invitation is sent', 'success', 2000)
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
-        errorMessage.value = err.response.data.message;
+        // errorMessage.value = err.response.data.message;
+        toastAlert(err.response.data.message, 'error', 2000)
       }
     })
     .finally(() => (isLoadingInvite.value = false));
@@ -197,5 +200,10 @@ th {
 
 .error {
   color: $error-red;
+}
+
+.toast {
+  color: $white-color;
+  background-color: $purple-normal;
 }
 </style>

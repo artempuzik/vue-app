@@ -8,8 +8,6 @@ import { AxiosError } from 'axios';
 import { useRouter } from 'vue-router';
 import { checkPassword, emailValidator } from '../../../app/helpers';
 
-const router = useRouter();
-
 const userStore = useUserStore();
 
 const errorMessage = ref('');
@@ -48,9 +46,7 @@ const submit = () => {
   userStore
     .loginUser({ login: login.value, password: password.value })
     .then(() => {
-      userStore.checkUser().then(() => {
-        router.replace('main');
-      });
+      userStore.checkUser()
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {

@@ -12,6 +12,7 @@ import {
   IUserResponse
 } from '../app/api/types/types.ts';
 import { reactive } from 'vue';
+import {useRouter} from "vue-router";
 
 export default defineStore('user', () => {
   const user = reactive({
@@ -21,6 +22,7 @@ export default defineStore('user', () => {
     surname: '',
     email: '',
   });
+  const router = useRouter();
   const appStore = useAppStore();
   const companyStore = useCompanyStore();
   const checkUser = async () =>
@@ -43,6 +45,7 @@ export default defineStore('user', () => {
         user.user_id = user_id;
         appStore.appConfig.Bearer_Auth = Bearer_Auth;
         localStorage.setItem('Bearer_Auth', Bearer_Auth);
+        router.replace('main');
       }
     });
   const checkExistUserByEmail = async (dto: IFirstCheckUserByEmail) => {
@@ -59,6 +62,7 @@ export default defineStore('user', () => {
     return authApi.createUserFetch(dto).then(data => {
       if (data.status === 200) {
         user.user_id = data.data.user_id;
+        router.replace('sign-in');
       }
       return data;
     });

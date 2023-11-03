@@ -3,6 +3,8 @@ import { computed, ref } from 'vue';
 import { PROJECT_NAME } from '../../app/config/enviroments.ts';
 import { useRouter } from 'vue-router';
 import { useUserStore, useAppStore } from '../../store';
+import AppUiButton from "./AppUiButton.vue";
+import AppUiInput from "./AppUiInput.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -13,6 +15,7 @@ const userName = computed(() => `${userStore.user.name} ${userStore.user.surname
 const emit = defineEmits(['update:tab']);
 
 const activeTab = ref('Dashboard');
+const isCheckLogoutPopup = ref(false);
 
 const clickToTab = (tab: string) => {
   activeTab.value = tab;
@@ -25,6 +28,7 @@ const toggleSelect = () => (isOpen.value = !isOpen.value);
 
 const logOut = () => {
   appStore.logOut();
+  isCheckLogoutPopup.value = false
   router.replace('sign-in');
 };
 </script>
@@ -42,15 +46,19 @@ const logOut = () => {
     <div class="w-100 d-flex flex-row align-items-center justify-content-between p-2">
       <div class="d-flex flex-row align-items-center justify-content-start">
         <div class="me-4 second-title">
-          <h1 class="main-title">
-            {{ PROJECT_NAME }}
-          </h1>
+          <router-link
+              to="dashboard"
+              class="main-title"
+              style="color: black; text-decoration: none"
+          >
+              {{ PROJECT_NAME }}
+          </router-link>
         </div>
         <div class="d-flex flex-row align-items-center justify-content-start">
           <router-link
             to="dashboard"
             class="m-1 p-2 link"
-            :class="{ active: activeTab === 'Dashboard' }"
+            :class="{ active_tab: activeTab === 'Dashboard' }"
             @click="clickToTab('Dashboard')"
           >
             <span class="main-text">{{ $t('header.nav_dashboard') }}</span>
@@ -58,7 +66,7 @@ const logOut = () => {
           <router-link
             to="list"
             class="m-1 p-2 link"
-            :class="{ active: activeTab === 'List' }"
+            :class="{ active_tab: activeTab === 'List' }"
             @click="clickToTab('List')"
           >
             <span class="main-text">{{ $t('header.nav_list') }}</span>
@@ -66,7 +74,7 @@ const logOut = () => {
           <router-link
             to="history"
             class="m-1 p-2 link"
-            :class="{ active: activeTab === 'History' }"
+            :class="{ active_tab: activeTab === 'History' }"
             @click="clickToTab('History')"
           >
             <span class="main-text">{{ $t('header.nav_history') }}</span>
@@ -111,12 +119,28 @@ const logOut = () => {
           <span class="mx-2 link">{{ $t('menu.management') }}</span>
         </router-link>
         <hr class="my-2">
-        <div @click="logOut">
+        <div @click="isCheckLogoutPopup = true">
           <img src="../../assets/svg/logout.svg">
           <span class="mx-2 link">{{ $t('menu.logout') }}</span>
         </div>
       </div>
     </div>
+    <app-ui-modal
+        v-if="isCheckLogoutPopup"
+        @close="isCheckLogoutPopup = false"
+    >
+      <br>
+      <h4 class="main-text text-center">
+        {{ $t('header.question') }}
+      </h4>
+      <br>
+      <br>
+      <app-ui-button
+          :is-in-active="false"
+          :text="$t('buttons.yes')"
+          @click="logOut"
+      />
+    </app-ui-modal>
   </header>
 </template>
 
@@ -132,7 +156,7 @@ header {
   text-decoration: none;
 }
 
-.active {
+.active_tab {
   border-radius: $button-border-radius;
   background-color: $blue-light-light;
   color: $blue-normal;

@@ -98,7 +98,7 @@ const submit = () => {
         if (err.response) {
           error.isError = true;
           error.code = err.response.status;
-          email.error = err.response.data.detail || 'Invalid data'
+          errorMessage.value = err.response.data.detail || 'Invalid data'
           email.isError = true;
         }
       })
@@ -112,31 +112,31 @@ const submit = () => {
     <template #left>
       <div class="sign-in_box w-100 d-flex flex-column align-items-start justify-content-start">
         <template v-if="error.isError">
-          <template v-if="error.code === 409">
+<!--          <template v-if="error.code === 409">-->
             <h1 class="main-title">
-              Ups ...
+              {{errorMessage}}
             </h1>
             <br>
             <h4 class="main-text">
               {{ $t('auth.sign_up_error_two') }}
             </h4>
-            <br>
-            <br>
-            <app-ui-button
-              class="p-3"
-              :text="$t('auth.demo')"
-              :size="'normal'"
-            />
-          </template>
-          <template v-if="error.code === 404">
-            <h1 class="main-title">
-              {{ $t('auth.ups') }}
-            </h1>
-            <br>
-            <h4 class="main-text">
-              {{ $t('auth.sign_up_error_one') }}
-            </h4>
-          </template>
+<!--            <br>-->
+<!--            <br>-->
+<!--            <app-ui-button-->
+<!--              class="p-3"-->
+<!--              :text="$t('auth.demo')"-->
+<!--              :size="'normal'"-->
+<!--            />-->
+<!--          </template>-->
+<!--          <template v-if="error.code === 404">-->
+<!--            <h1 class="main-title">-->
+<!--              {{ $t('auth.ups') }}-->
+<!--            </h1>-->
+<!--            <br>-->
+<!--            <h4 class="main-text">-->
+<!--              {{ $t('auth.sign_up_error_one') }}-->
+<!--            </h4>-->
+<!--          </template>-->
         </template>
         <template v-else>
           <h1 class="main-title">

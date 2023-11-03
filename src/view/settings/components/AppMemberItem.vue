@@ -7,6 +7,7 @@ import AppUiSelect from '../../UI/AppUiSelect.vue';
 import AppUiButton from '../../UI/AppUiButton.vue';
 import { AxiosError } from 'axios';
 import {getKeyByRoleValue} from "../../../app/helpers";
+import toastAlert from "../../../app/helpers/toast.ts";
 
 const { member } = defineProps({
   member: {
@@ -40,10 +41,12 @@ const edit = () => {
     .updateMemberById(member.user_id, { role_id: +getKeyByRoleValue(appStore.appConfig.roles, roles.value) })
     .then(() => {
       isShowModalRemove.value = false;
+      toastAlert('Role changed', 'success', 2000)
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
-        errorMessage.value = err.response.data.message;
+        // errorMessage.value = err.response.data.message;
+        toastAlert(err.response.data.message, 'error', 2000)
       }
     })
     .finally(() => (isLoading.value = false));

@@ -5,7 +5,8 @@ const messages = {
     header: {
       nav_dashboard: 'Dashboard',
       nav_list: 'List',
-      nav_history: 'History'
+      nav_history: 'History',
+      question: 'Are you sure?'
     },
     menu: {
       account: 'Account',
@@ -85,7 +86,8 @@ const messages = {
     header: {
       nav_dashboard: 'Panel',
       nav_list: 'Lista',
-      nav_history: 'Historia'
+      nav_history: 'Historia',
+      question: 'Jesteś pewny?'
     },
     menu: {
       account: 'Konto',
@@ -165,7 +167,8 @@ const messages = {
     header: {
       nav_dashboard: 'Armaturenbrett',
       nav_list: 'Aufführen',
-      nav_history: 'Geschichte'
+      nav_history: 'Geschichte',
+      question: 'Bist du sicher?'
     },
     menu: {
       account: 'Konto',
@@ -245,7 +248,8 @@ const messages = {
     header: {
       nav_dashboard: 'Panel',
       nav_list: 'Lista',
-      nav_history: 'Historia'
+      nav_history: 'Historia',
+      question: 'Estas seguro(a)?'
     },
     menu: {
       account: 'Cuenta',
