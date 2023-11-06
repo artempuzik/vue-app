@@ -99,7 +99,7 @@ const submitPassword = () => {
           {{ $t('profile.profile') }}
         </h3>
         <br>
-        <div class="w-50">
+        <div class="wrapper-33">
           <app-ui-auth-input
             v-model="name.value"
             :is-error="name.isError"
@@ -181,5 +181,9 @@ const submitPassword = () => {
 
 .error {
   color: $error-red;
+}
+
+.wrapper-33 {
+  width: 33%;
 }
 </style>

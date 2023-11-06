@@ -72,7 +72,7 @@ const update = () => {
           />
         </div>
         <br>
-        <div class="w-50">
+        <div class="w-25">
           <app-ui-button
             class="p-3"
             :text="'Save'"
