@@ -6,13 +6,16 @@ import {authApi} from "../app/api";
 import {convertRoles} from "../app/helpers";
 import {ReactiveVariable} from "vue/macros";
 import {IAppConfig} from "../app/api/types/types.ts";
+import {useRouter} from "vue-router";
 
 export default defineStore('app', () => {
   const appConfig: ReactiveVariable<IAppConfig> = reactive({
-    isAuth: false,
+    isAuth: true,
     Bearer_Auth: '',
     roles: {}
   });
+
+  const router = useRouter()
 
   const userStore = useUserStore();
   const companyStore = useCompanyStore();
@@ -33,17 +36,20 @@ export default defineStore('app', () => {
         }
         return data;
       })
-      .catch(error => error);
+      .catch(error => {
+        appConfig.isAuth = false;
+        router.push('sign-in')
+        return error
+      })
   };
   const checkAuth = async () => {
     if (!appConfig.Bearer_Auth) {
       const storage_token = localStorage.getItem('Bearer_Auth');
       if (!storage_token) {
-        return;
+        await router.push('sign-in')
       }
       appConfig.Bearer_Auth = storage_token;
     }
-
     return userStore.checkUser()
     };
   const logOut = () => {

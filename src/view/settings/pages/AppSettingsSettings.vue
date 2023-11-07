@@ -3,6 +3,8 @@ import AppLayoutSettings from '../layout/AppLayoutSettings.vue';
 import { CURRENCY, LANGUAGES, TIME_ZONE, DATE_TIME_FORMAT } from '../../../app/config/constants.ts';
 import { reactive } from 'vue';
 import { useCompanyStore } from '../../../store';
+import toastAlert from "../../../app/helpers/toast.ts";
+import {AxiosError} from "axios/index";
 
 const companyStore = useCompanyStore();
 
@@ -37,8 +39,13 @@ const update = () => {
     timezone_id: convertFormatToIndex(currency.value, CURRENCY),
     date_format_id: convertFormatToIndex(time_zone.value, TIME_ZONE),
     currency_id: convertFormatToIndex(date_format.value, CURRENCY)
-  });
-};
+  })
+      .then(() => toastAlert('Success', 'success', 2000)).catch((err: AxiosError<any>) => {
+    if (err.response) {
+      toastAlert(err.response.data.message, 'error', 2000)
+    }
+  })
+}
 </script>
 
 <template>

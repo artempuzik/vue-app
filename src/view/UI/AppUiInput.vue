@@ -46,10 +46,11 @@ const value = computed({
       <img
         v-if="withIcon"
         class="icon"
+        loading="eager"
         :class="{ inactive: isInActive }"
-        src="../../assets/svg/search.svg"
-        width="24"
-        height="24"
+        :style="{ opacity: value ? 1 : 0.7}"
+        src="../../assets/png/search-black.png"
+        width="20"
       >
       <input
         v-model.trim="value"
@@ -102,6 +103,7 @@ const value = computed({
 
 .icon {
   position: absolute;
+  padding: 2px 2px 4px 2px;
   left: 5px;
   width: 25px;
   height: 25px;

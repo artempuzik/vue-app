@@ -117,9 +117,9 @@ const submit = () => {
               {{errorMessage}}
             </h1>
             <br>
-            <h4 class="main-text">
-              {{ $t('auth.sign_up_error_two') }}
-            </h4>
+<!--            <h4 class="main-text">-->
+<!--              {{ $t('auth.sign_up_error_two') }}-->
+<!--            </h4>-->
 <!--            <br>-->
 <!--            <br>-->
 <!--            <app-ui-button-->

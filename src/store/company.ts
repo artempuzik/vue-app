@@ -80,6 +80,7 @@ export default defineStore('company', () => {
       if (data.status === 200) {
         settings = Object.assign(settings, dto);
       }
+      return data;
     });
   };
 

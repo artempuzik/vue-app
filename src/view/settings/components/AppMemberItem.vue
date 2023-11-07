@@ -62,7 +62,8 @@ const remove = () => {
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
-        errorMessage.value = err.response.data.message;
+        // errorMessage.value = err.response.data.message;
+        toastAlert(err.response.data.message, 'error', 2000)
       }
     })
     .finally(() => (isLoading.value = false));

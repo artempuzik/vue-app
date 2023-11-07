@@ -1,9 +1,4 @@
-import AppAuthSignIn from '../view/auth/pages/AppAuthSignIn.vue';
-import AppAuthSignUp from '../view/auth/pages/AppAuthSignUp.vue';
-import AppAuthReset from '../view/auth/pages/AppAuthReset.vue';
-import AppSettingsSettings from '../view/settings/pages/AppSettingsSettings.vue';
-import AppSettingsProfile from '../view/settings/pages/AppSettingsProfile.vue';
-import AppSettingsManager from '../view/settings/pages/AppSettingsManager.vue';
+import AppMainDashboard from "../view/main/AppMainDashboard.vue";
 
 const routes = [
   {
@@ -14,7 +9,7 @@ const routes = [
   },
   {
     path: '/dashboard',
-    component: () => import('../view/main/AppMainDashboard.vue'),
+    component: AppMainDashboard,
     name: 'dashboard',
     meta: { requiresAuth: true }
   },
@@ -33,34 +28,34 @@ const routes = [
   {
     path: '/sign-in',
     name: 'sign-in',
-    component: AppAuthSignIn
+    component: () => import('../view/auth/pages/AppAuthSignIn.vue'),
   },
   {
     path: '/sign-up',
     name: 'sign-up',
-    component: AppAuthSignUp
+    component: () => import('../view/auth/pages/AppAuthSignUp.vue'),
   },
   {
     path: '/reset-password',
     name: 'reset-password',
-    component: AppAuthReset
+    component: () => import('../view/auth/pages/AppAuthReset.vue'),
   },
   {
     path: '/settings',
     name: 'settings',
-    component: AppSettingsSettings,
+    component: () => import('../view/settings/pages/AppSettingsSettings.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/profile',
     name: 'profile',
-    component: AppSettingsProfile,
+    component: () => import('../view/settings/pages/AppSettingsProfile.vue'),
     meta: { requiresAuth: true }
   },
   {
     path: '/manager',
     name: 'manager',
-    component: AppSettingsManager,
+    component: () => import('../view/settings/pages/AppSettingsManager.vue'),
     meta: { requiresAuth: true }
   },
   {

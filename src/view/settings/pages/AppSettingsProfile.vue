@@ -4,6 +4,8 @@ import AppUiAuthInput from '../../UI/AppUiAuthInput.vue';
 import { computed, reactive, ref } from 'vue';
 import { useUserStore } from '../../../store';
 import { checkPassword } from '../../../app/helpers';
+import toastAlert from "../../../app/helpers/toast.ts";
+import {AxiosError} from "axios";
 
 const userStore = useUserStore();
 
@@ -68,11 +70,13 @@ const submitUser = () => {
       name: name.value,
       surname: surname.value
     })
-    .catch(err => {
-      if (err.response) {
-        errorUserMessage.value = err.response.data.message;
-      }
-    })
+      .then(() => toastAlert('Success', 'success', 2000))
+      .catch(err => {
+        if (err.response) {
+          // errorPasswordMessage.value = err.response.data.message;
+          toastAlert(err.response.data.message, 'error', 2000)
+        }
+      })
     .finally(() => (isLoadingUser.value = false));
 };
 
@@ -82,9 +86,11 @@ const submitPassword = () => {
       password: password.password,
       new_password: password.value
     })
+    .then(() => toastAlert('Success', 'success', 2000))
     .catch(err => {
       if (err.response) {
-        errorPasswordMessage.value = err.response.data.message;
+        // errorPasswordMessage.value = err.response.data.message;
+        toastAlert(err.response.data.message, 'error', 2000)
       }
     })
     .finally(() => (isLoadingPassword.value = false));

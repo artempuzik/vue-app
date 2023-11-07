@@ -4,7 +4,6 @@ import { PROJECT_NAME } from '../../app/config/enviroments.ts';
 import { useRouter } from 'vue-router';
 import { useUserStore, useAppStore } from '../../store';
 import AppUiButton from "./AppUiButton.vue";
-import AppUiInput from "./AppUiInput.vue";
 
 const router = useRouter();
 const userStore = useUserStore();
@@ -106,53 +105,21 @@ const logOut = () => {
         @click="isOpen = false"
         @focusout="isOpen = false"
       >
-        <router-link to="profile">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <rect width="20" height="20" fill="url(#pattern0)"/>
-            <defs>
-              <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                <use xlink:href="#image0_0_744" transform="scale(0.0416667)"/>
-              </pattern>
-              <image id="image0_0_744" width="24" height="24" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAuElEQVR4nO2SQQrCMBBFHxLQM6hd9xgeSW+gF+g9Wil0J55DXOoNVGx3XUWEEUKoY8ERN33wIWSS/xYJDBiRACXQSCogtSy/Aj7KTWZfU3aUv7K1EDSKoP614G4hqBRBYSFI5UHj8gswx4hEHrSWFJblA28ZAQtgA2SAC2ZO9tZy5nm2NxNgBZyjX5NLsZN1ODsBS2D8qXwGHJV/n3eUhzkAU02wVy77ntlpgtZA0GoCb5T/CQaIeQDxA5ROSTkZCgAAAABJRU5ErkJggg=="/>
-            </defs>
-          </svg>
+        <router-link to="profile" class="d-flex flex-row align-items-center">
+          <img src="../../assets/png/person.png" width="20" height="20" />
           <span class="mx-2 link">{{ $t('menu.account') }}</span>
         </router-link>
-        <router-link to="settings">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <rect width="20" height="20" fill="url(#pattern0)"/>
-            <defs>
-              <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                <use xlink:href="#image0_0_747" transform="scale(0.0416667)"/>
-              </pattern>
-              <image id="image0_0_747" width="24" height="24" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABUklEQVR4nOWVT0pDMRDGfxtXigs9RN2o3fhnabvQZT1FexYRxerGogepV/AMXbUqouuH8lSUgS8wxNe+RBEUPxgyyUy+SSbJBP4TloFCYvq30QHGQFf9HeBdYrqhJx/zzcaFyErpIxdgpLFSfdOz0XKEdWK+SdgHLjXhSpOfgRNgyxFuA33ZrD8E2pprHFMxjlZ2A6w6exgPWJOPn2McU9F1eX0SATMChCBhJ6W7FLWHa2kJmAOOXIBDjQX0Uw57SbkPt2XD2Ty5DxKw6W5XS1yfUEQE8872WBHgwdkXIluRE2AFeKkIYGONnABxinaBY3foVVIqfXspKYoP+U3tKzBQzu8lB8C5bN639kX3ohVfA80Z/k35+B0ZR/JDu614Cx7rwF3OQ/OlYuhWdarysCgx/czt1peK5Mrazih25vv7ynUHmCR8OJOvfjg//mXyJ/ABlmO9TQcQwLsAAAAASUVORK5CYII="/>
-            </defs>
-          </svg>
+        <router-link to="settings" class="d-flex flex-row align-items-center">
+          <img src="../../assets/png/settings.png" width="20" height="20" />
           <span class="mx-2 link">{{ $t('menu.settings') }}</span>
         </router-link>
-        <router-link to="manager">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <rect width="20" height="20" fill="url(#pattern0)"/>
-            <defs>
-              <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                <use xlink:href="#image0_0_741" transform="scale(0.0416667)"/>
-              </pattern>
-              <image id="image0_0_741" width="24" height="24" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAo0lEQVR4nO2RvQ3CMBBGXwEZgDkYKjMwRAhDIDZgm2wQJz2N6YzOulBYVi6ORBPypK/xux/JBzt/SwXcgAFwQKtvS72JNIQkbYE3GTIDxgJv4jID+gJvkvuCa4E3qXSImznynN8wJ6AGnkAHvDSdvtVaM3Ex/Jcj0AA+c7yQxGut9AgPw0fuCwaHJNIjnA0fea9Y4LX3YPhIWJkJy/9+wc6G+QAuxJ7LTV0aUgAAAABJRU5ErkJggg=="/>
-            </defs>
-          </svg>
+        <router-link to="manager" class="d-flex flex-row align-items-center">
+          <img src="../../assets/png/group.png" width="20" height="20" />
           <span class="mx-2 link">{{ $t('menu.management') }}</span>
         </router-link>
         <hr class="my-2">
-        <div @click="isCheckLogoutPopup = true">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <rect width="20" height="20" fill="url(#pattern0)"/>
-            <defs>
-              <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-                <use xlink:href="#image0_0_750" transform="scale(0.0416667)"/>
-              </pattern>
-              <image id="image0_0_750" width="24" height="24" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAf0lEQVR4nOWVQQqAIBBF376zdI/sFK66VtCl2tcd2k4EtpRGc0jsw4dZzJ+HigotagR2QBJ9ZZwGkDNcgjcN4G5OlWhz/wXMVgAfqYsBBFiALiWQChBgBfq3AHnwAUxVA8y36JND9pG6GMD8orXzFok2Z/7huNCYM3zIWHnlOgFUboiZOMRTJgAAAABJRU5ErkJggg=="/>
-            </defs>
-          </svg>
+        <div @click="isCheckLogoutPopup = true" class="d-flex flex-row align-items-center">
+          <img src="../../assets/png/logout.png" width="20" height="20" />
           <span class="mx-2 link">{{ $t('menu.logout') }}</span>
         </div>
       </div>
