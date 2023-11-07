@@ -13,11 +13,9 @@ const userName = computed(() => `${userStore.user.name} ${userStore.user.surname
 
 const emit = defineEmits(['update:tab']);
 
-const activeTab = ref('Dashboard');
 const isCheckLogoutPopup = ref(false);
 
 const clickToTab = (tab: string) => {
-  activeTab.value = tab;
   emit('update:tab', tab);
 };
 
@@ -57,7 +55,6 @@ const logOut = () => {
           <router-link
             to="dashboard"
             class="m-1 p-2 link"
-            :class="{ active_tab: activeTab === 'Dashboard' }"
             @click="clickToTab('Dashboard')"
           >
             <span class="main-text">{{ $t('header.nav_dashboard') }}</span>
@@ -65,7 +62,6 @@ const logOut = () => {
           <router-link
             to="list"
             class="m-1 p-2 link"
-            :class="{ active_tab: activeTab === 'List' }"
             @click="clickToTab('List')"
           >
             <span class="main-text">{{ $t('header.nav_list') }}</span>
@@ -73,7 +69,6 @@ const logOut = () => {
           <router-link
             to="history"
             class="m-1 p-2 link"
-            :class="{ active_tab: activeTab === 'History' }"
             @click="clickToTab('History')"
           >
             <span class="main-text">{{ $t('header.nav_history') }}</span>

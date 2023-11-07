@@ -7,7 +7,7 @@ import {convertRoles, mapOptions} from "../app/helpers";
 import {ReactiveVariable} from "vue/macros";
 import {IAppConfig, IAppSettings, ICompanySettings} from "../app/api/types/types.ts";
 import {useRouter} from "vue-router";
-import {LANGUAGES, OPTIONS} from "../app/config/constants.ts";
+import {OPTIONS} from "../app/config/constants.ts";
 import {useI18n} from "vue-i18n";
 
 export default defineStore('app', () => {
@@ -18,10 +18,10 @@ export default defineStore('app', () => {
   });
 
   let settings = reactive({
-    language_id: 0,
-    currency_id: 0,
-    timezone_id: 0,
-    date_format_id: 0,
+    language_id: 1,
+    currency_id: 1,
+    timezone_id: 1,
+    date_format_id: 1,
   });
 
   const settingsOptions: Ref<IAppSettings | null> = ref(null);
@@ -42,13 +42,13 @@ export default defineStore('app', () => {
     await authApi.getSettingsOptionsListFetch(appConfig.Bearer_Auth).then(response => {
       if (response.status === 200) {
         settingsOptions.value = mapOptions(response.data.data);
-        console.log(settingsOptions.value)
       }
     })
     await authApi.getSettingsListFetch(appConfig.Bearer_Auth).then(response => {
       if (response.status === 200) {
         companyStore.company.id = response.data.company_id;
         settings.language_id = response.data.settings.language_id;
+        settings.currency_id = response.data.settings.currency_id;
         settings.timezone_id = response.data.settings.timezone_id;
         settings.date_format_id = response.data.settings.date_format_id;
       }
@@ -73,9 +73,9 @@ export default defineStore('app', () => {
 
   const initApp = async () => {
     return checkAuth()
-      .then(data => {
+      .then(async (data) => {
         if (appConfig.Bearer_Auth) {
-          getOptions()
+          await getOptions()
         }
         return data;
       })
@@ -116,6 +116,7 @@ export default defineStore('app', () => {
   return {
     appConfig,
     settings,
+    settingsOptions,
     initApp,
     checkAuth,
     logOut,

@@ -1,10 +1,3 @@
-const LANGUAGES: { [key: string]: string } = {
-  English: 'en',
-  Deutch: 'de',
-  Polski: 'pl',
-  Español: 'esp'
-};
-
 enum OPTIONS {
   'languages' = 'languages',
   'timezones' = 'timezones',

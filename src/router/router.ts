@@ -4,6 +4,7 @@ import { useAppStore } from '../store';
 
 const router = createRouter({
   history: createWebHistory(),
+  linkActiveClass: 'active_tab',
   routes
 });
 

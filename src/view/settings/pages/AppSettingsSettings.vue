@@ -1,44 +1,45 @@
 <script setup lang="ts">
 import AppLayoutSettings from '../layout/AppLayoutSettings.vue';
-import { CURRENCY, LANGUAGES, TIME_ZONE, DATE_TIME_FORMAT } from '../../../app/config/constants.ts';
-import { reactive } from 'vue';
-import { useCompanyStore, useAppStore } from '../../../store';
+import {OPTIONS} from '../../../app/config/constants.ts';
+import {reactive, watch} from 'vue';
+import { useAppStore } from '../../../store';
 import toastAlert from "../../../app/helpers/toast.ts";
 import {AxiosError} from "axios";
 
 const appStore = useAppStore();
-
 const languages = reactive({
-  value: appStore.settings.lang,
-  options: Object.keys(LANGUAGES)
+  value: '',
+  options: []
 });
 const currency = reactive({
-  value: CURRENCY[appStore.settings.currency_id],
-  options: CURRENCY
+  value: '',
+  options: []
 });
 const time_zone = reactive({
-  value: TIME_ZONE[appStore.settings.timezone_id],
-  options: TIME_ZONE
+  value: '',
+  options: []
 });
 const date_format = reactive({
-  value: DATE_TIME_FORMAT[appStore.settings.date_format_id],
-  options: DATE_TIME_FORMAT
+  value: '',
+  options: []
 });
 
-const convertFormatToIndex = (value: string, array: string[]) => {
-  const index = array.findIndex(v => v === value)
-  if (index === -1) {
-    return 0
+const convertFormatToIndex = (value: string, object: {}) => {
+  const values = Object.keys(object)
+  //@ts-ignore
+  const element = values.find(key => object[key] === value)
+  if (!element) {
+    return 1
   }
-  return index
+  return +element
 }
 
 const update = () => {
   appStore.updateSettings({
-    language_id: convertFormatToIndex(languages.value, Object.keys(LANGUAGES)),
-    timezone_id: convertFormatToIndex(currency.value, CURRENCY),
-    date_format_id: convertFormatToIndex(time_zone.value, TIME_ZONE),
-    currency_id: convertFormatToIndex(date_format.value, CURRENCY)
+    language_id: convertFormatToIndex(languages.value, appStore.settingsOptions[OPTIONS.languages]),
+    timezone_id: convertFormatToIndex(currency.value, appStore.settingsOptions[OPTIONS.timezones]),
+    date_format_id: convertFormatToIndex(time_zone.value, appStore.settingsOptions[OPTIONS.data_formats]),
+    currency_id: convertFormatToIndex(date_format.value, appStore.settingsOptions[OPTIONS.currencies])
   })
       .then(() => toastAlert('Success', 'success', 2000)).catch((err: AxiosError<any>) => {
     if (err.response) {
@@ -46,6 +47,20 @@ const update = () => {
     }
   })
 }
+
+watch(() => [appStore.settingsOptions, appStore.settings], ()=> {
+  if (!appStore.settingsOptions) {
+    return
+  }
+  languages.value = appStore.settingsOptions[OPTIONS.languages][appStore.settings.language_id];
+  languages.options = Object.values(appStore.settingsOptions[OPTIONS.languages]);
+  currency.value = appStore.settingsOptions[OPTIONS.currencies][appStore.settings.currency_id];
+  currency.options = Object.values(appStore.settingsOptions[OPTIONS.currencies]);
+  time_zone.value = appStore.settingsOptions[OPTIONS.timezones][appStore.settings.timezone_id];
+  time_zone.options = Object.values(appStore.settingsOptions[OPTIONS.timezones]);
+  date_format.value = appStore.settingsOptions[OPTIONS.data_formats][appStore.settings.date_format_id];
+  date_format.options = Object.values(appStore.settingsOptions[OPTIONS.data_formats]);
+}, {immediate: true, deep: true })
 </script>
 
 <template>
