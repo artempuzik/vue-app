@@ -2,26 +2,26 @@
 import AppLayoutSettings from '../layout/AppLayoutSettings.vue';
 import { CURRENCY, LANGUAGES, TIME_ZONE, DATE_TIME_FORMAT } from '../../../app/config/constants.ts';
 import { reactive } from 'vue';
-import { useCompanyStore } from '../../../store';
+import { useCompanyStore, useAppStore } from '../../../store';
 import toastAlert from "../../../app/helpers/toast.ts";
-import {AxiosError} from "axios/index";
+import {AxiosError} from "axios";
 
-const companyStore = useCompanyStore();
+const appStore = useAppStore();
 
 const languages = reactive({
-  value: companyStore.settings.lang,
+  value: appStore.settings.lang,
   options: Object.keys(LANGUAGES)
 });
 const currency = reactive({
-  value: CURRENCY[companyStore.settings.currency_id],
+  value: CURRENCY[appStore.settings.currency_id],
   options: CURRENCY
 });
 const time_zone = reactive({
-  value: TIME_ZONE[companyStore.settings.timezone_id],
+  value: TIME_ZONE[appStore.settings.timezone_id],
   options: TIME_ZONE
 });
 const date_format = reactive({
-  value: DATE_TIME_FORMAT[companyStore.settings.date_format_id],
+  value: DATE_TIME_FORMAT[appStore.settings.date_format_id],
   options: DATE_TIME_FORMAT
 });
 
@@ -34,7 +34,7 @@ const convertFormatToIndex = (value: string, array: string[]) => {
 }
 
 const update = () => {
-  companyStore.updateSettings({
+  appStore.updateSettings({
     language_id: convertFormatToIndex(languages.value, Object.keys(LANGUAGES)),
     timezone_id: convertFormatToIndex(currency.value, CURRENCY),
     date_format_id: convertFormatToIndex(time_zone.value, TIME_ZONE),

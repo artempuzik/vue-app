@@ -8,6 +8,7 @@ import AppUiButton from '../../UI/AppUiButton.vue';
 import { AxiosError } from 'axios';
 import {getKeyByRoleValue} from "../../../app/helpers";
 import toastAlert from "../../../app/helpers/toast.ts";
+import AppMemberRole from "./AppMemberRole.vue";
 
 const { member } = defineProps({
   member: {
@@ -114,9 +115,7 @@ const remove = () => {
     <td>{{ member.name }} {{ member.surname }}</td>
     <td>{{ member.email }}</td>
     <td class="pe-2">
-      <div class="alert alert-primary py-0 px-1 border-0 text-center mt-1 mb-0 alert_color" role="alert">
-        {{ appStore.appConfig.roles[member.role_id] }}
-      </div>
+      <app-member-role :role="appStore.appConfig.roles[member.role_id]" />
     </td>
     <td>{{ member.logged_at && new Date(member.logged_at).toLocaleString() }}</td>
     <td>{{ member.created_at && new Date(member.created_at).toLocaleString() }}</td>

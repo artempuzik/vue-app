@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -34,6 +34,11 @@ const value = computed({
     emit('update:modelValue', value);
   }
 });
+
+const isFocused = ref(false)
+
+const setIsFocused = (value: boolean) => isFocused.value = value;
+
 </script>
 
 <template>
@@ -46,14 +51,16 @@ const value = computed({
       <img
         v-if="withIcon"
         class="icon"
-        loading="eager"
+        loading="lazy"
         :class="{ inactive: isInActive }"
-        :style="{ opacity: value ? 1 : 0.7}"
+        :style="{ opacity: value || isFocused ? 1 : 0.5}"
         src="../../assets/png/search-black.png"
         width="20"
       >
       <input
         v-model.trim="value"
+        @focusin="setIsFocused(true)"
+        @focusout="setIsFocused(false)"
         style="width: 100%"
         :placeholder="placeholder"
         class="app_input"

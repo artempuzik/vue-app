@@ -5,7 +5,6 @@ import { computed, reactive, ref } from 'vue';
 import { useUserStore } from '../../../store';
 import { checkPassword } from '../../../app/helpers';
 import toastAlert from "../../../app/helpers/toast.ts";
-import {AxiosError} from "axios";
 
 const userStore = useUserStore();
 

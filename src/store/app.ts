@@ -1,12 +1,14 @@
 import { defineStore } from 'pinia';
 import useUserStore from './user.ts';
 import useCompanyStore from './company.ts';
-import { reactive } from 'vue';
+import {reactive, ref, Ref, watch} from 'vue';
 import {authApi} from "../app/api";
-import {convertRoles} from "../app/helpers";
+import {convertRoles, mapOptions} from "../app/helpers";
 import {ReactiveVariable} from "vue/macros";
-import {IAppConfig} from "../app/api/types/types.ts";
+import {IAppConfig, IAppSettings, ICompanySettings} from "../app/api/types/types.ts";
 import {useRouter} from "vue-router";
+import {LANGUAGES, OPTIONS} from "../app/config/constants.ts";
+import {useI18n} from "vue-i18n";
 
 export default defineStore('app', () => {
   const appConfig: ReactiveVariable<IAppConfig> = reactive({
@@ -15,15 +17,57 @@ export default defineStore('app', () => {
     roles: {}
   });
 
+  let settings = reactive({
+    language_id: 0,
+    currency_id: 0,
+    timezone_id: 0,
+    date_format_id: 0,
+  });
+
+  const settingsOptions: Ref<IAppSettings | null> = ref(null);
+
+  const { locale } = useI18n();
+
   const router = useRouter()
 
   const userStore = useUserStore();
   const companyStore = useCompanyStore();
 
+  const getOptions = async () => {
+    await getSettings();
+    await getRoleOptions()
+  }
+
+  const getSettings = async () => {
+    await authApi.getSettingsOptionsListFetch(appConfig.Bearer_Auth).then(response => {
+      if (response.status === 200) {
+        settingsOptions.value = mapOptions(response.data.data);
+        console.log(settingsOptions.value)
+      }
+    })
+    await authApi.getSettingsListFetch(appConfig.Bearer_Auth).then(response => {
+      if (response.status === 200) {
+        companyStore.company.id = response.data.company_id;
+        settings.language_id = response.data.settings.language_id;
+        settings.timezone_id = response.data.settings.timezone_id;
+        settings.date_format_id = response.data.settings.date_format_id;
+      }
+    })
+  }
+
+  const updateSettings = async (dto: ICompanySettings) => {
+    return authApi.setCompanySettingsFetch(dto, appConfig.Bearer_Auth).then(response => {
+      if (response.status === 200) {
+        settings = Object.assign(settings, dto);
+      }
+      return response;
+    });
+  };
+
   const getRoleOptions = async () =>
-      authApi.getRoleOptionsListFetch(appConfig.Bearer_Auth).then(data => {
-        if (data.status === 200) {
-          appConfig.roles = convertRoles(data.data)
+      authApi.getRoleOptionsListFetch(appConfig.Bearer_Auth).then(response => {
+        if (response.status === 200) {
+          appConfig.roles = convertRoles(response.data)
         }
       });
 
@@ -31,8 +75,7 @@ export default defineStore('app', () => {
     return checkAuth()
       .then(data => {
         if (appConfig.Bearer_Auth) {
-          companyStore.getSettings();
-          getRoleOptions()
+          getOptions()
         }
         return data;
       })
@@ -48,7 +91,7 @@ export default defineStore('app', () => {
       if (!storage_token) {
         await router.push('sign-in')
       }
-      appConfig.Bearer_Auth = storage_token;
+      appConfig.Bearer_Auth = storage_token as string;
     }
     return userStore.checkUser()
     };
@@ -57,10 +100,26 @@ export default defineStore('app', () => {
     appConfig.isAuth = false;
     localStorage.clear();
   };
+
+  watch(
+      () => settings.language_id,
+      () => {
+        if(!settingsOptions.value) {
+          locale.value = 'en';
+          return;
+        }
+        locale.value = settingsOptions.value[OPTIONS.languages][settings.language_id]
+      },
+      { immediate: true }
+  );
+
   return {
     appConfig,
+    settings,
     initApp,
     checkAuth,
-    logOut
+    logOut,
+    getOptions,
+    updateSettings,
   };
 });

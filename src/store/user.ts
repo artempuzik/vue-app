@@ -37,7 +37,7 @@ export default defineStore('user', () => {
     });
 
   const loginUser = (dto: ILoginUser) =>
-    authApi.loginUserFetch(dto).then(data => {
+    authApi.loginUserFetch(dto).then(async (data) => {
       if (data.status === 200) {
         const { user_id, company_id, Bearer_Auth } = data.data as IUserResponse;
         appStore.appConfig.isAuth = true;
@@ -45,7 +45,8 @@ export default defineStore('user', () => {
         user.user_id = user_id;
         appStore.appConfig.Bearer_Auth = Bearer_Auth;
         localStorage.setItem('Bearer_Auth', Bearer_Auth);
-        router.replace('main');
+        await router.replace('main');
+        await appStore.getOptions()
       }
     });
   const checkExistUserByEmail = async (dto: IFirstCheckUserByEmail) => {

@@ -52,7 +52,7 @@ const submit = () => {
       if (err.response) {
         login.isError = true;
         password.isError = true;
-        login.error = err.response.data.detail || 'Invalid data'
+        errorMessage.value = 'Invalid Username or Password'
       }
     })
     .finally(() => (isLoading.value = false));
@@ -75,14 +75,12 @@ const submit = () => {
           v-model="login.value"
           :is-error="login.isError"
           :label="$t('auth.email')"
-          :error-message="login.error"
         />
         <app-ui-auth-input
           v-model="password.value"
           :is-error="password.isError"
           :label="$t('auth.password')"
           :is-password="true"
-          :error-message="password.error"
         />
         <div class="w-100 d-flex flex-column align-items-end my-2">
           <router-link to="reset-password">
@@ -91,13 +89,6 @@ const submit = () => {
         </div>
         <br>
         <br>
-        <div
-          v-if="errorMessage"
-          class="w-100 text-center"
-        >
-          <span class="error">{{ errorMessage }}</span>
-        </div>
-        <br v-else>
         <app-ui-button
           class="p-3"
           :text="'Sign in'"
@@ -106,7 +97,13 @@ const submit = () => {
           :size="'normal'"
           @click="submit"
         />
-        <br>
+        <div
+            v-if="errorMessage"
+            class="w-100 text-center"
+        >
+          <span class="error">{{ errorMessage }}</span>
+        </div>
+        <br v-else>
         <br>
         <div class="w-100 d-flex flex-column align-items-start my-2">
           <span class="main-text">{{ $t('auth.not_exist_account_text') }}

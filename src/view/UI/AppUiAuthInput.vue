@@ -58,8 +58,11 @@ const value = computed({
       :disabled="isInActive"
       :class="{ error: isError, active: !isInActive, inactive: isInActive }"
       :type="!isPassword ? 'text' : 'password'"
-      :style="{ marginBottom: isError ? '0px' : '28px' }"
     >
+    <span
+        v-if="!isError"
+        class="error_text mt-1 mb-1"
+    ></span>
     <span
       v-if="isError"
       class="error_text mt-1 mb-1"

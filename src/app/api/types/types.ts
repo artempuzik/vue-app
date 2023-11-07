@@ -1,3 +1,5 @@
+import {OPTIONS} from '../../config/constants.ts'
+
 export interface ILoginUser {
   login: string;
   password: string;
@@ -148,12 +150,20 @@ export interface IAppConfig {
   roles: {[key: number]: string}
 }
 
+export type IAppSettings = {
+  [key in OPTIONS]: {[key: number]: string};
+};
+
 export interface IOption {
   option_id: number,
   option_name: string,
 }
 
 export interface ISettingsOptions {
-  settings_name: string,
-  settings_options: IOption[]
+  [key: string]: IOption
+}
+
+export interface IOptionSetting {
+  settings_name: OPTIONS,
+  settings_options: Array<IOption>,
 }
