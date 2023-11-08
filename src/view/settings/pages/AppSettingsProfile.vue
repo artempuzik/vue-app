@@ -79,14 +79,26 @@ const submitUser = () => {
     .finally(() => (isLoadingUser.value = false));
 };
 
+const clearPasswordFields = () => {
+  password.value = '';
+  password.error = '';
+  password.confirm = '';
+  password.password = '';
+  password.isError = false;
+}
+
 const submitPassword = () => {
   userStore
     .changeProfilePassword({
       password: password.password,
       new_password: password.value
     })
-    .then(() => toastAlert('Success', 'success', 2000))
+    .then(() => {
+      clearPasswordFields()
+      toastAlert('Success', 'success', 2000)
+    })
     .catch(err => {
+      clearPasswordFields()
       if (err.response) {
         // errorPasswordMessage.value = err.response.data.detail;
         toastAlert(err.response.data.detail, 'error', 2000)

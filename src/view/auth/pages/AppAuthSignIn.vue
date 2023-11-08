@@ -45,9 +45,6 @@ const submit = () => {
   errorMessage.value = '';
   userStore
     .loginUser({ login: login.value, password: password.value })
-    .then(() => {
-      userStore.checkUser()
-    })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
         login.isError = true;

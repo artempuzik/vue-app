@@ -130,11 +130,9 @@ const submit = () => {
     <template #left>
       <div class="sign-in_box w-100 d-flex flex-column align-items-start justify-content-start p-1">
         <span
-          class="link-text"
+          class="back_btn link-text"
           @click="goBack"
         >Back</span>
-        <br>
-        <br>
         <h1 class="main-title">
           {{ $t('auth.reset_password_title') }}
         </h1>
@@ -194,5 +192,10 @@ const submit = () => {
 <style scoped lang="scss">
 .sign-in_box {
   max-width: 500px;
+}
+
+.back_btn {
+  position: absolute;
+  top: -100px;
 }
 </style>

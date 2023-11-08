@@ -14,55 +14,69 @@ import {
 import { reactive } from 'vue';
 import {useRouter} from "vue-router";
 
+const initUser = {
+  user_id: 0,
+  isAdmin: false,
+  name: '',
+  surname: '',
+  email: '',
+}
+
 export default defineStore('user', () => {
-  const user = reactive({
-    user_id: 0,
-    isAdmin: false,
-    name: '',
-    surname: '',
-    email: '',
-  });
+  let user = reactive({...initUser});
   const router = useRouter();
   const appStore = useAppStore();
   const companyStore = useCompanyStore();
-  const checkUser = async () =>
-      authApi.checkUserFetch(appStore.appConfig.Bearer_Auth).then(data => {
+  const checkUser = async () => {
+    appStore.isLoading = true
+    return authApi.checkUserFetch(appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
-        const { name, surname } = data.data;
+        const {name, surname} = data.data;
         user.name = name;
         user.surname = surname;
         appStore.appConfig.isAuth = true;
       }
       return data;
-    });
+    })
+    .then(async (data) => {
+      await appStore.getOptions()
+      return data
+    })
+    .catch(() => {
+      appStore.appConfig.isAuth = false;
+       router.push('sign-in')
+    })
+    .finally(() => appStore.isLoading = false);
+  }
 
-  const loginUser = (dto: ILoginUser) =>
-    authApi.loginUserFetch(dto).then(async (data) => {
+  const setAuth = async ({ user_id, company_id, Bearer_Auth }: IUserResponse) => {
+    appStore.appConfig.isAuth = true;
+    companyStore.company.id = company_id;
+    user.user_id = user_id;
+    appStore.appConfig.Bearer_Auth = Bearer_Auth;
+    localStorage.setItem('Bearer_Auth', Bearer_Auth);
+    await appStore.getOptions()
+    await router.replace('main');
+  }
+
+  const loginUser = (dto: ILoginUser) =>  authApi.loginUserFetch(dto).then(async (data) => {
+      appStore.isLoading = true
       if (data.status === 200) {
-        const { user_id, company_id, Bearer_Auth } = data.data as IUserResponse;
-        appStore.appConfig.isAuth = true;
-        companyStore.company.id = company_id;
-        user.user_id = user_id;
-        appStore.appConfig.Bearer_Auth = Bearer_Auth;
-        localStorage.setItem('Bearer_Auth', Bearer_Auth);
-        await router.replace('main');
-        await appStore.getOptions()
+        await setAuth(data.data)
       }
-    });
+    }).then(() => checkUser())
   const checkExistUserByEmail = async (dto: IFirstCheckUserByEmail) => {
     return authApi.checkExistUserByEmailFetch(dto).then(data => {
       if (data.status === 200) {
         appStore.appConfig.Bearer_Auth = data.data.Bearer_Auth;
-        localStorage.setItem('Bearer_Auth', appStore.appConfig.Bearer_Auth);
       }
       return data;
     })
   };
   const createUser = async (dto: ICreateUser) => {
-    return authApi.createUserFetch(dto).then(data => {
+    return authApi.createUserFetch(dto).then(async (data) => {
       if (data.status === 200) {
-        user.user_id = data.data.user_id;
-        router.replace('sign-in');
+        await setAuth(data.data)
       }
       return data;
     });
@@ -107,8 +121,13 @@ export default defineStore('user', () => {
       }
     });
 
+  const clearUser = () => {
+    user = Object.assign(user, initUser)
+  }
+
   return {
     user,
+    clearUser,
     checkUser,
     loginUser,
     updateUser,

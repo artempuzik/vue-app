@@ -85,6 +85,7 @@ const value = computed({
   position: absolute;
   padding: 9px 9px;
   background-color: $white-color;
+  border-radius: $button-border-radius;
   left: -1px;
   top: 60px;
   width: 100%;

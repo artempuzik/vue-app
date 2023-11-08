@@ -17,6 +17,8 @@ export default defineStore('app', () => {
     roles: {}
   });
 
+  const isLoading = ref(false)
+
   let settings = reactive({
     language_id: 1,
     currency_id: 1,
@@ -34,25 +36,11 @@ export default defineStore('app', () => {
   const companyStore = useCompanyStore();
 
   const getOptions = async () => {
+    console.log('starting')
     await getSettings();
     await getRoleOptions()
-  }
-
-  const getSettings = async () => {
-    await authApi.getSettingsOptionsListFetch(appConfig.Bearer_Auth).then(response => {
-      if (response.status === 200) {
-        settingsOptions.value = mapOptions(response.data.data);
-      }
-    })
-    await authApi.getSettingsListFetch(appConfig.Bearer_Auth).then(response => {
-      if (response.status === 200) {
-        companyStore.company.id = response.data.company_id;
-        settings.language_id = response.data.settings.language_id;
-        settings.currency_id = response.data.settings.currency_id;
-        settings.timezone_id = response.data.settings.timezone_id;
-        settings.date_format_id = response.data.settings.date_format_id;
-      }
-    })
+    await companyStore.getMemberList()
+    console.log('ending')
   }
 
   const updateSettings = async (dto: ICompanySettings) => {
@@ -70,20 +58,25 @@ export default defineStore('app', () => {
           appConfig.roles = convertRoles(response.data)
         }
       });
+  const getSettings = async () => {
+    await authApi.getSettingsOptionsListFetch(appConfig.Bearer_Auth).then(response => {
+      if (response.status === 200) {
+        settingsOptions.value = mapOptions(response.data.data);
+      }
+    })
+    await authApi.getSettingsListFetch(appConfig.Bearer_Auth).then(response => {
+      if (response.status === 200) {
+        companyStore.company.id = response.data.company_id;
+        settings.language_id = response.data.settings.language_id;
+        settings.currency_id = response.data.settings.currency_id;
+        settings.timezone_id = response.data.settings.timezone_id;
+        settings.date_format_id = response.data.settings.date_format_id;
+      }
+    })
+  }
 
   const initApp = async () => {
     return checkAuth()
-      .then(async (data) => {
-        if (appConfig.Bearer_Auth) {
-          await getOptions()
-        }
-        return data;
-      })
-      .catch(error => {
-        appConfig.isAuth = false;
-        router.push('sign-in')
-        return error
-      })
   };
   const checkAuth = async () => {
     if (!appConfig.Bearer_Auth) {
@@ -93,11 +86,16 @@ export default defineStore('app', () => {
       }
       appConfig.Bearer_Auth = storage_token as string;
     }
-    return userStore.checkUser()
+    if(appConfig.Bearer_Auth) {
+      return userStore.checkUser()
+    } else {
+      appConfig.isAuth = false;
+    }
     };
   const logOut = () => {
     appConfig.Bearer_Auth = '';
     appConfig.isAuth = false;
+    userStore.clearUser();
     localStorage.clear();
   };
 
@@ -117,6 +115,7 @@ export default defineStore('app', () => {
     appConfig,
     settings,
     settingsOptions,
+    isLoading,
     initApp,
     checkAuth,
     logOut,

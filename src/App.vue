@@ -7,30 +7,25 @@ import { startIntercomMessenger } from './intercom';
 const appStore = useAppStore();
 const userStore = useUserStore();
 
-const isLoading = ref(false);
-
 const init = () => {
-  isLoading.value = true;
   appStore
     .initApp()
     .then(() => {
       startIntercomMessenger(userStore.user.email);
     })
-    .finally(() => (isLoading.value = false));
 };
 
 init();
 </script>
-
 <template>
   <div
-    v-if="isLoading"
+    v-if="appStore.isLoading"
     class="d-flex flex-column align-items-center justify-content-center app_wrapper"
   >
     <app-ui-spinner />
   </div>
   <main
-    v-show="!isLoading"
+    v-show="!appStore.isLoading"
     class="app_wrapper p-1 position-relative"
   >
     <app-ui-header />

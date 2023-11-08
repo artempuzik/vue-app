@@ -13,11 +13,13 @@ if (appStore.appConfig.isAuth) {
 <template>
   <div class="w-100 h-100 d-flex flex-row justify-content-start slot_wrapper">
     <div class="w-50 h-100 d-flex flex-column align-items-end justify-content-center position-relative">
-      <div class="w-100 h-100 left d-flex flex-column align-items-center justify-content-center position-relative">
+      <div class="top_space"></div>
+      <div class="w-100 h-100 left d-flex flex-column align-items-center justify-content-start position-relative">
         <slot name="left" />
       </div>
     </div>
-    <div class="w-100 h-100 right d-flex flex-column align-items-center justify-content-center">
+    <div class="w-100 h-100 right d-flex flex-column align-items-center justify-content-start">
+      <div class="top_space"></div>
       <slot name="right" />
     </div>
   </div>
@@ -29,7 +31,7 @@ if (appStore.appConfig.isAuth) {
 .right {
   flex: 1;
   background-color: $blue-light-light;
-  min-width: 550px;
+  min-width: 500px;
 }
 
 .left {
@@ -37,8 +39,13 @@ if (appStore.appConfig.isAuth) {
   max-width: 800px;
 }
 
+.top_space {
+  width: 100%;
+  height: 16%;
+  min-height: 145px;
+}
+
 .slot_wrapper {
   margin: 0 auto;
-  min-width: 1000px;
 }
 </style>

@@ -46,7 +46,7 @@ const emit = defineEmits(['close']);
 
 .modal_body {
   background-color: $white-color;
-  border-radius: $input-border-radius;
+  border-radius: $button-border-radius;
   margin: 15% auto;
   padding: 0 10px 10px;
   border: 1px solid $grey-border;

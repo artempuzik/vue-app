@@ -184,6 +184,7 @@ div span {
   div {
     padding: 13px;
     border-radius: $input-border-radius;
+    background-color: $white-color;
     cursor: pointer;
     text-decoration: none;
 

@@ -1,4 +1,5 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+</script>
 
 <template>
   <div class="w-100 static-block">
@@ -40,8 +41,8 @@
         >
       </div>
     </div>
-    <div class="static-block_img">
-      <img src="../../../assets/png/auth_image.png">
+    <div class="w-100 d-flex flex-row justify-content-end">
+      <div class="static-block_img"></div>
     </div>
   </div>
 </template>
@@ -55,13 +56,16 @@
   }
 
   &_img {
-    position: relative;
+    width: 100%;
     height: 514px;
-    right: 0;
-    margin: 87px 0 0 95px;
-    & img {
-      position: absolute;
-      right: 0;
+    margin: 87px 0 0 0;
+    background-image: url("../../../assets/png/auth_image.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    @media screen and (max-width: 1200px) {
+      width: 90%;
+      height: 35vh;
     }
   }
 }
