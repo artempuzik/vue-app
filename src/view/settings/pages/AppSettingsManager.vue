@@ -35,6 +35,11 @@ const members = computed(() =>
   })
 );
 
+const updateList = async () => {
+  isLoading.value = true;
+  companyStore.getMemberList().finally(() => isLoading.value = false)
+}
+
 const sendInvite = () => {
   isLoadingInvite.value = true;
   errorMessage.value = '';
@@ -44,6 +49,7 @@ const sendInvite = () => {
       isModalHide.value = true;
       inviteEmail.value = '';
       toastAlert('Invitation is sent', 'success', 2000)
+      updateList()
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
@@ -51,7 +57,7 @@ const sendInvite = () => {
         toastAlert(err.response.data.detail, 'error', 2000)
       }
     })
-    .finally(() => (isLoadingInvite.value = false));
+    .finally(() => isLoadingInvite.value = false);
 };
 
 const roles = reactive({
@@ -173,7 +179,8 @@ watch(() => [appStore.appConfig.roles],() => {
 .table_body {
   overflow-y: auto;
   padding: 5px 15px;
-  height: 650px;
+  height: 50vh;
+  max-height: 650px;
   border: 1px solid $grey-border;
   border-radius: $input-border-radius;
   background-color: $white-color;
