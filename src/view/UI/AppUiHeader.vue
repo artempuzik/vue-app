@@ -11,13 +11,7 @@ const appStore = useAppStore();
 
 const userName = computed(() => `${userStore.user.name} ${userStore.user.surname}`);
 
-const emit = defineEmits(['update:tab']);
-
 const isCheckLogoutPopup = ref(false);
-
-const clickToTab = (tab: string) => {
-  emit('update:tab', tab);
-};
 
 const isOpen = ref(false);
 
@@ -55,21 +49,18 @@ const logOut = () => {
           <router-link
             to="dashboard"
             class="m-1 p-2 link"
-            @click="clickToTab('Dashboard')"
           >
             <span class="main-text">{{ $t('header.nav_dashboard') }}</span>
           </router-link>
           <router-link
             to="list"
             class="m-1 p-2 link"
-            @click="clickToTab('List')"
           >
             <span class="main-text">{{ $t('header.nav_list') }}</span>
           </router-link>
           <router-link
             to="history"
             class="m-1 p-2 link"
-            @click="clickToTab('History')"
           >
             <span class="main-text">{{ $t('header.nav_history') }}</span>
           </router-link>
@@ -98,7 +89,6 @@ const logOut = () => {
         :class="{'hide': !isOpen}"
         tabindex="0"
         @click="isOpen = false"
-        @focusout="isOpen = false"
       >
         <router-link to="profile" class="d-flex flex-row align-items-center">
           <img src="../../assets/png/person.png" width="20" height="20" />
@@ -178,7 +168,7 @@ div span {
   width: 269px;
   right: 0px;
   box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2);
-  z-index: 9999;
+  z-index: 101;
 
   a,
   div {
@@ -197,12 +187,11 @@ div span {
 
 .modal_wrapper {
   position: absolute;
-  max-width: 2000px;
-  min-width: 1000px;
   width: 100vw;
   height: 100vh;
   top: 0;
   left: 0;
+  z-index: 100;
 }
 
 .link {
