@@ -61,8 +61,8 @@ export default defineStore('user', () => {
   }
 
   const loginUser = (dto: ILoginUser) =>  authApi.loginUserFetch(dto).then(async (data) => {
-      appStore.isLoading = true
       if (data.status === 200) {
+        appStore.isLoading = true
         await setAuth(data.data)
         await checkUser()
       }
@@ -78,7 +78,9 @@ export default defineStore('user', () => {
   const createUser = async (dto: ICreateUser) => {
     return authApi.createUserFetch(dto).then(async (data) => {
       if (data.status === 200) {
+        appStore.isLoading = true
         await setAuth(data.data)
+        await checkUser()
       }
       return data;
     });
