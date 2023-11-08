@@ -30,7 +30,7 @@ init();
     <app-ui-spinner />
   </div>
   <main
-    v-else
+    v-show="!isLoading"
     class="app_wrapper p-1 position-relative"
   >
     <app-ui-header />

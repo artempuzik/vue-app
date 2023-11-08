@@ -46,7 +46,7 @@ const logOut = () => {
           <router-link
               to="dashboard"
               class="main-title"
-              style="color: black; text-decoration: none"
+              style="color: black; text-decoration: none; background-color: #ffffff"
           >
               {{ PROJECT_NAME }}
           </router-link>
@@ -94,8 +94,8 @@ const logOut = () => {
         </div>
       </div>
       <div
-        v-if="isOpen"
         class="app_select_modal d-flex flex-column"
+        :class="{'hide': !isOpen}"
         tabindex="0"
         @click="isOpen = false"
         @focusout="isOpen = false"
@@ -140,6 +140,10 @@ const logOut = () => {
 
 <style lang="scss" scoped>
 @import '../../styles/variables.scss';
+
+.hide {
+  display: none !important;
+}
 
 header {
   background-color: $white-color;
