@@ -40,13 +40,14 @@ export default defineStore('user', () => {
     })
     .then(async (data) => {
       await appStore.getOptions()
+      appStore.isLoading = false
       return data
     })
     .catch(() => {
       appStore.appConfig.isAuth = false;
-       router.push('sign-in')
+      appStore.isLoading = false
+      router.push('sign-in')
     })
-    .finally(() => appStore.isLoading = false);
   }
 
   const setAuth = async ({ user_id, company_id, Bearer_Auth }: IUserResponse) => {
@@ -63,8 +64,9 @@ export default defineStore('user', () => {
       appStore.isLoading = true
       if (data.status === 200) {
         await setAuth(data.data)
+        await checkUser()
       }
-    }).then(() => checkUser())
+    })
   const checkExistUserByEmail = async (dto: IFirstCheckUserByEmail) => {
     return authApi.checkExistUserByEmailFetch(dto).then(data => {
       if (data.status === 200) {

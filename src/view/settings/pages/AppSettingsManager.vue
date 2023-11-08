@@ -62,25 +62,7 @@ const roles = reactive({
 watch(() => [appStore.appConfig.roles],() => {
   console.log(appStore.appConfig.roles)
   roles.options = ['All roles', ...Object.values(appStore.appConfig.roles)] as string[]
-})
-
-// onMounted(() => {
-//   isLoading.value = true;
-//   errorMessage.value = '';
-//   companyStore.getMemberList()
-//     .then(() => {
-//       console.log('getMemberList')
-//     isModalHide.value = true;
-//     inviteEmail.value = '';
-//   })
-//       .catch((err: AxiosError<any>) => {
-//         if (err.response) {
-//           errorMessage.value = err.response.data.detail;
-//           toastAlert(err.response.data.detail, 'error', 2000)
-//         }
-//       })
-//       .finally(() => isLoading.value = false);
-// })
+}, {deep: true, immediate: true})
 </script>
 
 <template>

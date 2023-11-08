@@ -37,5 +37,6 @@ onBeforeMount(() => {
   width: 100vw;
   height: 100vh;
   min-width: 1000px;
+  min-height: 750px;
 }
 </style>
