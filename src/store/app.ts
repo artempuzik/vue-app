@@ -36,11 +36,9 @@ export default defineStore('app', () => {
   const companyStore = useCompanyStore();
 
   const getOptions = async () => {
-    console.log('starting')
     await getSettings();
     await getRoleOptions()
     await companyStore.getMemberList()
-    console.log('ending')
   }
 
   const updateSettings = async (dto: ICompanySettings) => {
@@ -90,6 +88,7 @@ export default defineStore('app', () => {
       return userStore.checkUser()
     } else {
       appConfig.isAuth = false;
+      isLoading.value = false;
     }
     };
   const logOut = () => {

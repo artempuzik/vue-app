@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import { useAppStore, useUserStore } from './store';
 import AppUiSpinner from './view/UI/AppUiSpinner.vue';
-import { ref } from 'vue';
 import { startIntercomMessenger } from './intercom';
+import {onBeforeMount} from "vue";
 
 const appStore = useAppStore();
 const userStore = useUserStore();
 
-const init = () => {
+onBeforeMount(() => {
+  appStore.isLoading = true;
   appStore
-    .initApp()
-    .then(() => {
-      startIntercomMessenger(userStore.user.email);
-    })
-};
-
-init();
+      .initApp()
+      .then(() => {
+        startIntercomMessenger(userStore.user.email);
+      })
+})
 </script>
 <template>
   <div
