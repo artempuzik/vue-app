@@ -57,7 +57,6 @@ export default defineStore('user', () => {
       }
       return data;
     })
-    .then(() => checkUser());
   };
   const createUser = async (dto: ICreateUser) => {
     return authApi.createUserFetch(dto).then(data => {

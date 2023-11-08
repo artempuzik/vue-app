@@ -32,6 +32,7 @@ export interface IUser {
 
 export interface IUpdateMember {
   role_id: number;
+  member_id: number;
 }
 
 export interface ICheckUserResponse extends IUser {

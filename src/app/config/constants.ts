@@ -5,12 +5,11 @@ enum OPTIONS {
   'currencies' = 'currencies',
 }
 
-const CURRENCY = ['USD', 'EUR', 'GBP'];
-
-const DATE_TIME_FORMAT = ['DD-MM-YYYY', 'YYYY-MM-DD'];
-
-const TIME_ZONE = ['GMT+0', 'GMT+1', 'GMT+2', 'GMT+3'];
+enum DATE_TIME_FORMAT {
+  'ru' = 'en-US',
+  'en' = 'timezones',
+}
 
 const PASSWORD_LENGTH = 8;
 
-export { LANGUAGES, CURRENCY, DATE_TIME_FORMAT, TIME_ZONE, PASSWORD_LENGTH, OPTIONS };
+export { PASSWORD_LENGTH, OPTIONS, DATE_TIME_FORMAT };

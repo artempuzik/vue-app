@@ -3,38 +3,32 @@ import AppLayoutSettings from '../layout/AppLayoutSettings.vue';
 import {OPTIONS} from '../../../app/config/constants.ts';
 import {reactive, watch} from 'vue';
 import { useAppStore } from '../../../store';
+import {convertFormatToIndex} from '../../../app/helpers'
 import toastAlert from "../../../app/helpers/toast.ts";
 import {AxiosError} from "axios";
 
 const appStore = useAppStore();
 const languages = reactive({
   value: '',
-  options: []
+  options: [] as string[]
 });
 const currency = reactive({
   value: '',
-  options: []
+  options: [] as string[]
 });
 const time_zone = reactive({
   value: '',
-  options: []
+  options: [] as string[]
 });
 const date_format = reactive({
   value: '',
-  options: []
+  options: [] as string[]
 });
 
-const convertFormatToIndex = (value: string, object: {}) => {
-  const values = Object.keys(object)
-  //@ts-ignore
-  const element = values.find(key => object[key] === value)
-  if (!element) {
-    return 1
-  }
-  return +element
-}
-
 const update = () => {
+  if(!appStore.settingsOptions) {
+    return
+  }
   appStore.updateSettings({
     language_id: convertFormatToIndex(languages.value, appStore.settingsOptions[OPTIONS.languages]),
     timezone_id: convertFormatToIndex(currency.value, appStore.settingsOptions[OPTIONS.timezones]),
@@ -43,7 +37,7 @@ const update = () => {
   })
       .then(() => toastAlert('Success', 'success', 2000)).catch((err: AxiosError<any>) => {
     if (err.response) {
-      toastAlert(err.response.data.message, 'error', 2000)
+      toastAlert(err.response.data.detail, 'error', 2000)
     }
   })
 }
@@ -53,13 +47,13 @@ watch(() => [appStore.settingsOptions, appStore.settings], ()=> {
     return
   }
   languages.value = appStore.settingsOptions[OPTIONS.languages][appStore.settings.language_id];
-  languages.options = Object.values(appStore.settingsOptions[OPTIONS.languages]);
+  languages.options = Object.values(appStore.settingsOptions[OPTIONS.languages]) as string[];
   currency.value = appStore.settingsOptions[OPTIONS.currencies][appStore.settings.currency_id];
-  currency.options = Object.values(appStore.settingsOptions[OPTIONS.currencies]);
+  currency.options = Object.values(appStore.settingsOptions[OPTIONS.currencies]) as string[];
   time_zone.value = appStore.settingsOptions[OPTIONS.timezones][appStore.settings.timezone_id];
-  time_zone.options = Object.values(appStore.settingsOptions[OPTIONS.timezones]);
+  time_zone.options = Object.values(appStore.settingsOptions[OPTIONS.timezones]) as string[];
   date_format.value = appStore.settingsOptions[OPTIONS.data_formats][appStore.settings.date_format_id];
-  date_format.options = Object.values(appStore.settingsOptions[OPTIONS.data_formats]);
+  date_format.options = Object.values(appStore.settingsOptions[OPTIONS.data_formats]) as string[];
 }, {immediate: true, deep: true })
 </script>
 

@@ -79,7 +79,7 @@ const submit = () => {
         if (err.response) {
           error.isError = true;
           error.code = err.response.status;
-          errorMessage.value = err.response.data.message;
+          errorMessage.value = err.response.data.detail;
         }
       })
       .finally(() => (isLoading.value = false));

@@ -47,8 +47,8 @@ const sendInvite = () => {
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
-        // errorMessage.value = err.response.data.message;
-        toastAlert(err.response.data.message, 'error', 2000)
+        // errorMessage.value = err.response.data.detail;
+        toastAlert(err.response.data.detail, 'error', 2000)
       }
     })
     .finally(() => (isLoadingInvite.value = false));
@@ -69,7 +69,8 @@ onMounted(() => {
   })
       .catch((err: AxiosError<any>) => {
         if (err.response) {
-          errorMessage.value = err.response.data.message;
+          errorMessage.value = err.response.data.detail;
+          toastAlert(err.response.data.detail, 'error', 2000)
         }
       })
       .finally(() => (isLoading.value = false));
@@ -121,13 +122,13 @@ onMounted(() => {
             />
           </div>
           <app-ui-button
-            style="width: 150px"
+            style="width: 150px; height: 40px"
             :text="$t('buttons.invite_member')"
             @click="isModalHide = false"
           />
         </div>
         <br>
-        <h3 class="category-title">
+        <h3 class="category-title mb-3">
           {{ $t('team.members') }} ({{ members.length }})
         </h3>
         <div class="w-100 table_body">
@@ -137,7 +138,7 @@ onMounted(() => {
           >
             <app-ui-spinner />
           </div>
-          <table v-else class="table">
+          <table v-else class="w-100">
             <thead>
               <tr class="table_header">
                 <th scope="col">
@@ -161,7 +162,7 @@ onMounted(() => {
             <tbody>
               <template
                 v-for="member in members"
-                :key="member.id"
+                :key="member.user_id"
               >
                 <app-member-item :member="member" />
               </template>
@@ -188,6 +189,10 @@ onMounted(() => {
   border: 1px solid $grey-border;
   border-radius: $input-border-radius;
   background-color: $white-color;
+}
+
+.table_header {
+  height: 80px;
 }
 
 tr {

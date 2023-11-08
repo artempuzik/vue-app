@@ -1,16 +1,19 @@
 <script setup lang="ts">
-import { PropType, ref, reactive } from 'vue';
+import {PropType, ref, reactive, computed} from 'vue';
 import { IUser } from '../../../app/api/types/types.ts';
 import { useCompanyStore, useUserStore, useAppStore } from '../../../store';
 import AppUiModal from '../../UI/AppUiModal.vue';
 import AppUiSelect from '../../UI/AppUiSelect.vue';
 import AppUiButton from '../../UI/AppUiButton.vue';
 import { AxiosError } from 'axios';
-import {getKeyByRoleValue} from "../../../app/helpers";
+import {convertDate, getKeyByRoleValue} from "../../../app/helpers";
 import toastAlert from "../../../app/helpers/toast.ts";
 import AppMemberRole from "./AppMemberRole.vue";
+import {useI18n} from "vue-i18n";
 
-const { member } = defineProps({
+const { locale } = useI18n();
+
+const props = defineProps({
   member: {
     type: Object as PropType<IUser>,
     required: true
@@ -29,9 +32,11 @@ const isLoading = ref(false);
 const errorMessage = ref('');
 
 const roles = reactive({
-  value: appStore.appConfig.roles[member?.role_id],
+  value: appStore.appConfig.roles[props.member?.role_id],
   options: Object.values(appStore.appConfig.roles) as string[]
 });
+
+const logged_at = computed(() => props.member.logged_at && convertDate(props.member.logged_at, locale.value))
 
 const toggleShowMenu = () => (isShowingMenu.value = !isShowingMenu.value);
 
@@ -39,15 +44,15 @@ const edit = () => {
   isLoading.value = true;
   errorMessage.value = '';
   userStore
-    .updateMemberById(member.user_id, { role_id: +getKeyByRoleValue(appStore.appConfig.roles, roles.value) })
+    .updateMemberById(props.member.user_id, { role_id: +getKeyByRoleValue(appStore.appConfig.roles, roles.value), member_id: +props.member.user_id })
     .then(() => {
       isShowModalRemove.value = false;
       toastAlert('Role changed', 'success', 2000)
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
-        // errorMessage.value = err.response.data.message;
-        toastAlert(err.response.data.message, 'error', 2000)
+        // errorMessage.value = err.response.data.detail;
+        toastAlert(err.response.data.detail, 'error', 2000)
       }
     })
     .finally(() => (isLoading.value = false));
@@ -57,14 +62,15 @@ const remove = () => {
   isLoading.value = true;
   errorMessage.value = '';
   companyStore
-    .removeMemberById(member.user_id)
+    .removeMemberById(props.member.user_id)
     .then(() => {
       isShowModalRemove.value = false;
+      toastAlert('Success', 'success', 2000)
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
-        // errorMessage.value = err.response.data.message;
-        toastAlert(err.response.data.message, 'error', 2000)
+        // errorMessage.value = err.response.data.detail;
+        toastAlert(err.response.data.detail, 'error', 2000)
       }
     })
     .finally(() => (isLoading.value = false));
@@ -117,7 +123,7 @@ const remove = () => {
     <td class="pe-2">
       <app-member-role :role="appStore.appConfig.roles[member.role_id]" />
     </td>
-    <td>{{ member.logged_at && new Date(member.logged_at).toLocaleString() }}</td>
+    <td>{{ logged_at }}</td>
     <td>{{ member.created_at && new Date(member.created_at).toLocaleString() }}</td>
     <td
       tabindex="0"
@@ -145,6 +151,7 @@ const remove = () => {
 @import '../../../styles/variables.scss';
 
 .item {
+  height: 65px;
   cursor: pointer;
 }
 

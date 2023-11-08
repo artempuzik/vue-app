@@ -4,7 +4,7 @@ defineProps(['role'])
 </script>
 
 <template>
-  <div class="item">
+  <div class="item_role">
     <span>{{role}}</span>
   </div>
 </template>
@@ -12,7 +12,7 @@ defineProps(['role'])
 <style scoped lang="scss">
 @import '../../../styles/variables.scss';
 
-.item {
+.item_role {
   display: flex;
   align-items: center;
   justify-content: center;

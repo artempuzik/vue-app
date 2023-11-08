@@ -1,32 +1,16 @@
-import { PASSWORD_LENGTH } from '../config/constants.ts';
+import {DATE_TIME_FORMAT, PASSWORD_LENGTH} from '../config/constants.ts';
 import {IAppSettings, IOption, IOptionSetting} from "../api/types/types.ts";
 
 export const emailValidator = (email: string) => /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email);
 
 export const checkPassword = (password: string) => !password.length || password.length >= PASSWORD_LENGTH;
 
-export const convertTime = (time: Date, format: string) => {
-  switch (format) {
-    case 'GTM+0':
-      return time;
-    case 'GTM+1':
-      return time;
-    case 'GTM+2':
-      return time;
-    case 'GTM+3':
-      return time;
-    default:
-      return time;
-  }
-};
-
-export const convertDate = (time: Date, format: string) => {
-  switch (format) {
-    case 'YYYY-MM-DD':
-      return new Date(time);
-    default:
-      return new Date(time);
-  }
+export const convertDate = (date: Date, locale: string) => {
+  // const key = DATE_TIME_FORMAT[locale] as string || 'en-GB'
+  return  new Intl.DateTimeFormat(locale, {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(new Date(date)).replace(/\//g, '.')
 };
 
 export const convertRoles = (roles: Array<{role_id: number, role_name: string}>) => {
@@ -55,4 +39,17 @@ export const mapOptions = (object: IOptionSetting[]) => {
     options[o.settings_name] = mapSettingsOptions(o.settings_options)
   })
   return options as IAppSettings
+}
+
+export const convertFormatToIndex = (value: string, object: {} | null) => {
+  if(!object) {
+    return 1
+  }
+  const values = Object.keys(object)
+  //@ts-ignore
+  const element = values.find(key => object[key] === value)
+  if (!element) {
+    return 1
+  }
+  return +element
 }

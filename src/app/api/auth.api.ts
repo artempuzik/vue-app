@@ -58,8 +58,7 @@ const updateMemberFetch = (dto: IUpdateMember, id: string, token: string) =>
       }
     });
 
-const deleteMemberFromCompanyFetch = (id: string, token: string) =>
-    fetch.post(`/auth/member/${id}/delete`, {
+const deleteMemberFromCompanyFetch = (id: string, token: string) => fetch.post(`/auth/member/${id}/delete`, null, {
         headers: {
             auth: `Bearer ${token}`
         }

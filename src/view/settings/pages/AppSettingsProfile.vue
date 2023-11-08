@@ -72,8 +72,8 @@ const submitUser = () => {
       .then(() => toastAlert('Success', 'success', 2000))
       .catch(err => {
         if (err.response) {
-          // errorPasswordMessage.value = err.response.data.message;
-          toastAlert(err.response.data.message, 'error', 2000)
+          // errorPasswordMessage.value = err.response.data.detail;
+          toastAlert(err.response.data.detail, 'error', 2000)
         }
       })
     .finally(() => (isLoadingUser.value = false));
@@ -88,8 +88,8 @@ const submitPassword = () => {
     .then(() => toastAlert('Success', 'success', 2000))
     .catch(err => {
       if (err.response) {
-        // errorPasswordMessage.value = err.response.data.message;
-        toastAlert(err.response.data.message, 'error', 2000)
+        // errorPasswordMessage.value = err.response.data.detail;
+        toastAlert(err.response.data.detail, 'error', 2000)
       }
     })
     .finally(() => (isLoadingPassword.value = false));
