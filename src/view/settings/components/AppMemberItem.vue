@@ -48,11 +48,12 @@ const edit = () => {
   userStore
     .updateMemberById(props.member.user_id, { role_id: +getKeyByRoleValue(appStore.appConfig.roles, roles.value), member_id: +props.member.user_id })
     .then(() => {
-      isShowModalRemove.value = false;
+      isShowModalRole.value = false;
       toastAlert('Role changed', 'success', 2000)
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
+        isShowModalRole.value = false;
         // errorMessage.value = err.response.data.detail;
         toastAlert(err.response.data.detail, 'error', 2000)
       }
@@ -71,6 +72,7 @@ const remove = () => {
     })
     .catch((err: AxiosError<any>) => {
       if (err.response) {
+        isShowModalRemove.value = false;
         // errorMessage.value = err.response.data.detail;
         toastAlert(err.response.data.detail, 'error', 2000)
       }
