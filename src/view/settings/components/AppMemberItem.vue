@@ -37,6 +37,8 @@ const roles = reactive({
 });
 
 const logged_at = computed(() => props.member.logged_at && convertDate(props.member.logged_at, locale.value))
+const created_at = computed(() => props.member.created_at && convertDate(props.member.created_at, locale.value))
+
 
 const toggleShowMenu = () => (isShowingMenu.value = !isShowingMenu.value);
 
@@ -124,7 +126,7 @@ const remove = () => {
       <app-member-role :role="appStore.appConfig.roles[member.role_id]" />
     </td>
     <td>{{ logged_at }}</td>
-    <td>{{ member.created_at && new Date(member.created_at).toLocaleString() }}</td>
+    <td>{{ created_at }}</td>
     <td
       tabindex="0"
       class="position-relative"
