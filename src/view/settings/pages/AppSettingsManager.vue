@@ -4,7 +4,7 @@ import AppUiInput from '../../UI/AppUiInput.vue';
 import AppUiSelect from '../../UI/AppUiSelect.vue';
 import AppUiButton from '../../UI/AppUiButton.vue';
 import AppMemberItem from '../components/AppMemberItem.vue';
-import {reactive, ref, computed, onMounted} from 'vue';
+import {reactive, ref, computed, onMounted, watch} from 'vue';
 import { useCompanyStore, useAppStore } from '../../../store';
 import { IUser } from '../../../app/api/types/types.ts';
 import { emailValidator } from '../../../app/helpers';
@@ -56,8 +56,12 @@ const sendInvite = () => {
 
 const roles = reactive({
   value: 'All roles',
-  options: ['All roles', ...Object.values(appStore.appConfig.roles)] as string[]
+  options: ['All roles']
 });
+
+watch(() => [appStore.appConfig.roles],() => {
+  roles.options = ['All roles', ...Object.values(appStore.appConfig.roles)] as string[]
+})
 
 onMounted(() => {
   isLoading.value = true;
