@@ -67,10 +67,6 @@ const logOut = () => {
         </div>
       </div>
       <div class="d-flex flex-row align-items-center justify-content-start position-relative">
-        <img
-          src="../../assets/svg/info.svg"
-          width="25"
-        >
         <div
           class="d-flex flex-row align-items-center justify-content-start ms-3"
           style="cursor: pointer"

@@ -4,7 +4,8 @@ import useCompanyStore from './company.ts';
 import {reactive, ref, Ref, watch} from 'vue';
 import {authApi} from "../app/api";
 import {convertRoles, mapOptions} from "../app/helpers";
-import {ReactiveVariable} from "vue/macros";
+import {startIntercomMessenger} from '../intercom'
+import {ReactiveVariable} from "vue";
 import {IAppConfig, IAppSettings, ICompanySettings} from "../app/api/types/types.ts";
 import {useRouter} from "vue-router";
 import {OPTIONS} from "../app/config/constants.ts";
@@ -94,6 +95,7 @@ export default defineStore('app', () => {
   const logOut = () => {
     appConfig.Bearer_Auth = '';
     appConfig.isAuth = false;
+    startIntercomMessenger()
     userStore.clearUser();
     localStorage.clear();
   };

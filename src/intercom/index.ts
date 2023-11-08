@@ -6,26 +6,28 @@ interface IntercomWithOnce extends Intercom {
   once: (state: string, func: () => void) => void
 }
 
-const startIntercomMessenger = (email: string) => {
+const startIntercomMessenger = (name = '') => {
   const intercom: Intercom = new Intercom({ appId: INTERCOM_API_KEY });
+  const settings = name ? {name} : {}
+  console.log(settings)
   intercom.boot({
-    email: email,
+    ...settings,
     app_id: INTERCOM_API_KEY
   });
   intercom.show();
   if (!intercom.ready) {
-    (intercom as IntercomWithOnce).once('ready', () => rebootIntercom(intercom, email));
+    (intercom as IntercomWithOnce).once('ready', () => rebootIntercom(intercom, settings));
   } else {
-    rebootIntercom(intercom, email);
+    rebootIntercom(intercom, settings);
   }
 };
 
-function rebootIntercom (intercom: Intercom, email: string) {
+function rebootIntercom (intercom: Intercom, settings: {}) {
   intercom.shutdown();
 
   if (intercom.isBooted) return;
   intercom.boot({
-    email: email,
+    ...settings,
     app_id: INTERCOM_API_KEY
   });
 }
