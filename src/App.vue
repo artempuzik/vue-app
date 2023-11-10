@@ -21,21 +21,19 @@ onBeforeMount(() => {
   >
     <app-ui-spinner />
   </div>
-  <app-ui-header />
   <main
     ref="container"
     v-show="!appStore.isLoading"
-    class="app_wrapper p-1 position-relative"
+    class="app_wrapper container-fluid p-1 position-relative"
   >
+    <app-ui-header />
     <router-view />
   </main>
 </template>
 
 <style lang="scss" scoped>
 .app_wrapper {
-  width: 100vw;
-  height: 100vh;
   min-width: 1000px;
-  min-height: 750px;
+  height: 100vh;
 }
 </style>
