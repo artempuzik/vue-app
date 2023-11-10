@@ -17,6 +17,8 @@ enum HISTORY_FILTERS {
   CATEGORY = 'Category'
 }
 
+const PAGINATION_STEP = 10
+
 // enum DATE_TIME_FORMAT {
 //   'ru' = 'en-US',
 //   'en' = 'timezones',
@@ -24,4 +26,4 @@ enum HISTORY_FILTERS {
 
 const PASSWORD_LENGTH = 8;
 
-export { PASSWORD_LENGTH, OPTIONS, HISTORY_FILTERS };
+export { PASSWORD_LENGTH, OPTIONS, HISTORY_FILTERS, PAGINATION_STEP };

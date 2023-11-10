@@ -1,34 +1,66 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
 import AppHistoryLayout from '../layouts/AppHistoryLayout.vue';
 import AppUiInput from '../../UI/AppUiInput.vue';
 import AppUiSpinner from '../../UI/AppUiSpinner.vue';
 import {useHistoryStore} from "../../../store";
 import AppHistoryFilters from "../components/AppHistoryFilters.vue";
 import AppHistoryItem from "../components/AppHistoryItem.vue";
+import {PAGINATION_STEP} from "../../../app/config/constants.ts";
+import AppUiButton from "../../UI/AppUiButton.vue";
 
 const historyStore = useHistoryStore()
 
-const isLoading = ref(false)
-
 const query = ref('')
+
+const currentPage = ref(0)
+
+const isListLoading = ref(false)
+
+const changePage = (count: number) => {
+  if(count === -1 && currentPage.value === 0) {
+    return
+  }
+  if(count === 1 && currentPage.value === pages.value) {
+    return
+  }
+
+  if(historyStore.filters) {
+    currentPage.value += count
+    historyStore.filters.offset = (currentPage.value * PAGINATION_STEP)
+    // historyStore.filters.limit = historyStore.filters.offset + PAGINATION_STEP
+
+    isListLoading.value = true
+    historyStore.getHistoryList().finally(() => isListLoading.value = false)
+  }
+}
+
+const pages = computed(() => Math.round(historyStore.historyList.count / PAGINATION_STEP))
+
 </script>
 
 <template>
-  <div
-      v-if="isLoading"
-      class="d-flex layout bg-color h-100 flex-column align-items-center justify-content-center app_wrapper"
-  >
-    <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>
-  </div>
+<!--  <div-->
+<!--      v-if="isPageLoading"-->
+<!--      class="d-flex layout bg-color h-100 flex-column align-items-center justify-content-center app_wrapper"-->
+<!--  >-->
+<!--    <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>-->
+<!--  </div>-->
   <app-history-layout>
   <template #search>
-    <div style="width: 440px">
-      <app-ui-input
-          v-model="query"
-          class="w-100"
-          :placeholder="$t('history.search_placeholder')"
-          :with-icon="true"
+    <div class="w-100 d-flex flex-row align-items-center justify-content-between">
+      <div style="width: 440px">
+        <app-ui-input
+            v-model="query"
+            class="w-100"
+            :placeholder="$t('history.search_placeholder')"
+            :with-icon="true"
+        />
+      </div>
+      <app-ui-button
+          style="width: 150px; height: 40px"
+          :is-in-active="true"
+          :text="$t('buttons.export_bth')"
       />
     </div>
   </template>
@@ -39,6 +71,12 @@ const query = ref('')
       </span>
     </div>
     <div class="w-100 table_body">
+      <div
+          v-if="isListLoading"
+          class="d-flex layout h-100 flex-column align-items-center justify-content-center app_wrapper"
+      >
+        <app-ui-spinner  />
+      </div>
     <table class="w-100">
       <thead>
       <tr class="table_header">
@@ -75,10 +113,29 @@ const query = ref('')
       </tbody>
     </table>
     </div>
+    <div class="w-100 ms-2 my-2 d-flex align-items-center justify-content-end">
+      <span>
+       {{currentPage + 1}} / {{pages}} page
+      </span>
+      <img
+          @click="changePage(-1)"
+          src="../../../assets/svg/chevron.svg"
+          width="30"
+          class="cursor"
+          style="transform: rotate(90deg)"
+      >
+      <img
+          @click="changePage(1)"
+          src="../../../assets/svg/chevron.svg"
+          width="30"
+          class="cursor"
+          style="transform: rotate(-90deg)"
+      >
+    </div>
   </template>
-    <template #filter>
-      <app-history-filters />
-    </template>
+  <template #filter>
+    <app-history-filters />
+  </template>
 </app-history-layout>
 </template>
 
@@ -89,6 +146,13 @@ const query = ref('')
   color: $grey-table_header;
   opacity: 0.7;
 }
+.cursor {
+  cursor: pointer;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
 
 .bg-color {
   background-color: $grey-bg;

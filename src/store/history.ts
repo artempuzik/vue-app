@@ -1,15 +1,11 @@
 import { defineStore } from 'pinia';
 import { historyApi } from '../app/api';
 import { reactive, watch, ref, Ref } from 'vue';
-import { useAppStore } from './index.ts';
+import { useAppStore } from './';
 import {HistoryRequestBody} from "../app/types";
-import {HISTORY_FILTERS} from "../app/config/constants.ts";
+import {HISTORY_FILTERS, PAGINATION_STEP} from "../app/config/constants";
 
 export default defineStore('history', () => {
-  const pagination = reactive({
-    limit: 10,
-    offset: 0,
-  })
   const filters:  Ref<HistoryRequestBody | null> = ref(null);
   const historyList = reactive({
     count: 0,
@@ -18,13 +14,8 @@ export default defineStore('history', () => {
 
   const appStore = useAppStore();
 
-  const getHistoryList = async (dto: HistoryRequestBody) => {
-    const body = {
-      ...dto,
-      limit: pagination.limit,
-      offset: pagination.offset,
-    }
-    return historyApi.getHistory(body, appStore.appConfig.Bearer_Auth).then(response => {
+  const getHistoryList = async () => {
+    return historyApi.getHistory(filters.value as HistoryRequestBody, appStore.appConfig.Bearer_Auth).then(response => {
       if (response.status === 200) {
         historyList.list = response.data.history;
         historyList.count = response.data.count;
@@ -36,7 +27,7 @@ export default defineStore('history', () => {
   const getFilterList = async () => {
     return historyApi.getHistoryFilters(appStore.appConfig.Bearer_Auth).then(response => {
       if (response.status === 200) {
-        filters.value = response.data;
+        filters.value = {...response.data, limit: PAGINATION_STEP};
       }
       return response
     });
@@ -144,7 +135,7 @@ export default defineStore('history', () => {
 
   watch(filters, async () => {
     if(filters.value) {
-      await getHistoryList(filters.value as HistoryRequestBody)
+      await getHistoryList()
       console.log(historyList.list)
     }
   }, {deep: true})

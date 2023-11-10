@@ -23,7 +23,8 @@ const messages = {
       yes: 'Yes',
       change_role: 'Change role',
       invite: 'Invite',
-      invite_member: '+Invite Member'
+      invite_member: '+Invite Member',
+      export_bth: 'Export to CSV',
     },
     settings: {
       settings: 'Settings',
