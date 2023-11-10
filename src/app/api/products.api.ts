@@ -25,10 +25,17 @@ const getProductFilters = (token: string) => fetch.get(`/products/filters`, {
     }
 })
 
+const getProductCategories = (token: string) => fetch.get(`/products/categories`, {
+    headers: {
+        auth: `Bearer ${token}`
+    }
+})
+
 
 export {
     getProducts,
     exportProducts,
     getProductFilters,
-    getProductsById
+    getProductsById,
+    getProductCategories
 }

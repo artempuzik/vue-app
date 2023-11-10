@@ -78,10 +78,11 @@ export default defineStore('history', () => {
     }
   }
 
-  const updatePropertyByFilterName = (title: string, values: any, isRemove: boolean) => {
+  const updatePropertyByFilterName = (title: string, values: any) => {
     if(!filters.value) {
       return
     }
+
     switch (title) {
       case HISTORY_FILTERS.PRICE:
         filters.value = {
@@ -131,8 +132,9 @@ export default defineStore('history', () => {
       //   filters.rule_id [...filters.rule_id]
       // case HISTORY_FILTERS.MADE_BY:
       //   return [...filters.user_id]
-      // case HISTORY_FILTERS.CATEGORY:
-      //   return [...filters.category_id]
+      case HISTORY_FILTERS.CATEGORY:
+        filters.value.category_id = [...values]
+        break;
     }
   }
 
@@ -145,7 +147,7 @@ export default defineStore('history', () => {
       await getHistoryList(filters.value as HistoryRequestBody)
       console.log(historyList.list)
     }
-  })
+  }, {deep: true})
 
   return {
     filters,

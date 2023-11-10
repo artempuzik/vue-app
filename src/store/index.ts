@@ -1,6 +1,7 @@
-import useAppStore from './app.ts';
-import useUserStore from './user.ts';
-import useCompanyStore from './company.ts';
-import useHistoryStore from './history.ts';
+import useAppStore from './app';
+import useUserStore from './user';
+import useCompanyStore from './company';
+import useHistoryStore from './history';
+import useProductStore from './product';
 
-export { useAppStore, useUserStore, useCompanyStore, useHistoryStore };
+export { useAppStore, useUserStore, useCompanyStore, useHistoryStore, useProductStore };

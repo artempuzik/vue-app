@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import AppHistoryFilterItem from "../../settings/components/AppHistoryFilterItem.vue";
+import AppHistoryFilterItem from "./AppHistoryFilterItem.vue";
 import {HISTORY_FILTERS} from "../../../app/config/constants";
+import AppHistorySelectFilter from "./AppHistorySelectFilter.vue";
 
 </script>
 
@@ -18,7 +19,7 @@ import {HISTORY_FILTERS} from "../../../app/config/constants";
     <app-history-filter-item type="min-max" :title="HISTORY_FILTERS.PROFIT"/>
     <app-history-filter-item type="min-max" :title="HISTORY_FILTERS.SALES"/>
     <app-history-filter-item type="min-max" :title="HISTORY_FILTERS.MARGIN"/>
-    <app-history-filter-item type="checked" :title="HISTORY_FILTERS.CATEGORY"/>
+    <app-history-select-filter />
   </div>
 </template>
 
@@ -27,7 +28,6 @@ import {HISTORY_FILTERS} from "../../../app/config/constants";
 
 .filter_wrapper {
   overflow-y: auto;
-  padding: 5px 0px;
   flex: 1;
   border: 1px solid $grey-border;
   border-radius: $input-border-radius;

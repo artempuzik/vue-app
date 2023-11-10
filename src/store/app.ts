@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
-import useUserStore from './user.ts';
-import useCompanyStore from './company.ts';
+import {useHistoryStore, useProductStore, useCompanyStore, useUserStore} from "./";
 import {reactive, ref, Ref, watch} from 'vue';
 import {authApi} from "../app/api";
 import {convertRoles, mapOptions} from "../app/helpers";
@@ -10,7 +9,6 @@ import {useRouter} from "vue-router";
 import {OPTIONS} from "../app/config/constants.ts";
 import {useI18n} from "vue-i18n";
 import {ReactiveVariable} from "vue/macros";
-import {useHistoryStore} from "./index.ts";
 
 export default defineStore('app', () => {
   const appConfig: ReactiveVariable<IAppConfig> = reactive({
@@ -37,12 +35,14 @@ export default defineStore('app', () => {
   const userStore = useUserStore();
   const companyStore = useCompanyStore();
   const historyStore = useHistoryStore();
+  const productStore = useProductStore()
 
   const getOptions = async () => {
     await getSettings();
     await getRoleOptions()
     await companyStore.init()
     await historyStore.init()
+    await productStore.init()
   }
 
   const updateSettings = async (dto: ICompanySettings) => {
