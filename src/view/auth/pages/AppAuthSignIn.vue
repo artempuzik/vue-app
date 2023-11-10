@@ -5,7 +5,6 @@ import AppStaticAuth from '../layout/AppStaticAuth.vue';
 import { computed, reactive, ref } from 'vue';
 import { useUserStore } from '../../../store';
 import { AxiosError } from 'axios';
-import { useRouter } from 'vue-router';
 import { checkPassword, emailValidator } from '../../../app/helpers';
 
 const userStore = useUserStore();

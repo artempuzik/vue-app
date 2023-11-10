@@ -21,12 +21,12 @@ onBeforeMount(() => {
   >
     <app-ui-spinner />
   </div>
+  <app-ui-header />
   <main
     ref="container"
     v-show="!appStore.isLoading"
     class="app_wrapper p-1 position-relative"
   >
-    <app-ui-header />
     <router-view />
   </main>
 </template>

@@ -32,9 +32,9 @@ const logOut = () => {
   />
   <header
     v-if="appStore.appConfig.isAuth"
-    class="d-flex flex-column align-items-center justify-content-start header_wrapper header position-relative"
+    class="d-flex flex-column align-items-center justify-content-start position-relative"
   >
-    <div class="w-100 d-flex flex-row align-items-center justify-content-between p-2">
+    <div class="header_wrapper d-flex flex-row align-items-center justify-content-between p-2">
       <div class="d-flex flex-row align-items-center justify-content-start">
         <div class="me-4 second-title">
           <router-link
@@ -133,6 +133,12 @@ const logOut = () => {
 
 header {
   background-color: $white-color;
+  width: 100%;
+}
+
+.header_wrapper {
+  width: 100%;
+  max-width: 1300px;
 }
 
 .link {

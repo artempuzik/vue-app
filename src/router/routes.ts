@@ -21,7 +21,7 @@ const routes = [
   },
   {
     path: '/history',
-    component: () => import('../view/main/AppMainHistory.vue'),
+    component: () => import('../view/history/pages/AppHistory.vue'),
     name: 'history',
     meta: { requiresAuth: true }
   },

@@ -13,7 +13,6 @@
 
 .layout {
   background-color: $grey-bg;
-  min-height: 100%;
 }
 
 .slot_wrapper {

@@ -1,6 +1,5 @@
-import * as authApi from './auth.api.ts';
-import * as companyApi from './company.api.ts';
-import * as dashboardApi from './dashboard.api.ts';
-import * as marketplaceApi from './marketplace.api.ts';
+import * as authApi from './auth.api';
+import * as productApi from './products.api';
+import * as historyApi from './history.api';
 
-export { authApi, companyApi, dashboardApi, marketplaceApi };
+export { authApi, historyApi, productApi };

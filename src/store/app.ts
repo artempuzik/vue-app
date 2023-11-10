@@ -5,11 +5,12 @@ import {reactive, ref, Ref, watch} from 'vue';
 import {authApi} from "../app/api";
 import {convertRoles, mapOptions} from "../app/helpers";
 import {startIntercomMessenger} from '../intercom'
-import {ReactiveVariable} from "vue";
-import {IAppConfig, IAppSettings, ICompanySettings} from "../app/api/types/types.ts";
+import {IAppConfig, IAppSettings, ICompanySettings} from "../app/types";
 import {useRouter} from "vue-router";
 import {OPTIONS} from "../app/config/constants.ts";
 import {useI18n} from "vue-i18n";
+import {ReactiveVariable} from "vue/macros";
+import {useHistoryStore} from "./index.ts";
 
 export default defineStore('app', () => {
   const appConfig: ReactiveVariable<IAppConfig> = reactive({
@@ -35,11 +36,13 @@ export default defineStore('app', () => {
 
   const userStore = useUserStore();
   const companyStore = useCompanyStore();
+  const historyStore = useHistoryStore();
 
   const getOptions = async () => {
     await getSettings();
     await getRoleOptions()
-    await companyStore.getMemberList()
+    await companyStore.init()
+    await historyStore.init()
   }
 
   const updateSettings = async (dto: ICompanySettings) => {

@@ -80,6 +80,16 @@ const messages = {
       invite_text: "Please enter the user's email for invitation",
       remove_member: 'Remove member',
       search_placeholder: 'Search for member...'
+    },
+    history: {
+      search_placeholder: 'Search by SKU or product name ...',
+      sku: 'SKU',
+      name: 'Name, Category',
+      old_price: 'Old price',
+      new_price: 'New price',
+      date: 'Date',
+      made_by: 'Made by',
+      rule: 'Rule',
     }
   },
   pl: {

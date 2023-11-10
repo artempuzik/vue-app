@@ -1,8 +1,44 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import {computed} from "vue";
+
+const props = defineProps({
+  size: {
+    type: Number,
+    default: 32,
+  },
+  line: {
+    type: Number,
+    default: 4,
+  },
+  background: {
+    type: String,
+    default: 'white',
+  },
+})
+
+const container_size = computed(() => +props.size + +props.line * 2)
+
+
+
+</script>
 
 <template>
-  <div class="spinner-container">
-    <div class="spinner" />
+  <div
+      :style="{
+        width: `${container_size}px`,
+        height: `${container_size}px`,
+        }"
+      class="spinner-container"
+  >
+    <div
+        :style="{
+        width: `${size}px`,
+        height: `${size}px`,
+        background: background,
+        }"
+        class="spinner"
+    />
   </div>
 </template>
 
@@ -12,16 +48,12 @@
 .spinner {
   background: $white-color;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
   animation: spin 1s linear infinite;
 }
 
 .spinner-container {
   background: conic-gradient($white-color, $blue-normal);
   border-radius: 50%;
-  width: 40px;
-  height: 40px;
   animation: spin 1s linear infinite;
 
   display: flex;

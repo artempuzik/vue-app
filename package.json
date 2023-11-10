@@ -12,6 +12,7 @@
   "dependencies": {
     "@mathieustan/intercom": "^1.0.0-alpha.0",
     "axios": "^1.5.1",
+    "lodash.debounce": "^4.0.8",
     "pinia": "^2.1.6",
     "vite-svg-loader": "^4.0.0",
     "vue": "^3.3.4",
@@ -21,6 +22,7 @@
   },
   "devDependencies": {
     "@popperjs/core": "^2.11.8",
+    "@types/lodash.debounce": "^4.0.9",
     "@typescript-eslint/parser": "^6.7.4",
     "@vitejs/plugin-vue": "^4.2.3",
     "bootstrap": "^5.3.2",

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { authApi } from '../app/api';
 import { reactive, Ref, ref } from 'vue';
 import { useAppStore } from './index.ts';
-import {IUser} from '../app/api/types/types.ts';
+import {IUser} from '../app/types';
 
 export default defineStore('company', () => {
   const company = reactive({
@@ -48,9 +48,13 @@ export default defineStore('company', () => {
 
   const inviteMember = async (email: string) => authApi.sendInviteToMemberFetch({ email }, appStore.appConfig.Bearer_Auth)
 
+  const init = async () => {
+    await getMemberList()
+  }
   return {
     company,
     companyMembers,
+    init,
     getCompanyList,
     getMemberList,
     inviteMember,

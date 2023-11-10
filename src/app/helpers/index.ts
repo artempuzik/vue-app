@@ -1,5 +1,5 @@
-import {DATE_TIME_FORMAT, PASSWORD_LENGTH} from '../config/constants.ts';
-import {IAppSettings, IOption, IOptionSetting} from "../api/types/types.ts";
+import {PASSWORD_LENGTH} from '../config/constants.ts';
+import {IAppSettings, IOption, IOptionSetting} from "../types";
 
 export const emailValidator = (email: string) => /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(email);
 

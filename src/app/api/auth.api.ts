@@ -9,7 +9,7 @@ import {
     ISendInvite,
     IUpdateMember,
     IUser
-} from './types/types.ts';
+} from '../types';
 
 const loginUserFetch = (dto: ILoginUser) => fetch.post('/auth/login/', dto);
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import {PropType, ref, reactive, computed} from 'vue';
-import { IUser } from '../../../app/api/types/types.ts';
+import { IUser } from '../../../app/types';
 import { useCompanyStore, useUserStore, useAppStore } from '../../../store';
 import AppUiModal from '../../UI/AppUiModal.vue';
 import AppUiSelect from '../../UI/AppUiSelect.vue';

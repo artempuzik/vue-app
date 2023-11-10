@@ -10,7 +10,7 @@ import {
   ILoginUser, IUpdateMember,
   IUser,
   IUserResponse
-} from '../app/api/types/types.ts';
+} from '../app/types';
 import { reactive } from 'vue';
 import {useRouter} from "vue-router";
 

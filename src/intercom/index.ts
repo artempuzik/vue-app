@@ -9,7 +9,6 @@ interface IntercomWithOnce extends Intercom {
 const startIntercomMessenger = (name = '') => {
   const intercom: Intercom = new Intercom({ appId: INTERCOM_API_KEY });
   const settings = name ? {name} : {}
-  console.log(settings)
   intercom.boot({
     ...settings,
     app_id: INTERCOM_API_KEY
