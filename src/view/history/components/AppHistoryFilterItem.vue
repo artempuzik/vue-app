@@ -50,7 +50,7 @@ watch(minMax, debounce(() => historyStore.updatePropertyByFilterName(props.title
           <input v-model="minMax.min" type="number" min="0" class="form-control" placeholder="min">
         </div>
         <div class="input-group mb-1">
-          <span class="input-group-text">min:</span>
+          <span class="input-group-text">max:</span>
           <input v-model="minMax.max" type="number" min="0" class="form-control" placeholder="min">
         </div>
       </div>

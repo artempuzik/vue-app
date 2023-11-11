@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia';
 import { historyApi } from '../app/api';
-import { reactive, watch, ref, Ref } from 'vue';
+import { reactive, ref, Ref } from 'vue';
 import { useAppStore } from './';
 import {HistoryRequestBody} from "../app/types";
 import {HISTORY_FILTERS, PAGINATION_STEP} from "../app/config/constants";
 
 export default defineStore('history', () => {
+  const isPageLoading = ref(false)
+
   const filters:  Ref<HistoryRequestBody | null> = ref(null);
   const historyList = reactive({
     count: 0,
@@ -69,7 +71,7 @@ export default defineStore('history', () => {
     }
   }
 
-  const updatePropertyByFilterName = (title: string, values: any) => {
+  const updatePropertyByFilterName = async (title: string, values: any) => {
     if(!filters.value) {
       return
     }
@@ -117,32 +119,38 @@ export default defineStore('history', () => {
           profit_max: values.max
         }
         break;
-      // case HISTORY_FILTERS.RULE: {
-      //   filters.rule_id = isRemove ? [...filters.rule_id]
-      // }
-      //   filters.rule_id [...filters.rule_id]
-      // case HISTORY_FILTERS.MADE_BY:
-      //   return [...filters.user_id]
+      case HISTORY_FILTERS.RULE:
+        filters.value.rule_id = [...values]
+        break;
+      case HISTORY_FILTERS.MADE_BY:
+        filters.value.user_id = [...values]
+        break;
       case HISTORY_FILTERS.CATEGORY:
         filters.value.category_id = [...values]
         break;
     }
+    await getHistoryList()
   }
 
   const init = async () => {
-    await getFilterList()
+    isPageLoading.value = true;
+    await getFilterList().then(async () => {
+      await getHistoryList()
+      isPageLoading.value = false;
+    })
   }
 
-  watch(filters, async () => {
-    if(filters.value) {
-      await getHistoryList()
-      console.log(historyList.list)
-    }
-  }, {deep: true})
+  // watch(filters, async () => {
+  //   if(filters.value) {
+  //     await getHistoryList()
+  //     console.log(historyList.list)
+  //   }
+  // }, {deep: true})
 
   return {
     filters,
     historyList,
+    isPageLoading,
     init,
     getFilterList,
     getHistoryList,

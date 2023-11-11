@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import {useHistoryStore, useProductStore} from "../../../store";
-import {ref, watch} from "vue";
+import {useCompanyStore, useHistoryStore} from "../../../store";
+import {onMounted, ref, watch} from "vue";
 import {HISTORY_FILTERS} from '../../../app/config/constants';
 
 const historyStore = useHistoryStore()
-const productStore = useProductStore()
+const companyStore = useCompanyStore()
 
-const isShowAddBlock = ref(true)
+const isShowAddBlock = ref(false)
 
 const checked = ref([])
 
@@ -24,18 +24,22 @@ const toggleEditBlock = () => {
 }
 
 watch(checked, () => {
-  historyStore.updatePropertyByFilterName(HISTORY_FILTERS.CATEGORY, checked.value)
+  historyStore.updatePropertyByFilterName(HISTORY_FILTERS.MADE_BY, checked.value)
 }, {deep: true})
+
+onMounted(() => {
+
+})
 
 </script>
 
 <template>
-  <div class="w-100 d-flex flex-column align-items-start justify-content-start filter_title p-3"
+  <div class="w-100 d-flex flex-column align-items-start justify-content-start filter_title border-bottom border-2 p-3"
        :class="{'is_open': isShowAddBlock}"
   >
     <div class="w-100 d-flex flex-column align-items-start justify-content-start">
       <div class="w-100 d-flex flex-row align-items-center justify-content-between">
-        <span class="title">{{ HISTORY_FILTERS.CATEGORY }}</span>
+        <span class="title">{{ HISTORY_FILTERS.MADE_BY }}</span>
         <span @click="toggleEditBlock" class="cursor">{{ !isShowAddBlock ? '+' : '-' }}</span>
       </div>
       <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start">
@@ -43,11 +47,11 @@ watch(checked, () => {
       </div>
     </div>
     <div v-if="isShowAddBlock" class="w-100 mt-2 overflow-y-auto list">
-      <template v-for="category in productStore.categories" :key="category.id">
+      <template v-for="user in companyStore.companyMembers" :key="user.user_id">
         <div class="form-check my-1">
-          <input class="form-check-input" @change="selected(category.id)" type="checkbox" :id="`category-${category.id}`">
-          <label class="form-check-label" :for="`category-${category.id}`">
-            {{ category.name }}
+          <input class="form-check-input" @change="selected(user.user_id)" type="checkbox" :id="`user-${user.user_id}`">
+          <label class="form-check-label" :for="`user-${user.user_id}`">
+            {{ user.name }} {{ user.surname }}
           </label>
         </div>
       </template>

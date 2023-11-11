@@ -8,6 +8,7 @@ import AppHistoryFilters from "../components/AppHistoryFilters.vue";
 import AppHistoryItem from "../components/AppHistoryItem.vue";
 import {PAGINATION_STEP} from "../../../app/config/constants.ts";
 import AppUiButton from "../../UI/AppUiButton.vue";
+import {IUser} from "../../../app/types";
 
 const historyStore = useHistoryStore()
 
@@ -28,7 +29,6 @@ const changePage = (count: number) => {
   if(historyStore.filters) {
     currentPage.value += count
     historyStore.filters.offset = (currentPage.value * PAGINATION_STEP)
-    // historyStore.filters.limit = historyStore.filters.offset + PAGINATION_STEP
 
     isListLoading.value = true
     historyStore.getHistoryList().finally(() => isListLoading.value = false)
@@ -37,15 +37,30 @@ const changePage = (count: number) => {
 
 const pages = computed(() => Math.round(historyStore.historyList.count / PAGINATION_STEP))
 
+const list = computed(() =>
+    historyStore.historyList.list.filter((history: History) => {
+        return JSON.stringify(
+            history.sku.toString() + history.product_name.toString()
+        ).toLowerCase().includes(query.value.trim().toLowerCase());
+    })
+);
+
+onMounted(() => {
+  if(historyStore.filters) {
+    historyStore.isPageLoading = true
+    historyStore.getHistoryList().finally(() => historyStore.isPageLoading = false)
+  }
+})
+
 </script>
 
 <template>
-<!--  <div-->
-<!--      v-if="isPageLoading"-->
-<!--      class="d-flex layout bg-color h-100 flex-column align-items-center justify-content-center app_wrapper"-->
-<!--  >-->
-<!--    <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>-->
-<!--  </div>-->
+  <div
+      v-if="historyStore.isPageLoading"
+      class="d-flex layout bg-color h-100 flex-column align-items-center justify-content-center app_wrapper"
+  >
+    <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>
+  </div>
   <app-history-layout>
   <template #search>
     <div class="w-100 d-flex flex-row align-items-center justify-content-between">
@@ -105,8 +120,8 @@ const pages = computed(() => Math.round(historyStore.historyList.count / PAGINAT
       </thead>
       <tbody>
       <template
-          v-for="history in historyStore.historyList.list"
-          :key="history.product_id"
+          v-for="history in list"
+          :key="history.product_id + Date.now() + Math.random()*10"
       >
         <app-history-item :history="history"/>
       </template>

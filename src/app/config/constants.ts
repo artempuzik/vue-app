@@ -17,7 +17,7 @@ enum HISTORY_FILTERS {
   CATEGORY = 'Category'
 }
 
-const PAGINATION_STEP = 10
+const PAGINATION_STEP = 8
 
 // enum DATE_TIME_FORMAT {
 //   'ru' = 'en-US',

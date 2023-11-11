@@ -2,6 +2,7 @@
 import AppHistoryFilterItem from "./AppHistoryFilterItem.vue";
 import {HISTORY_FILTERS} from "../../../app/config/constants";
 import AppHistorySelectFilter from "./AppHistorySelectFilter.vue";
+import AppHistoryByUsersFilter from "./AppHistoryByUsersFilter.vue";
 
 </script>
 
@@ -14,7 +15,7 @@ import AppHistorySelectFilter from "./AppHistorySelectFilter.vue";
     <app-history-filter-item type="min-max" :title="HISTORY_FILTERS.PRICE"/>
     <app-history-filter-item type="min-max" :title="HISTORY_FILTERS.CHANGE"/>
     <app-history-filter-item type="checked" :title="HISTORY_FILTERS.RULE"/>
-    <app-history-filter-item type="checked" :title="HISTORY_FILTERS.MADE_BY"/>
+    <app-history-by-users-filter type="checked" :title="HISTORY_FILTERS.MADE_BY"/>
     <app-history-filter-item type="min-max" :title="HISTORY_FILTERS.REVENUE"/>
     <app-history-filter-item type="min-max" :title="HISTORY_FILTERS.PROFIT"/>
     <app-history-filter-item type="min-max" :title="HISTORY_FILTERS.SALES"/>
