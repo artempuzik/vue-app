@@ -23,6 +23,7 @@ import {
     ProductRequestBody,
     ProductExportRequestBody,
     ProductFilters,
+    Product,
 } from './product.types.ts'
 
 import {
@@ -48,6 +49,7 @@ export {
     type IChangeUserPassword,
     type IUserResponse,
     type ILoginUser,
+    type Product,
     type ProductRequestBody,
     type ProductExportRequestBody,
     type ProductFilters,

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as debounce from 'lodash.debounce'
-import {onUpdated, reactive, ref, watch} from "vue";
-import {useHistoryStore} from "../../../store";
+import {reactive, ref, watch} from "vue";
+import {useProductStore} from "../../../store";
 import AppFilterValueElement from "./AppFilterValueElement.vue";
 
 const props = defineProps({
@@ -16,7 +16,7 @@ defineExpose({
   clear,
 });
 
-const historyStore = useHistoryStore()
+const productStore = useProductStore()
 const isShowAddBlock = ref(false)
 
 const minMax = reactive({
@@ -28,7 +28,7 @@ const toggleEditBlock = () => {
   isShowAddBlock.value = !isShowAddBlock.value
 }
 
-watch(minMax, debounce(() => historyStore.updatePropertyByFilterName(props.title as string, minMax), 1000), {deep: true})
+watch(minMax, debounce(() => productStore.updatePropertyByFilterName(props.title as string, minMax), 1000), {deep: true})
 
 </script>
 

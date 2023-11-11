@@ -1,7 +1,7 @@
 import fetch from './axios-dashboard'
-import {ProductRequestBody, ProductExportRequestBody} from "../types";
+import {ProductFilters, ProductExportRequestBody} from "../types";
 
-const getProducts = (dto: ProductRequestBody, token: string) => fetch.post('/products', dto, {
+const getProducts = (dto: ProductFilters, token: string) => fetch.post('/products', dto, {
     headers: {
         auth: `Bearer ${token}`
     }
@@ -25,6 +25,12 @@ const getProductFilters = (token: string) => fetch.get(`/products/filters`, {
     }
 })
 
+const getProductStatus = (token: string) => fetch.get(`/products/status`, {
+    headers: {
+        auth: `Bearer ${token}`
+    }
+})
+
 const getProductCategories = (token: string) => fetch.get(`/products/categories`, {
     headers: {
         auth: `Bearer ${token}`
@@ -37,5 +43,6 @@ export {
     exportProducts,
     getProductFilters,
     getProductsById,
+    getProductStatus,
     getProductCategories
 }

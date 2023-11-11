@@ -17,6 +17,25 @@ enum HISTORY_FILTERS {
   CATEGORY = 'Category'
 }
 
+enum PRODUCT_FILTERS {
+  STATUS ='Status',
+  POTENTIAL = 'Potential',
+  PRICE ='Price',
+  DISCOUNT = 'Discount',
+  REVENUE = 'Revenue',
+  PROFIT = 'Profit',
+  SALES = 'Sales',
+  MARGIN = 'Margin',
+  CATEGORY = 'Category'
+}
+
+const PRODUCT_STATUSES = {
+  '1': 'MATCH',
+  '2': 'REPRICED',
+  '3': 'NOT FOUND',
+  '4': 'ERROR',
+}
+
 const PAGINATION_STEP = 8
 
 // enum DATE_TIME_FORMAT {
@@ -26,4 +45,4 @@ const PAGINATION_STEP = 8
 
 const PASSWORD_LENGTH = 8;
 
-export { PASSWORD_LENGTH, OPTIONS, HISTORY_FILTERS, PAGINATION_STEP };
+export { PASSWORD_LENGTH, OPTIONS, HISTORY_FILTERS, PAGINATION_STEP, PRODUCT_STATUSES, PRODUCT_FILTERS };

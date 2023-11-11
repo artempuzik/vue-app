@@ -91,6 +91,16 @@ const messages = {
       date: 'Date',
       made_by: 'Made by',
       rule: 'Rule',
+    },
+    list: {
+      search_placeholder: 'Search by SKU or product name ...',
+      sku: 'SKU',
+      name: 'Name, Category',
+      status: 'Status',
+      price: 'Price',
+      date: 'Date',
+      potential: 'Potential',
+      competition: 'Competition',
     }
   },
   pl: {

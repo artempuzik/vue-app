@@ -15,7 +15,7 @@ const routes = [
   },
   {
     path: '/list',
-    component: () => import('../view/main/AppMainList.vue'),
+    component: () => import('../view/product/pages/AppProduct.vue'),
     name: 'list',
     meta: { requiresAuth: true }
   },

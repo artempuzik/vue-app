@@ -31,4 +31,8 @@ const emit = defineEmits(['clear'])
   border-radius: $button-border-radius;
 }
 
+.item_role svg {
+  cursor: pointer;
+}
+
 </style>

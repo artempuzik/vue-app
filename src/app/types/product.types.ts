@@ -1,22 +1,11 @@
-export type ProductRequestBody = {
-    "status_id": string[],
-    "potential_min": number,
-    "potential_max": number,
-    "discount_min": number,
-    "discount_max": number,
-    "price_min": number,
-    "price_max": number,
-    "revenue_min": number,
-    "revenue_max": number,
-    "profit_min": number,
-    "profit_max": number,
-    "sales_min": number,
-    "sales_max": number,
-    "margin_min": number,
-    "margin_max": number,
-    "category_id": string[],
-    "limit": number,
-    "offset": number
+export type Product = {
+    "product_id": number,
+    "sku": string,
+    "product_name": string,
+    "category_name": string,
+    "status_id": number,
+    "product_price": number,
+    "product_potential": number
 }
 
 export type ProductExportRequestBody = {
@@ -43,6 +32,8 @@ export type ProductFilters = {
     "status_id": [],
     "discount_min": number,
     "discount_max": number,
+    "potential_min": number,
+    "potential_max": number,
     "price_min": number,
     "price_max": number,
     "revenue_min": number,

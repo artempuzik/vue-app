@@ -64,7 +64,7 @@ export default defineStore('history', () => {
         min: filters.value.profit_min,
         max: filters.value.profit_max
       }
-      case HISTORY_FILTERS.RULE: return filters.value.rule_id
+      // case HISTORY_FILTERS.RULE: return filters.value.rule_id
       case HISTORY_FILTERS.MADE_BY: return filters.value.user_id
       case HISTORY_FILTERS.CATEGORY: return filters.value.category_id
       default: return {}
@@ -119,9 +119,9 @@ export default defineStore('history', () => {
           profit_max: values.max
         }
         break;
-      case HISTORY_FILTERS.RULE:
-        filters.value.rule_id = [...values]
-        break;
+      // case HISTORY_FILTERS.RULE:
+      //   filters.value.rule_id = [...values]
+      //   break;
       case HISTORY_FILTERS.MADE_BY:
         filters.value.user_id = [...values]
         break;

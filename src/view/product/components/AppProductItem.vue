@@ -1,25 +1,19 @@
 <script setup lang="ts">
 import {computed, PropType} from "vue";
-import {History} from "../../../app/types";
-import {convertDate} from "../../../app/helpers";
-import {useI18n} from "vue-i18n";
-import AppHistoryRole from "./AppHistoryRole.vue";
-
-const { locale } = useI18n();
+import {Product} from "../../../app/types";
+import AppProductStatus from "./AppProductStatus.vue";
+import AppProductCompetition from "./AppProductCompetition.vue";
 
 const props = defineProps({
-  history: {
-    type: Object as PropType<History>,
+  product: {
+    type: Object as PropType<Product>,
     required: true,
   }
 })
 
-const repricing_date = computed(() => props.history.repricing_date && convertDate(props.history.repricing_date, locale.value))
-
-const sku = computed(() => props.history.sku.replace('SKU', ''))
-const old_price = computed(() => props.history.old_price.toFixed(2))
-const new_price = computed(() => props.history.new_price.toFixed(2))
-// const made_by = computed(() => props.history.new_price.toFixed(2))
+const sku = computed(() => props.product.sku.replace('SKU', ''))
+const price = computed(() => props.product.product_price.toFixed(2))
+const potential = computed(() => props.product.product_potential.toFixed(2))
 
 
 </script>
@@ -29,18 +23,19 @@ const new_price = computed(() => props.history.new_price.toFixed(2))
     <td style="width: 7%">{{ sku }}</td>
     <td style="width: 33%" class="py-1">
       <div class="w-100">
-        <span>{{ history.product_name }}</span>
+        <span>{{ product.product_name }}</span>
       </div>
       <div class="w-100 group">
-        <span>{{ history.product_group }}</span>
+        <span>{{ product.category_name }}</span>
       </div>
     </td>
-    <td style="width: 10%">{{ old_price }}</td>
-    <td style="width: 10%">{{ new_price }}</td>
-    <td style="width: 15%">{{ repricing_date }}</td>
-    <td style="width: 15%">{{ history.made_by }}</td>
-    <td style="width: 10%">
-      <app-history-role :role="history.rule_id" />
+    <td style="width: 15%">
+      <app-product-status :status="product.status_id" />
+    </td>
+    <td style="width: 10%">{{ price }}</td>
+    <td style="width: 15%">{{ potential }} %</td>
+    <td style="width: 20%">
+      <app-product-competition :red="3" :green="1"/>
     </td>
   </tr>
 </template>

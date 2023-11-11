@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import {computed, onMounted, ref} from 'vue'
-import AppHistoryLayout from '../layouts/AppHistoryLayout.vue';
+import AppProductLayout from '../layouts/AppProductLayout.vue';
 import AppUiInput from '../../UI/AppUiInput.vue';
 import AppUiSpinner from '../../UI/AppUiSpinner.vue';
-import {useHistoryStore} from "../../../store";
-import AppHistoryFilters from "../components/AppHistoryFilters.vue";
-import AppHistoryItem from "../components/AppHistoryItem.vue";
+import {useHistoryStore, useProductStore} from "../../../store";
+import AppProductFilters from "../components/AppProductFilters.vue";
+import AppProductItem from "../components/AppProductItem.vue";
 import {PAGINATION_STEP} from "../../../app/config/constants.ts";
 import AppUiButton from "../../UI/AppUiButton.vue";
+import {Product} from "../../../app/types";
 
-const historyStore = useHistoryStore()
+const productStore = useProductStore()
 
 const query = ref('')
 
@@ -23,29 +24,29 @@ const changePage = (count: number) => {
     return
   }
 
-  if(historyStore.filters) {
+  if(productStore.filters) {
     currentPage.value += count
-    historyStore.filters.offset = (currentPage.value * PAGINATION_STEP)
+    productStore.filters.offset = (currentPage.value * PAGINATION_STEP)
 
-    historyStore.isListLoading = true
-    historyStore.getHistoryList().finally(() => historyStore.isListLoading = false)
+    productStore.isListLoading = true
+    productStore.getHistoryList().finally(() => productStore.isListLoading = false)
   }
 }
 
-const pages = computed(() => Math.round(historyStore.historyList.count / PAGINATION_STEP))
+const pages = computed(() => Math.round(productStore.productList.count / PAGINATION_STEP))
 
 const list = computed(() =>
-    historyStore.historyList.list.filter((history: History) => {
+    productStore.productList.list.filter((product: Product) => {
         return JSON.stringify(
-            history.sku.toString() + history.product_name.toString()
+            product.sku.toString() + product.product_name.toString()
         ).toLowerCase().includes(query.value.trim().toLowerCase());
     })
 );
 
 onMounted(() => {
-  if(historyStore.filters) {
-    historyStore.isPageLoading = true
-    historyStore.getHistoryList().finally(() => historyStore.isPageLoading = false)
+  if(productStore.filters) {
+    productStore.isPageLoading = true
+    productStore.getProducts().finally(() => productStore.isPageLoading = false)
   }
 })
 
@@ -53,12 +54,12 @@ onMounted(() => {
 
 <template>
   <div
-      v-if="historyStore.isPageLoading"
+      v-if="productStore.isPageLoading"
       class="d-flex layout bg-color h-100 flex-column align-items-center justify-content-center app_wrapper"
   >
     <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>
   </div>
-  <app-history-layout>
+  <app-product-layout>
   <template #search>
     <div class="w-100 d-flex flex-row align-items-center justify-content-between">
       <div style="width: 440px">
@@ -79,12 +80,12 @@ onMounted(() => {
   <template #main>
     <div class="w-100 ms-2 my-2 d-flex align-items-center justify-content-start grey">
       <span>
-        {{historyStore.historyList.count}} items
+        {{productStore.productList.count}} products
       </span>
     </div>
     <div class="w-100 table_body">
       <div
-          v-if="historyStore.isListLoading"
+          v-if="productStore.isListLoading"
           class="d-flex layout h-100 flex-column align-items-center justify-content-center app_wrapper"
       >
         <app-ui-spinner  />
@@ -93,34 +94,31 @@ onMounted(() => {
       <thead>
       <tr class="table_header">
         <th scope="col">
-          {{ $t('history.sku') }}
+          {{ $t('list.sku') }}
         </th>
         <th scope="col">
-          {{ $t('history.name') }}
+          {{ $t('list.name') }}
         </th>
         <th scope="col">
-          {{ $t('history.old_price') }}
+          {{ $t('list.status') }}
         </th>
         <th scope="col">
-          {{ $t('history.new_price') }}
+          {{ $t('list.price') }}
         </th>
         <th scope="col">
-          {{ $t('history.date') }}
+          {{ $t('list.potential') }}
         </th>
         <th scope="col">
-          {{ $t('history.made_by') }}
-        </th>
-        <th scope="col">
-          {{ $t('history.rule') }}
+          {{ $t('list.competition') }}
         </th>
       </tr>
       </thead>
       <tbody>
       <template
-          v-for="history in list"
-          :key="history.product_id + Date.now() + Math.random()*10"
+          v-for="product in list"
+          :key="product.product_id + Date.now() + Math.random()*10"
       >
-        <app-history-item :history="history"/>
+        <app-product-item :product="product"/>
       </template>
       </tbody>
     </table>
@@ -146,9 +144,9 @@ onMounted(() => {
     </div>
   </template>
   <template #filter>
-    <app-history-filters />
+    <app-product-filters />
   </template>
-</app-history-layout>
+</app-product-layout>
 </template>
 
 <style scoped lang="scss">
