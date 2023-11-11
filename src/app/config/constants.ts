@@ -7,7 +7,7 @@ enum OPTIONS {
 
 enum HISTORY_FILTERS {
   PRICE ='Price',
-  CHANGE = 'Change (%)',
+  CHANGE = 'Change',
   RULE = 'Rule',
   MADE_BY = 'Made by',
   REVENUE = 'Revenue',

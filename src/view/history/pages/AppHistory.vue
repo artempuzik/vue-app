@@ -8,15 +8,12 @@ import AppHistoryFilters from "../components/AppHistoryFilters.vue";
 import AppHistoryItem from "../components/AppHistoryItem.vue";
 import {PAGINATION_STEP} from "../../../app/config/constants.ts";
 import AppUiButton from "../../UI/AppUiButton.vue";
-import {IUser} from "../../../app/types";
 
 const historyStore = useHistoryStore()
 
 const query = ref('')
 
 const currentPage = ref(0)
-
-const isListLoading = ref(false)
 
 const changePage = (count: number) => {
   if(count === -1 && currentPage.value === 0) {
@@ -30,8 +27,8 @@ const changePage = (count: number) => {
     currentPage.value += count
     historyStore.filters.offset = (currentPage.value * PAGINATION_STEP)
 
-    isListLoading.value = true
-    historyStore.getHistoryList().finally(() => isListLoading.value = false)
+    historyStore.isListLoading = true
+    historyStore.getHistoryList().finally(() => historyStore.isListLoading = false)
   }
 }
 
@@ -87,7 +84,7 @@ onMounted(() => {
     </div>
     <div class="w-100 table_body">
       <div
-          v-if="isListLoading"
+          v-if="historyStore.isListLoading"
           class="d-flex layout h-100 flex-column align-items-center justify-content-center app_wrapper"
       >
         <app-ui-spinner  />

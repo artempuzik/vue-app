@@ -7,7 +7,7 @@ import {HISTORY_FILTERS, PAGINATION_STEP} from "../app/config/constants";
 
 export default defineStore('history', () => {
   const isPageLoading = ref(false)
-
+  const isListLoading = ref(false)
   const filters:  Ref<HistoryRequestBody | null> = ref(null);
   const historyList = reactive({
     count: 0,
@@ -129,7 +129,8 @@ export default defineStore('history', () => {
         filters.value.category_id = [...values]
         break;
     }
-    await getHistoryList()
+    isListLoading.value = true;
+    await getHistoryList().finally(() => isListLoading.value = false)
   }
 
   const init = async () => {
@@ -151,6 +152,7 @@ export default defineStore('history', () => {
     filters,
     historyList,
     isPageLoading,
+    isListLoading,
     init,
     getFilterList,
     getHistoryList,

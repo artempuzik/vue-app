@@ -19,7 +19,7 @@ onBeforeMount(() => {
     v-if="appStore.isLoading"
     class="d-flex flex-column align-items-center justify-content-center app_wrapper"
   >
-    <app-ui-spinner />
+    <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>
   </div>
   <main
     ref="container"
