@@ -2,6 +2,7 @@
 import {useCompanyStore, useHistoryStore} from "../../../store";
 import {onMounted, ref, watch} from "vue";
 import {HISTORY_FILTERS} from '../../../app/config/constants';
+import AppFilterValueElement from "./AppFilterValueElement.vue";
 
 const historyStore = useHistoryStore()
 const companyStore = useCompanyStore()
@@ -14,9 +15,18 @@ const clear = () => {
   checked.value = []
 }
 
+const remove = (id: number) => {
+  checked.value = checked.value.filter(i => i !== id)
+}
+
 defineExpose({
   clear,
 });
+
+const getNameById = (id: number) => {
+  const member = companyStore.companyMembers.filter(member => member.user_id === id)[0]
+  return `${member.name} ${member.surname}`
+}
 const toggleEditBlock = () => {
   isShowAddBlock.value = !isShowAddBlock.value
 }
@@ -43,8 +53,10 @@ onMounted(() => {
           <span @click="toggleEditBlock" class="cursor">{{ !isShowAddBlock ? '+' : '-' }}</span>
         </div>
       </div>
-      <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start">
-
+      <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start mt-1">
+        <template v-for="id in checked" :key="id">
+          <app-filter-value-element class="me-1 mb-1" @clear="remove(id)" v-if="checked.length" :value="getNameById(id)"/>
+        </template>
       </div>
     </div>
     <div v-if="isShowAddBlock" class="w-100 mt-2 overflow-y-auto list">
