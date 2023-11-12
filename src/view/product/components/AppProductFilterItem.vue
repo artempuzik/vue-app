@@ -37,15 +37,18 @@ watch(minMax, debounce(() => productStore.updatePropertyByFilterName(props.title
         :class="{'is_open': isShowAddBlock}"
   >
     <div class="w-100 d-flex flex-column align-items-start justify-content-start">
-      <div class="w-100 d-flex flex-row align-items-center justify-content-between">
+      <div @click="toggleEditBlock" class="w-100 d-flex flex-row align-items-center justify-content-between">
         <span class="title">{{ title }}</span>
         <div>
           <span v-if="minMax.min || minMax.max" @click="clear" class="clear-text me-4">Clear</span>
-          <span @click="toggleEditBlock" class="cursor">{{ !isShowAddBlock ? '+' : '-' }}</span>
+          <span class="cursor">{{ !isShowAddBlock ? '+' : '-' }}</span>
         </div>
       </div>
       <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start mt-1">
-        <app-filter-value-element @clear="clear" v-if="minMax.min || minMax.max" :value="`${minMax.min}-${minMax.max}`"/>
+        <app-filter-value-element
+            @clear="clear"
+            v-if="minMax.min || minMax.max"
+            :value="minMax.min < minMax.max ? `${minMax.min}-${minMax.max}` : `${minMax.min} +`"/>
       </div>
     </div>
     <div v-if="isShowAddBlock">
@@ -100,7 +103,7 @@ watch(minMax, debounce(() => productStore.updatePropertyByFilterName(props.title
 
 .clear-text {
   font-size: 0.7rem;
-  color: #8258fa;
+  color: #0500FF;
   font-weight: bold;
   cursor: pointer;
 }

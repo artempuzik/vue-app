@@ -58,4 +58,8 @@ const new_price = computed(() => props.history.new_price.toFixed(2))
   font-weight: bold;
  }
 
+td {
+  padding: 0 5px;
+}
+
 </style>

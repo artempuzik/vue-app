@@ -92,25 +92,25 @@ onMounted(() => {
     <table class="w-100">
       <thead>
       <tr class="table_header">
-        <th scope="col">
+        <th style="width: 7%" scope="col">
           {{ $t('history.sku') }}
         </th>
-        <th scope="col">
+        <th style="width: 33%" scope="col">
           {{ $t('history.name') }}
         </th>
-        <th scope="col">
+        <th style="width: 10%" scope="col">
           {{ $t('history.old_price') }}
         </th>
-        <th scope="col">
+        <th style="width: 10%" scope="col">
           {{ $t('history.new_price') }}
         </th>
-        <th scope="col">
+        <th style="width: 15%" scope="col">
           {{ $t('history.date') }}
         </th>
-        <th scope="col">
+        <th style="width: 15%" scope="col">
           {{ $t('history.made_by') }}
         </th>
-        <th scope="col">
+        <th style="width: 10%" scope="col">
           {{ $t('history.rule') }}
         </th>
       </tr>
@@ -175,17 +175,31 @@ onMounted(() => {
 }
 
 .table_body {
-  overflow-y: auto;
+  overflow: hidden;
   padding: 5px 15px;
-  height: 50vh;
-  max-height: 650px;
+  height: 60vh;
+  max-height: 700px;
   border: 1px solid $grey-border;
   border-radius: $input-border-radius;
   background-color: $white-color;
+  tbody {
+    overflow-y: scroll;
+    height: 50vh;
+    max-height: 620px;
+  }
+
+  tbody,td {
+    display:block;
+  }
 }
 
 .table_header {
   height: 80px;
+  display: flex;
+  th {
+    display: flex;
+    align-items: center;
+  }
 }
 
 tr {

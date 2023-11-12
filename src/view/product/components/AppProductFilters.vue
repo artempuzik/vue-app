@@ -3,6 +3,9 @@ import AppProductFilterItem from "./AppProductFilterItem.vue";
 import {PRODUCT_FILTERS} from "../../../app/config/constants";
 import AppProductSelectFilter from "./AppProductSelectFilter.vue";
 import {reactive, toRefs} from "vue";
+import {useProductStore} from "../../../store";
+
+const productStore = useProductStore()
 
 const refs = reactive({
   status: null,
@@ -21,6 +24,7 @@ const reset = async () => {
       el.clear();
     }
   })
+  productStore.isEmptyFilter = true;
 }
 
 const { price, potential, discount, revenue, profit, sales, margin, categories } = toRefs(refs)
@@ -30,7 +34,7 @@ const { price, potential, discount, revenue, profit, sales, margin, categories }
   <div class="w-100 filter_wrapper">
     <div class="w-100 d-flex flex-row align-items-center justify-content-between p-4 border-bottom border-2">
       <span class="filter-title">Filters</span>
-      <span @click="reset" class="clear-text">Clear all</span>
+      <span v-if="!productStore.isEmptyFilter" @click="reset" class="clear-text">Clear all</span>
     </div>
     <app-product-filter-item ref="status" :title="PRODUCT_FILTERS.STATUS"/>
     <app-product-filter-item ref="potential" :title="PRODUCT_FILTERS.POTENTIAL"/>
@@ -62,7 +66,7 @@ const { price, potential, discount, revenue, profit, sales, margin, categories }
 
 .clear-text {
   font-size: 0.7rem;
-  color: #8258fa;
+  color: #0500FF;
   font-weight: bold;
   cursor: pointer;
 }

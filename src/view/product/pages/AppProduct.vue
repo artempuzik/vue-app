@@ -93,22 +93,22 @@ onMounted(() => {
     <table class="w-100">
       <thead>
       <tr class="table_header">
-        <th scope="col">
+        <th style="width: 7%" scope="col">
           {{ $t('list.sku') }}
         </th>
-        <th scope="col">
+        <th style="width: 33%" scope="col">
           {{ $t('list.name') }}
         </th>
-        <th scope="col">
+        <th style="width: 15%" scope="col">
           {{ $t('list.status') }}
         </th>
-        <th scope="col">
+        <th style="width: 10%" scope="col">
           {{ $t('list.price') }}
         </th>
-        <th scope="col">
+        <th style="width: 15%" scope="col">
           {{ $t('list.potential') }}
         </th>
-        <th scope="col">
+        <th style="width: 20%" scope="col">
           {{ $t('list.competition') }}
         </th>
       </tr>
@@ -173,17 +173,31 @@ onMounted(() => {
 }
 
 .table_body {
-  overflow-y: auto;
+  overflow: hidden;
   padding: 5px 15px;
-  height: 50vh;
-  max-height: 650px;
+  height: 60vh;
+  max-height: 700px;
   border: 1px solid $grey-border;
   border-radius: $input-border-radius;
   background-color: $white-color;
+  tbody {
+    overflow-y: scroll;
+    height: 50vh;
+    max-height: 620px;
+  }
+
+  tbody,td {
+    display:block;
+  }
 }
 
 .table_header {
   height: 80px;
+  display: flex;
+  th {
+    display: flex;
+    align-items: center;
+  }
 }
 
 tr {

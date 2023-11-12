@@ -46,11 +46,11 @@ onMounted(() => {
        :class="{'is_open': isShowAddBlock}"
   >
     <div class="w-100 d-flex flex-column align-items-start justify-content-start">
-      <div class="w-100 d-flex flex-row align-items-center justify-content-between">
+      <div @click="toggleEditBlock" class="w-100 d-flex flex-row align-items-center justify-content-between">
         <span class="title">{{ HISTORY_FILTERS.MADE_BY }}</span>
         <div>
           <span v-if="checked.length" @click="clear" class="clear-text me-4">Clear</span>
-          <span @click="toggleEditBlock" class="cursor">{{ !isShowAddBlock ? '+' : '-' }}</span>
+          <span class="cursor">{{ !isShowAddBlock ? '+' : '-' }}</span>
         </div>
       </div>
       <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start mt-1">
@@ -100,7 +100,7 @@ onMounted(() => {
 }
 .clear-text {
   font-size: 0.7rem;
-  color: #8258fa;
+  color: #0500FF;
   font-weight: bold;
   cursor: pointer;
 }

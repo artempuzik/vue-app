@@ -36,7 +36,7 @@ const PRODUCT_STATUSES = {
   '4': 'ERROR',
 }
 
-const PAGINATION_STEP = 8
+const PAGINATION_STEP = 30
 
 // enum DATE_TIME_FORMAT {
 //   'ru' = 'en-US',

@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
 import { historyApi } from '../app/api';
-import { reactive, ref, Ref } from 'vue';
+import { reactive, ref, Ref, watch } from 'vue';
 import { useAppStore } from './';
 import {HistoryRequestBody} from "../app/types";
 import {HISTORY_FILTERS, PAGINATION_STEP} from "../app/config/constants";
 
 export default defineStore('history', () => {
+  const isEmptyFilter = ref(true)
   const isPageLoading = ref(false)
   const isListLoading = ref(false)
   const filters:  Ref<HistoryRequestBody | null> = ref(null);
@@ -30,6 +31,7 @@ export default defineStore('history', () => {
     return historyApi.getHistoryFilters(appStore.appConfig.Bearer_Auth).then(response => {
       if (response.status === 200) {
         filters.value = {...response.data, limit: PAGINATION_STEP};
+        isEmptyFilter.value = true;
       }
       return response
     });
@@ -141,18 +143,34 @@ export default defineStore('history', () => {
     })
   }
 
-  // watch(filters, async () => {
-  //   if(filters.value) {
-  //     await getHistoryList()
-  //     console.log(historyList.list)
-  //   }
-  // }, {deep: true})
+  watch(filters, () => {
+    for (const filter in filters.value) {
+      if(filter === 'limit' || filter === 'offset') {
+        continue
+      }
+      const isArray = Array.isArray(filters.value[filter])
+      if(isArray) {
+        if(filters.value[filter].length !== 0) {
+          isEmptyFilter.value = false
+          break;
+        }
+      }
+      if(typeof filters.value[filter] === 'number') {
+        if(filters.value[filter] !== 0) {
+          isEmptyFilter.value = false
+          break;
+        }
+      }
+      isEmptyFilter.value = true;
+    }
+  }, {deep: true})
 
   return {
     filters,
     historyList,
     isPageLoading,
     isListLoading,
+    isEmptyFilter,
     init,
     getFilterList,
     getHistoryList,

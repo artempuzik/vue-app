@@ -16,7 +16,7 @@ defineProps(['role'])
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 98px;
+  width: 80px;
   height: 31px;
   background-color: $blue-normal;
   color: $white-color;

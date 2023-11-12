@@ -4,11 +4,13 @@ import {HISTORY_FILTERS} from "../../../app/config/constants";
 import AppHistorySelectFilter from "./AppHistorySelectFilter.vue";
 import AppHistoryByUsersFilter from "./AppHistoryByUsersFilter.vue";
 import {reactive, toRefs} from "vue";
+import {useHistoryStore} from "../../../store";
+
+const historyStore = useHistoryStore()
 
 const refs = reactive({
   price: null,
   change: null,
-  rule: null,
   made: null,
   revenue: null,
   profit: null,
@@ -22,20 +24,20 @@ const reset = async () => {
       el.clear();
     }
   })
+  historyStore.isEmptyFilter = true;
 }
 
-const { price, change, rule, made, revenue, profit, sales, margin, categories } = toRefs(refs)
+const { price, change, made, revenue, profit, sales, margin, categories } = toRefs(refs)
 </script>
 
 <template>
   <div class="w-100 filter_wrapper">
     <div class="w-100 d-flex flex-row align-items-center justify-content-between p-4 border-bottom border-2">
       <span class="filter-title">Filters</span>
-      <span @click="reset" class="clear-text">Clear all</span>
+      <span v-if="!historyStore.isEmptyFilter" @click="reset" class="clear-text">Clear all</span>
     </div>
     <app-history-filter-item ref="price" :title="HISTORY_FILTERS.PRICE"/>
     <app-history-filter-item ref="change" :title="`${HISTORY_FILTERS.CHANGE}(%)`"/>
-    <app-history-filter-item ref="rule" :title="HISTORY_FILTERS.RULE"/>
     <app-history-by-users-filter ref="made" :title="HISTORY_FILTERS.MADE_BY"/>
     <app-history-filter-item ref="revenue" :title="HISTORY_FILTERS.REVENUE"/>
     <app-history-filter-item ref="profit" :title="HISTORY_FILTERS.PROFIT"/>
@@ -63,7 +65,7 @@ const { price, change, rule, made, revenue, profit, sales, margin, categories } 
 
 .clear-text {
   font-size: 0.7rem;
-  color: #8258fa;
+  color: #0500FF;
   font-weight: bold;
   cursor: pointer;
 }
