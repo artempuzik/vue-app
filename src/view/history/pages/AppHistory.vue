@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue'
+import {computed, onMounted, ref, Ref, watchEffect} from 'vue'
 import AppHistoryLayout from '../layouts/AppHistoryLayout.vue';
 import AppUiInput from '../../UI/AppUiInput.vue';
 import AppUiSpinner from '../../UI/AppUiSpinner.vue';
@@ -8,12 +8,16 @@ import AppHistoryFilters from "../components/AppHistoryFilters.vue";
 import AppHistoryItem from "../components/AppHistoryItem.vue";
 import {PAGINATION_STEP} from "../../../app/config/constants.ts";
 import AppUiButton from "../../UI/AppUiButton.vue";
+import AppUiCheckbox from "../../UI/AppUiCheckbox.vue";
 
 const historyStore = useHistoryStore()
 
 const query = ref('')
 
 const currentPage = ref(0)
+
+const selected: Ref<number[]> = ref([])
+const selectedAll = ref(false)
 
 const changePage = (count: number) => {
   if(count === -1 && currentPage.value === 0) {
@@ -49,6 +53,16 @@ onMounted(() => {
   }
 })
 
+const selectAll = () => {
+  if(!selectedAll.value) {
+    selected.value = list.value.map(el => el.product_id)
+    selectedAll.value = true
+  } else {
+    selected.value = []
+    selectedAll.value = false
+  }
+}
+
 </script>
 
 <template>
@@ -71,7 +85,7 @@ onMounted(() => {
       </div>
       <app-ui-button
           style="width: 150px; height: 40px"
-          :is-in-active="true"
+          :is-in-active="!selectedAll && !Boolean(selected.length)"
           :text="$t('buttons.export_bth')"
       />
     </div>
@@ -92,10 +106,13 @@ onMounted(() => {
     <table class="w-100">
       <thead>
       <tr class="table_header">
+        <th style="width: 6%">
+          <app-ui-checkbox @click="selectAll" :width="20"/>
+        </th>
         <th style="width: 7%" scope="col">
           {{ $t('history.sku') }}
         </th>
-        <th style="width: 33%" scope="col">
+        <th style="width: 30%" scope="col">
           {{ $t('history.name') }}
         </th>
         <th style="width: 10%" scope="col">
@@ -104,10 +121,10 @@ onMounted(() => {
         <th style="width: 10%" scope="col">
           {{ $t('history.new_price') }}
         </th>
-        <th style="width: 15%" scope="col">
+        <th style="width: 13%" scope="col">
           {{ $t('history.date') }}
         </th>
-        <th style="width: 15%" scope="col">
+        <th style="width: 13%" scope="col">
           {{ $t('history.made_by') }}
         </th>
         <th style="width: 10%" scope="col">
@@ -120,7 +137,7 @@ onMounted(() => {
           v-for="history in list"
           :key="history.product_id + Date.now() + Math.random()*10"
       >
-        <app-history-item :history="history"/>
+        <app-history-item :history="history" v-model="selected"/>
       </template>
       </tbody>
     </table>

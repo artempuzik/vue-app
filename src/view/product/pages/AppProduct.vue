@@ -1,20 +1,24 @@
 <script setup lang="ts">
-import {computed, onMounted, ref} from 'vue'
+import {computed, onMounted, ref, Ref} from 'vue'
 import AppProductLayout from '../layouts/AppProductLayout.vue';
 import AppUiInput from '../../UI/AppUiInput.vue';
 import AppUiSpinner from '../../UI/AppUiSpinner.vue';
-import {useHistoryStore, useProductStore} from "../../../store";
+import {useProductStore} from "../../../store";
 import AppProductFilters from "../components/AppProductFilters.vue";
 import AppProductItem from "../components/AppProductItem.vue";
 import {PAGINATION_STEP} from "../../../app/config/constants.ts";
 import AppUiButton from "../../UI/AppUiButton.vue";
 import {Product} from "../../../app/types";
+import AppUiCheckbox from "../../UI/AppUiCheckbox.vue";
 
 const productStore = useProductStore()
 
 const query = ref('')
 
 const currentPage = ref(0)
+
+const selected: Ref<number[]> = ref([])
+const selectedAll = ref(false)
 
 const changePage = (count: number) => {
   if(count === -1 && currentPage.value === 0) {
@@ -29,7 +33,7 @@ const changePage = (count: number) => {
     productStore.filters.offset = (currentPage.value * PAGINATION_STEP)
 
     productStore.isListLoading = true
-    productStore.getHistoryList().finally(() => productStore.isListLoading = false)
+    productStore.getProducts().finally(() => productStore.isListLoading = false)
   }
 }
 
@@ -42,6 +46,16 @@ const list = computed(() =>
         ).toLowerCase().includes(query.value.trim().toLowerCase());
     })
 );
+
+const selectAll = () => {
+  if(!selectedAll.value) {
+    selected.value = list.value.map(el => el.product_id)
+    selectedAll.value = true
+  } else {
+    selected.value = []
+    selectedAll.value = false
+  }
+}
 
 onMounted(() => {
   if(productStore.filters) {
@@ -72,7 +86,7 @@ onMounted(() => {
       </div>
       <app-ui-button
           style="width: 150px; height: 40px"
-          :is-in-active="true"
+          :is-in-active="!selectedAll && !Boolean(selected.length)"
           :text="$t('buttons.export_bth')"
       />
     </div>
@@ -93,10 +107,13 @@ onMounted(() => {
     <table class="w-100">
       <thead>
       <tr class="table_header">
+        <th style="width: 6%">
+          <app-ui-checkbox @click="selectAll" :width="20"/>
+        </th>
         <th style="width: 7%" scope="col">
           {{ $t('list.sku') }}
         </th>
-        <th style="width: 33%" scope="col">
+        <th style="width: 30%" scope="col">
           {{ $t('list.name') }}
         </th>
         <th style="width: 15%" scope="col">
@@ -105,10 +122,10 @@ onMounted(() => {
         <th style="width: 10%" scope="col">
           {{ $t('list.price') }}
         </th>
-        <th style="width: 15%" scope="col">
+        <th style="width: 13%" scope="col">
           {{ $t('list.potential') }}
         </th>
-        <th style="width: 20%" scope="col">
+        <th style="width: 18%" scope="col">
           {{ $t('list.competition') }}
         </th>
       </tr>
@@ -118,7 +135,7 @@ onMounted(() => {
           v-for="product in list"
           :key="product.product_id + Date.now() + Math.random()*10"
       >
-        <app-product-item :product="product"/>
+        <app-product-item :product="product" v-model="selected"/>
       </template>
       </tbody>
     </table>
