@@ -24,7 +24,7 @@ onBeforeMount(() => {
   <main
     ref="container"
     v-show="!appStore.isLoading"
-    class="app_wrapper container-fluid p-1 position-relative"
+    class="app_wrapper d-flex flex-column container-fluid p-1 position-relative"
   >
     <app-ui-header />
     <router-view />

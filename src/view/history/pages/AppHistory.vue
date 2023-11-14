@@ -72,7 +72,7 @@ const selectAll = () => {
   >
     <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>
   </div>
-  <app-history-layout>
+  <app-history-layout v-else>
   <template #search>
     <div class="w-100 d-flex flex-row align-items-center justify-content-between">
       <div style="width: 440px">
@@ -121,10 +121,10 @@ const selectAll = () => {
         <th style="width: 10%" scope="col">
           {{ $t('history.new_price') }}
         </th>
-        <th style="width: 13%" scope="col">
+        <th style="width: 10%" scope="col">
           {{ $t('history.date') }}
         </th>
-        <th style="width: 13%" scope="col">
+        <th style="width: 16%" scope="col">
           {{ $t('history.made_by') }}
         </th>
         <th style="width: 10%" scope="col">

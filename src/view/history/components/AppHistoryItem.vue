@@ -5,10 +5,13 @@ import {convertDate} from "../../../app/helpers";
 import {useI18n} from "vue-i18n";
 import AppHistoryRole from "./AppHistoryRole.vue";
 import AppUiCheckbox from "../../UI/AppUiCheckbox.vue";
+import {useCompanyStore} from "../../../store";
 
 const { locale } = useI18n();
 
 const emit = defineEmits(['update:modelValue']);
+
+const companyStore = useCompanyStore()
 
 const props = defineProps({
   modelValue: {
@@ -30,12 +33,18 @@ const checker = computed({
   }
 });
 
-const repricing_date = computed(() => props.history.repricing_date && convertDate(props.history.repricing_date, locale.value))
+const repricing_date = computed(() => props.history.repricing_date && convertDate(props.history.repricing_date, locale.value).split(', '));
 
 const sku = computed(() => props.history.sku.replace('SKU', ''))
 const old_price = computed(() => props.history.old_price.toFixed(2))
 const new_price = computed(() => props.history.new_price.toFixed(2))
-// const made_by = computed(() => props.history.new_price.toFixed(2))
+const made_by = computed(() => {
+  const member = companyStore.companyMembers.find(m => m.user_id === props.history.made_by)
+  if(member) {
+    return `${member.name} ${member.surname}`
+  }
+  return ''
+})
 
 
 </script>
@@ -56,8 +65,15 @@ const new_price = computed(() => props.history.new_price.toFixed(2))
     </td>
     <td style="width: 10%">{{ old_price }}</td>
     <td style="width: 10%">{{ new_price }}</td>
-    <td style="width: 13%">{{ repricing_date }}</td>
-    <td style="width: 13%">{{ history.made_by }}</td>
+    <td style="width: 10%" class="">
+      <div class="w-100">
+        <span>{{ repricing_date[0] }}</span>
+      </div>
+      <div class="w-100">
+        <span>{{ repricing_date[1] }}</span>
+      </div>
+    </td>
+    <td style="width: 16%">{{ made_by }}</td>
     <td style="width: 10%">
       <app-history-role :role="history.rule_id" />
     </td>

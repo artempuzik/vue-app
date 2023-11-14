@@ -84,7 +84,7 @@ watch(minMax, debounce(() => historyStore.updatePropertyByFilterName(props.title
 .is_open {
   background-color: $grey-bg;
   .title {
-    color: #8258fa;
+    color: $blue-normal;
   }
 }
 
@@ -103,7 +103,7 @@ watch(minMax, debounce(() => historyStore.updatePropertyByFilterName(props.title
 
 .clear-text {
   font-size: 0.7rem;
-  color: #0500FF;
+  color: $blue-normal;
   font-weight: bold;
   cursor: pointer;
 }

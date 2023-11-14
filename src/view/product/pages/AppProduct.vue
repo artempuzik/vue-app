@@ -73,7 +73,7 @@ onMounted(() => {
   >
     <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>
   </div>
-  <app-product-layout>
+  <app-product-layout v-else>
   <template #search>
     <div class="w-100 d-flex flex-row align-items-center justify-content-between">
       <div style="width: 440px">

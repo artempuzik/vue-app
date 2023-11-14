@@ -2,8 +2,8 @@
 </script>
 
 <template>
-  <div class="layout p-4">
-    <div class="w-100 slot_wrapper d-flex flex-row align-items-start justify-content-between">
+  <div class="layout h-100 p-4 pb-0 overflow-hidden">
+    <div class="w-100 h-100 slot_wrapper d-flex flex-row align-items-start justify-content-between">
       <div class="w-100 main_wrapper h-100 d-flex flex-column align-items-start justify-content-start">
         <div class="w-100 d-flex flex-row align-items-center justify-content-start my-3">
           <slot name="search" />

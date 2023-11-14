@@ -5,7 +5,8 @@ defineProps(['role'])
 
 <template>
   <div class="item_role">
-    <span>{{role}}</span>
+<!--    <span>{{role}}</span>-->
+    <span>PROFIT</span>
   </div>
 </template>
 

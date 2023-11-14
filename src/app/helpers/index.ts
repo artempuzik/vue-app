@@ -10,7 +10,7 @@ export const convertDate = (date: Date, locale: string) => {
   return  new Intl.DateTimeFormat(locale, {
     dateStyle: 'short',
     timeStyle: 'short',
-  }).format(new Date(date)).replace(/\//g, '.')
+  }).format(new Date(date))
 };
 
 export const convertRoles = (roles: Array<{role_id: number, role_name: string}>) => {

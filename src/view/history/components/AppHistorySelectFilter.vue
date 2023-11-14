@@ -35,7 +35,7 @@ watch(checked, () => {
 </script>
 
 <template>
-  <div class="w-100 d-flex flex-column align-items-start justify-content-start filter_title p-3"
+  <div class="w-100 d-flex flex-column align-items-start overflow-hidden justify-content-start filter_title p-3 position-relative"
        :class="{'is_open': isShowAddBlock}"
   >
     <div class="w-100 d-flex flex-column align-items-start justify-content-start">
@@ -52,15 +52,15 @@ watch(checked, () => {
         </template>
       </div>
     </div>
-    <div v-if="isShowAddBlock" class="w-100 mt-2 overflow-y-auto list">
-      <template v-for="category in productStore.categories" :key="category.id">
-        <div class="form-check my-1">
-          <input class="form-check-input" v-model="checked" :value="category.id" type="checkbox" :id="`category-${category.id}`">
-          <label class="form-check-label" :for="`category-${category.id}`">
-            {{ category.name }}
-          </label>
-        </div>
-      </template>
+    <div v-if="isShowAddBlock" class="w-100 h-100 mt-2 position-relative overflow-y-auto">
+        <template v-for="category in productStore.categories" :key="category.id">
+          <div class="form-check my-1">
+            <input class="form-check-input" v-model="checked" :value="category.id" type="checkbox" :id="`category-${category.id}`">
+            <label class="form-check-label" :for="`category-${category.id}`">
+              {{ category.name }}
+            </label>
+          </div>
+        </template>
     </div>
   </div>
 </template>
@@ -71,12 +71,8 @@ watch(checked, () => {
 .is_open {
   background-color: $grey-bg;
   .title {
-    color: #8258fa;
+    color: $blue-normal;
   }
-}
-
-.list {
-  max-height: 300px;
 }
 
 .filter_title {
@@ -94,7 +90,7 @@ watch(checked, () => {
 
 .clear-text {
   font-size: 0.7rem;
-  color: #0500FF;
+  color: $blue-normal;
   font-weight: bold;
   cursor: pointer;
 }

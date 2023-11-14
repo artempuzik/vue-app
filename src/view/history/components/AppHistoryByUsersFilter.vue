@@ -78,7 +78,7 @@ onMounted(() => {
 .is_open {
   background-color: $grey-bg;
   .title {
-    color: #8258fa;
+    color: $blue-normal;
   }
 }
 
@@ -100,7 +100,7 @@ onMounted(() => {
 }
 .clear-text {
   font-size: 0.7rem;
-  color: #0500FF;
+  color: $blue-normal;
   font-weight: bold;
   cursor: pointer;
 }

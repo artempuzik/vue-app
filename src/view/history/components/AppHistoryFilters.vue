@@ -31,7 +31,7 @@ const { price, change, made, revenue, profit, sales, margin, categories } = toRe
 </script>
 
 <template>
-  <div class="w-100 filter_wrapper">
+  <div class="w-100 h-100 filter_wrapper overflow-y-auto">
     <div class="w-100 d-flex flex-row align-items-center justify-content-between p-4 border-bottom border-2">
       <span class="filter-title">Filters</span>
       <span v-if="!historyStore.isEmptyFilter" @click="reset" class="clear-text">Clear all</span>
@@ -51,8 +51,7 @@ const { price, change, made, revenue, profit, sales, margin, categories } = toRe
 @import '../../../styles/variables.scss';
 
 .filter_wrapper {
-  overflow-y: auto;
-  flex: 1;
+  width: 100%;
   border: 1px solid $grey-border;
   border-radius: $input-border-radius;
   background-color: $white-color;
