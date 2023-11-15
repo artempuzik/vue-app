@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import AppProductFilterItem from "./AppProductFilterItem.vue";
-import {PRODUCT_FILTERS} from "../../../app/config/constants";
-import AppProductSelectFilter from "./AppProductSelectFilter.vue";
+import AppProductListFilterItem from "./AppProductListFilterItem.vue";
+import {PRODUCT_FILTERS} from "../../../../app/config/constants.ts";
+import AppProductListSelectFilter from "./AppProductListSelectFilter.vue";
 import {reactive, toRefs} from "vue";
-import {useProductStore} from "../../../store";
+import {useProductStore} from "../../../../store";
 
 const productStore = useProductStore()
 
@@ -36,20 +36,20 @@ const { price, potential, discount, revenue, profit, sales, margin, categories }
       <span class="filter-title">Filters</span>
       <span v-if="!productStore.isEmptyFilter" @click="reset" class="clear-text">Clear all</span>
     </div>
-    <app-product-filter-item ref="status" :title="PRODUCT_FILTERS.STATUS"/>
-    <app-product-filter-item ref="potential" :title="PRODUCT_FILTERS.POTENTIAL"/>
-    <app-product-filter-item ref="price" :title="PRODUCT_FILTERS.PRICE"/>
-    <app-product-filter-item ref="discount" :title="PRODUCT_FILTERS.DISCOUNT"/>
-    <app-product-filter-item ref="revenue" :title="PRODUCT_FILTERS.REVENUE"/>
-    <app-product-filter-item ref="profit" :title="PRODUCT_FILTERS.PROFIT"/>
-    <app-product-filter-item ref="sales" :title="PRODUCT_FILTERS.SALES"/>
-    <app-product-filter-item ref="margin" :title="PRODUCT_FILTERS.MARGIN"/>
-    <app-product-select-filter ref="categories" />
+    <app-product-list-filter-item ref="status" :title="PRODUCT_FILTERS.STATUS"/>
+    <app-product-list-filter-item ref="potential" :title="PRODUCT_FILTERS.POTENTIAL"/>
+    <app-product-list-filter-item ref="price" :title="PRODUCT_FILTERS.PRICE"/>
+    <app-product-list-filter-item ref="discount" :title="PRODUCT_FILTERS.DISCOUNT"/>
+    <app-product-list-filter-item ref="revenue" :title="PRODUCT_FILTERS.REVENUE"/>
+    <app-product-list-filter-item ref="profit" :title="PRODUCT_FILTERS.PROFIT"/>
+    <app-product-list-filter-item ref="sales" :title="PRODUCT_FILTERS.SALES"/>
+    <app-product-list-filter-item ref="margin" :title="PRODUCT_FILTERS.MARGIN"/>
+    <app-product-list-select-filter ref="categories" />
   </div>
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables.scss';
+@import '../../../../styles/variables';
 
 .filter_wrapper {
   border: 1px solid $grey-border;

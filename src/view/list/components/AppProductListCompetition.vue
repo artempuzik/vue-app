@@ -29,7 +29,7 @@ const competition = computed(() => props.red /(props.red + props.green) * 100)
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables.scss';
+@import '../../../styles/variables';
 
 .competition {
   flex: 1;

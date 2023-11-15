@@ -4,6 +4,7 @@ import {useAppStore} from "./";
 import {reactive, Ref, ref, watch} from "vue";
 import {ProductFilters} from "../app/types";
 import {PAGINATION_STEP, PRODUCT_FILTERS} from "../app/config/constants.ts";
+import {getProductsById} from "../app/api/products.api.ts";
 
 export default defineStore('product', () => {
   const isEmptyFilter = ref(true)
@@ -12,6 +13,7 @@ export default defineStore('product', () => {
 
   const isPageLoading = ref(false)
   const isListLoading = ref(false)
+  const isProductLoading = ref(false)
 
   const statuses = ref([])
   const filters:  Ref<ProductFilters | null> = ref(null);
@@ -46,6 +48,8 @@ export default defineStore('product', () => {
       statuses.value = response.data.status
     }
   })
+
+  const getProductById = (id: number) => productApi.getProductById(id, appStore.appConfig.Bearer_Auth)
 
   const getPropertyByFilterName = (title: string) => {
     if(!filters.value) {
@@ -190,10 +194,12 @@ export default defineStore('product', () => {
     isListLoading,
     isPageLoading,
     isEmptyFilter,
+    isProductLoading,
     statuses,
     init,
     getProducts,
     getPropertyByFilterName,
     updatePropertyByFilterName,
+    getProductById,
   };
 });

@@ -34,7 +34,7 @@ watch(() =>[productStore.statuses, productStore.productList], () => {
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables.scss';
+@import '../../../styles/variables';
 
 .item_role {
   display: flex;

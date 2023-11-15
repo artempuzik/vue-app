@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
@@ -7,26 +6,14 @@
     <div class="w-100 h-100 slot_wrapper d-flex flex-row align-items-start justify-content-between">
       <div class="w-100 main_wrapper h-100 d-flex flex-column align-items-start justify-content-start">
         <div class="w-100 d-flex flex-row align-items-center justify-content-start my-3">
-          <slot name="back" />
-        </div>
-        <div class="w-100 d-flex flex-row align-items-center justify-content-end my-3">
           <slot name="search" />
         </div>
         <div class="w-100 d-flex flex-column align-items-center justify-content-start">
-          <div class="w-100 d-flex flex-row align-items-center justify-content-start">
-            <slot name="info" />
-            <slot name="price_history" />
-          </div>
-          <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start">
-            <slot name="stats" />
-          </div>
-          <div class="w-100 d-flex flex-column flex-wrap align-items-center justify-content-start">
-            <slot name="main" />
-          </div>
-          <div class="w-100 d-flex flex-column flex-wrap align-items-center justify-content-start">
-            <slot name="list" />
-          </div>
+          <slot name="main" />
         </div>
+      </div>
+      <div class="filter ms-3 h-100 d-flex flex-column align-items-start justify-content-start">
+        <slot name="filter" />
       </div>
     </div>
   </div>

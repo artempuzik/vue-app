@@ -13,7 +13,7 @@ const exportProducts = (dto: ProductExportRequestBody, token: string) => fetch.p
     }
 })
 
-const getProductsById = (id: number, token: string) => fetch.get(`/product/${id}`, {
+const getProductById = (id: number, token: string) => fetch.get(`/product/${id}`, {
     headers: {
         auth: `Bearer ${token}`
     }
@@ -42,7 +42,7 @@ export {
     getProducts,
     exportProducts,
     getProductFilters,
-    getProductsById,
+    getProductById,
     getProductStatus,
     getProductCategories
 }

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import {useProductStore} from "../../../store";
+import {useProductStore} from "../../../../store";
 import {ref, watch} from "vue";
-import {PRODUCT_FILTERS} from '../../../app/config/constants';
+import {PRODUCT_FILTERS} from '../../../../app/config/constants.ts';
 import AppFilterValueElement from "./AppFilterValueElement.vue";
 
 const productStore = useProductStore()
@@ -65,7 +65,7 @@ watch(checked, () => {
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables.scss';
+@import '../../../../styles/variables';
 
 .is_open {
   background-color: $grey-bg;

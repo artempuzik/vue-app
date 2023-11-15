@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as debounce from 'lodash.debounce'
 import {reactive, ref, watch} from "vue";
-import {useProductStore} from "../../../store";
+import {useProductStore} from "../../../../store";
 import AppFilterValueElement from "./AppFilterValueElement.vue";
 
 const props = defineProps({
@@ -79,7 +79,7 @@ watch(minMax, debounce(() => productStore.updatePropertyByFilterName(props.title
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables.scss';
+@import '../../../../styles/variables';
 
 .is_open {
   background-color: $grey-bg;

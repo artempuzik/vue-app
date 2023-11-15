@@ -38,7 +38,7 @@ const logOut = () => {
       <div class="d-flex flex-row align-items-center justify-content-start">
         <div class="me-4 second-title">
           <router-link
-              to="dashboard"
+              to="/dashboard"
               class="main-title"
               style="color: black; text-decoration: none; background-color: #ffffff"
           >
@@ -47,19 +47,19 @@ const logOut = () => {
         </div>
         <div class="d-flex flex-row align-items-center justify-content-start">
           <router-link
-            to="dashboard"
+            to="/dashboard"
             class="m-1 p-2 link"
           >
             <span class="main-text">{{ $t('header.nav_dashboard') }}</span>
           </router-link>
           <router-link
-            to="list"
+            to="/list"
             class="m-1 p-2 link"
           >
             <span class="main-text">{{ $t('header.nav_list') }}</span>
           </router-link>
           <router-link
-            to="history"
+            to="/history"
             class="m-1 p-2 link"
           >
             <span class="main-text">{{ $t('header.nav_history') }}</span>
