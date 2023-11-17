@@ -46,7 +46,7 @@ const edit = () => {
   isLoading.value = true;
   errorMessage.value = '';
   userStore
-    .updateMemberById(props.member.user_id, { role_id: +getKeyByRoleValue(appStore.appConfig.roles, roles.value), member_id: +props.member.user_id })
+    .updateMemberById(props.member.user_id.toString(), { role_id: +getKeyByRoleValue(appStore.appConfig.roles, roles.value), member_id: +props.member.user_id })
     .then(() => {
       isShowModalRole.value = false;
       toastAlert('Role changed', 'success', 2000)
@@ -65,7 +65,7 @@ const remove = () => {
   isLoading.value = true;
   errorMessage.value = '';
   companyStore
-    .removeMemberById(props.member.user_id)
+    .removeMemberById(props.member.user_id.toString())
     .then(() => {
       isShowModalRemove.value = false;
       toastAlert('Success', 'success', 2000)

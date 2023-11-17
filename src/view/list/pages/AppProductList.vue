@@ -49,7 +49,7 @@ const list = computed(() =>
 
 const selectAll = () => {
   if(!selectedAll.value) {
-    selected.value = list.value.map(el => el.product_id)
+    selected.value = list.value.map((el: Product) => el.product_id)
     selectedAll.value = true
   } else {
     selected.value = []

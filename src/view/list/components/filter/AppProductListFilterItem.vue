@@ -1,4 +1,5 @@
 <script setup lang="ts">
+//@ts-ignore
 import * as debounce from 'lodash.debounce'
 import {reactive, ref, watch} from "vue";
 import {useProductStore} from "../../../../store";

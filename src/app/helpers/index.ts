@@ -53,3 +53,35 @@ export const convertFormatToIndex = (value: string, object: {} | null) => {
   }
   return +element
 }
+
+export const mapPriceHistory = (graph: Array<[number, Date]>) => {
+  const data: {labels: string[], data: number[]} = {
+    labels: [],
+    data: []
+  }
+  graph.forEach(g => {
+    data.data.push(g[0])
+    data.labels.push(
+        getDayAndMonth(g[1])
+    )
+  })
+  return data
+}
+
+export const mapProductElasticity = (graph: Array<[number, number]>) => {
+  const data: {labels: string[], data: number[]} = {
+    labels: [],
+    data: []
+  }
+  graph.forEach(g => {
+    data.data.push(g[1])
+    data.labels.push(`${g[0]}$`)
+  })
+  return data
+}
+
+export const getDayAndMonth = (date: Date) => {
+  const day = new Date(date).getDay()
+  const month = new Date(date).toDateString().split(' ')[1]
+  return `${day} ${month}`
+}

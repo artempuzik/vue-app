@@ -3,6 +3,7 @@ import {useProductStore} from "../../../../store";
 import {ref, watch} from "vue";
 import {PRODUCT_FILTERS} from '../../../../app/config/constants.ts';
 import AppFilterValueElement from "./AppFilterValueElement.vue";
+import {ProductCategory} from "../../../../app/types";
 
 const productStore = useProductStore()
 
@@ -17,7 +18,10 @@ const remove = (id: number) => {
   checked.value = checked.value.filter(i => i !== id)
 }
 
-const getNameById = (id: number) => productStore.categories.filter(category => category.id === id)[0].name
+const getNameById = (id: number) => {
+  const category: ProductCategory = productStore.categories.filter((category: ProductCategory) => category.id === id)[0]
+  return category.name
+}
 
 defineExpose({
   clear,

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import AppHistoryFilterItem from "./AppHistoryFilterItem.vue";
-import {HISTORY_FILTERS} from "../../../app/config/constants";
+import {HISTORY_FILTERS} from "../../../../app/config/constants.ts";
 import AppHistorySelectFilter from "./AppHistorySelectFilter.vue";
 import AppHistoryByUsersFilter from "./AppHistoryByUsersFilter.vue";
 import {reactive, toRefs} from "vue";
-import {useHistoryStore} from "../../../store";
+import {useHistoryStore} from "../../../../store";
 
 const historyStore = useHistoryStore()
 
@@ -48,7 +48,7 @@ const { price, change, made, revenue, profit, sales, margin, categories } = toRe
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables.scss';
+@import '../../../../styles/variables';
 
 .filter_wrapper {
   width: 100%;

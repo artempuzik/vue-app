@@ -115,7 +115,7 @@ export default defineStore('user', () => {
   const updateMemberById = (id: string, dto: IUpdateMember) =>
       authApi.updateMemberFetch(dto, id, appStore.appConfig.Bearer_Auth).then(data => {
       if (data.status === 200) {
-        const idx = companyStore.companyMembers.findIndex(member => member.user_id === id);
+        const idx = companyStore.companyMembers.findIndex(member => member.user_id.toString() === id);
         if (idx !== -1) {
           companyStore.companyMembers[idx] = {
             ...companyStore.companyMembers[idx],

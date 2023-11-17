@@ -20,10 +20,11 @@ import {
 } from './user.types'
 
 import {
-    ProductRequestBody,
     ProductExportRequestBody,
     ProductFilters,
     Product,
+    ProductItem,
+    ProductCategory,
 } from './product.types.ts'
 
 import {
@@ -50,7 +51,8 @@ export {
     type IUserResponse,
     type ILoginUser,
     type Product,
-    type ProductRequestBody,
+    type ProductItem,
+    type ProductCategory,
     type ProductExportRequestBody,
     type ProductFilters,
     type HistoryRequestBody,

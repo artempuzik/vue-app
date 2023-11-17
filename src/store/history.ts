@@ -148,14 +148,18 @@ export default defineStore('history', () => {
       if(filter === 'limit' || filter === 'offset') {
         continue
       }
+      //@ts-ignore
       const isArray = Array.isArray(filters.value[filter])
       if(isArray) {
+        //@ts-ignore
         if(filters.value[filter].length !== 0) {
           isEmptyFilter.value = false
           break;
         }
       }
+      //@ts-ignore
       if(typeof filters.value[filter] === 'number') {
+        //@ts-ignore
         if(filters.value[filter] !== 0) {
           isEmptyFilter.value = false
           break;

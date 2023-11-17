@@ -1,17 +1,21 @@
 <script setup lang="ts">
-import {onMounted, ref} from "vue";
+import {onMounted, ref, Ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useProductStore} from "../../../store";
 import toastAlert from '../../../app/helpers/toast'
+import {ProductItem} from '../../../app/types'
 import AppProductLayout from "../layouts/AppProductLayout.vue";
 import AppUiSpinner from "../../UI/AppUiSpinner.vue";
 import AppUiButton from "../../UI/AppUiButton.vue";
+import AppProductSlider from "../components/slider/AppProductSlider.vue";
+import AppProductPriceHistory from "../components/AppProductPriceHistory.vue";
+import AppProductElasticity from "../components/AppProductElasticity.vue";
 
 const route = useRoute()
 const router = useRouter()
 const productStore = useProductStore()
 
-const product = ref(null)
+const product: Ref<ProductItem | null> = ref(null)
 
 const goBack = () => router.back()
 
@@ -42,7 +46,7 @@ onMounted(() => {
   >
     <app-ui-spinner  :size="60" :line="8" background="#f5f5f5"/>
   </div>
-  <app-product-layout v-else>
+  <app-product-layout v-if="!productStore.isProductLoading && product">
     <template #back>
       <div>
         <span @click="goBack" class="cursor"> &#8592; Back</span>
@@ -55,7 +59,15 @@ onMounted(() => {
           :text="$t('buttons.export_bth')"
       />
     </template>
-
+    <template #info>
+      <app-product-slider :product="product"/>
+    </template>
+    <template #price_history>
+      <app-product-price-history :product="product"/>
+    </template>
+    <template #main>
+      <app-product-elasticity :product="product"/>
+    </template>
   </app-product-layout>
 </template>
 

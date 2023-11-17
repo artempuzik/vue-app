@@ -41,7 +41,7 @@ export default defineStore('company', () => {
   const removeMemberById = async (id: string) => {
     return authApi.deleteMemberFromCompanyFetch(id, appStore.appConfig.Bearer_Auth).then(response => {
       if (response.status === 200) {
-        companyMembers.value = companyMembers.value.filter(member => member.user_id !== id);
+        companyMembers.value = companyMembers.value.filter(member => member.user_id.toString() !== id);
       }
     });
   };

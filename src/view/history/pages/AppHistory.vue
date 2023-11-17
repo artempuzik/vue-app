@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import {computed, onMounted, ref, Ref, watchEffect} from 'vue'
+import {computed, onMounted, ref, Ref} from 'vue'
 import AppHistoryLayout from '../layouts/AppHistoryLayout.vue';
 import AppUiInput from '../../UI/AppUiInput.vue';
 import AppUiSpinner from '../../UI/AppUiSpinner.vue';
 import {useHistoryStore} from "../../../store";
-import AppHistoryFilters from "../components/AppHistoryFilters.vue";
+import {History} from '../../../app/types'
+import AppHistoryFilters from "../components/filter/AppHistoryFilters.vue";
 import AppHistoryItem from "../components/AppHistoryItem.vue";
 import {PAGINATION_STEP} from "../../../app/config/constants.ts";
 import AppUiButton from "../../UI/AppUiButton.vue";
@@ -55,7 +56,7 @@ onMounted(() => {
 
 const selectAll = () => {
   if(!selectedAll.value) {
-    selected.value = list.value.map(el => el.product_id)
+    selected.value = list.value.map((el: History) => el.product_id)
     selectedAll.value = true
   } else {
     selected.value = []

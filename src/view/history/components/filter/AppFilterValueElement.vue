@@ -21,7 +21,7 @@ const emit = defineEmits(['clear'])
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables.scss';
+@import '../../../../styles/variables';
 
 .item_role {
   font-size: 12px;

@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import {ref, watch} from "vue";
+import {Ref, ref, watch} from "vue";
 import {useProductStore} from "../../../store";
+import {ProductCategory} from '../../../app/types'
 
 const props = defineProps(['status'])
 
 const productStore = useProductStore()
 
-const element = ref(null)
-const style = ref(null)
+const element: Ref<ProductCategory | null> = ref(null)
+const style: Ref<string> = ref('')
 
 const getStyle = (id: number) => {
   switch (id) {
@@ -20,15 +21,18 @@ const getStyle = (id: number) => {
 
 watch(() =>[productStore.statuses, productStore.productList], () => {
   if(productStore.statuses.length) {
-    element.value = productStore.statuses.find(el => el.id === props.status)
-    style.value = getStyle(element.value.id)
+    const result = productStore.statuses.find((el: ProductCategory) => el.id === props.status)
+    if(result) {
+      element.value = result as ProductCategory
+      style.value = getStyle(element.value.id as number)
+    }
   }
 }, {immediate: true})
 
 </script>
 
 <template>
-  <div class="item_role me-1" :class="style">
+  <div v-if="element" class="item_role me-1" :class="style">
     <span class="mt-1">{{element?.name}}</span>
   </div>
 </template>

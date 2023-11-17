@@ -15,7 +15,12 @@
         <div class="w-100 d-flex flex-column align-items-center justify-content-start">
           <div class="w-100 d-flex flex-row align-items-center justify-content-start">
             <slot name="info" />
-            <slot name="price_history" />
+            <div class="w-100 ms-3 rounded p-2 chart_wrapper">
+              <div class="w-100 mb-3 border-bottom border-1 pb-2">
+                <span class="ms-4 fw-bolder">Price History</span>
+              </div>
+              <slot name="price_history" />
+            </div>
           </div>
           <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start">
             <slot name="stats" />
@@ -52,5 +57,11 @@
 
 .filter {
   width: 300px;
+}
+
+.chart_wrapper {
+  flex: 1;
+  height: 100%;
+  background-color: white;
 }
 </style>

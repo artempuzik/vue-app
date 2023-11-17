@@ -2,14 +2,13 @@ import { defineStore } from 'pinia';
 import {productApi} from '../app/api'
 import {useAppStore} from "./";
 import {reactive, Ref, ref, watch} from "vue";
-import {ProductFilters} from "../app/types";
+import {ProductCategory, ProductFilters} from "../app/types";
 import {PAGINATION_STEP, PRODUCT_FILTERS} from "../app/config/constants.ts";
-import {getProductsById} from "../app/api/products.api.ts";
 
 export default defineStore('product', () => {
   const isEmptyFilter = ref(true)
 
-  const categories = ref([])
+  const categories: Ref<ProductCategory[]> = ref([])
 
   const isPageLoading = ref(false)
   const isListLoading = ref(false)
@@ -170,14 +169,18 @@ export default defineStore('product', () => {
       if(filter === 'limit' || filter === 'offset') {
         continue
       }
+      //@ts-ignore
       const isArray = Array.isArray(filters.value[filter])
       if(isArray) {
+        //@ts-ignore
         if(filters.value[filter].length !== 0) {
           isEmptyFilter.value = false
           break;
         }
       }
+      //@ts-ignore
       if(typeof filters.value[filter] === 'number') {
+        //@ts-ignore
         if(filters.value[filter] !== 0) {
           isEmptyFilter.value = false
           break;
