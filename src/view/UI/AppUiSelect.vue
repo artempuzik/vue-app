@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  placeholder: {
+    type: String,
+    default: ''
+  },
   options: {
     type: Array as PropType<string[]>,
     default: () => []
@@ -47,7 +51,8 @@ const value = computed({
       @focusout="isOpen = false"
     >
       <div class="w-100 d-flex flex-column align-items-start justify-content-center px-2">
-        <span>{{ value }}</span>
+        <span v-if="placeholder && !value" style="opacity: 0.5">{{ placeholder }}</span>
+        <span v-else>{{ value }}</span>
       </div>
       <img
         src="../../assets/svg/chevron.svg"

@@ -10,6 +10,8 @@ import AppUiButton from "../../UI/AppUiButton.vue";
 import AppProductSlider from "../components/slider/AppProductSlider.vue";
 import AppProductPriceHistory from "../components/AppProductPriceHistory.vue";
 import AppProductElasticity from "../components/AppProductElasticity.vue";
+import AppProductSetUp from "../components/AppProductSetUp.vue";
+import AppUiSelect from "../../UI/AppUiSelect.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -66,7 +68,16 @@ onMounted(() => {
       <app-product-price-history :product="product"/>
     </template>
     <template #main>
-      <app-product-elasticity :product="product"/>
+      <div class="w-100 d-flex flex-row align-items-center justify-content-start my-4">
+        <span class="fw-bolder me-2">Choose your platform</span>
+        <div style="width: 200px">
+          <app-ui-select />
+        </div>
+      </div>
+      <div class="w-100 d-flex flex-row align-items-start justify-content-between">
+        <app-product-elasticity :product="product"/>
+        <app-product-set-up :product="product"/>
+      </div>
     </template>
   </app-product-layout>
 </template>
@@ -75,5 +86,4 @@ onMounted(() => {
 .cursor {
   cursor: pointer;
 }
-
 </style>

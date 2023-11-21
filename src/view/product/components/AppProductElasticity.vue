@@ -46,14 +46,6 @@ return {
 </script>
 
 <template>
-  <div class="w-100 my-4">
-    <div class="w-100">
-      <div class="w-100 d-flex flex-row align-items-center justify-content-start my-3">
-        <span class="fw-bolder me-2">Choose your platform</span>
-        <div style="width: 200px">
-          <app-ui-select />
-        </div>
-      </div>
       <div class="chart rounded p-2">
         <Line
             id="historyPrice"
@@ -64,12 +56,11 @@ return {
             :data="chartData"
         />
       </div>
-    </div>
-  </div>
 </template>
 
 <style scoped lang="scss">
 .chart {
+  flex: 1;
   display: block;
   height: 600px;
   background-color: white;

@@ -25,7 +25,7 @@
           <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start">
             <slot name="stats" />
           </div>
-          <div class="w-100 d-flex flex-column flex-wrap align-items-center justify-content-start">
+          <div class="w-100 d-flex flex-column align-items-center justify-content-start mt-4">
             <slot name="main" />
           </div>
           <div class="w-100 d-flex flex-column flex-wrap align-items-center justify-content-start">
