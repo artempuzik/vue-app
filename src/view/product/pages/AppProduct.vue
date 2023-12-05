@@ -36,6 +36,14 @@ const gepProductById = () => {
   productStore.getProductById(+route.params.id).then(response => {
     if(response.status === 200) {
       product.value = response.data.info
+      if(!product.value) {
+        return
+      }
+      productStore.addProductToLastVisits({
+        sku: product.value.sku,
+        product_name: product.value.product_name,
+        product_id: product.value.product_id,
+      })
       console.log(product.value)
     } else {
       toastAlert('Product not found', 'error', 2000)

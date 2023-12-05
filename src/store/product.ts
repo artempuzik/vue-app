@@ -5,8 +5,12 @@ import {reactive, Ref, ref, watch} from "vue";
 import {ProductCategory, ProductFilters, StarDTO, RepricingSettings} from "../app/types";
 import {PAGINATION_STEP, PRODUCT_FILTERS} from "../app/config/constants.ts";
 
+const STORAGE_PRODUCT_KEY = 'relu_products'
+
 export default defineStore('product', () => {
   const isEmptyFilter = ref(true)
+
+  const lastVisits: Ref<{sku: string, product_name: string, product_id: number}[]> = ref([])
 
   const categories: Ref<ProductCategory[]> = ref([])
 
@@ -25,6 +29,28 @@ export default defineStore('product', () => {
     time_frequencies: [],
     time_periods: [],
   })
+
+  const addProductToLastVisits = (data: {sku: string, product_name: string, product_id: number}) => {
+    const length = lastVisits.value.length
+    const isExist = !!lastVisits.value.find(p => p.product_id === data.product_id)
+    if(isExist) {
+      return
+    }
+    if(length === 5) {
+      const products = lastVisits.value.slice(0, -1)
+      lastVisits.value = [data, ...products]
+    } else {
+      lastVisits.value.push(data)
+    }
+    localStorage.setItem(STORAGE_PRODUCT_KEY, JSON.stringify(lastVisits.value))
+  }
+
+  const getProductToLastVisitsFromStorage = () => {
+    const products = localStorage.getItem(STORAGE_PRODUCT_KEY)
+    if(products) {
+      lastVisits.value = JSON.parse(products)
+    }
+  }
 
   const appStore = useAppStore()
   const getProductCategories = () => productApi.getProductCategories(appStore.appConfig.Bearer_Auth).then((response) => {
@@ -160,6 +186,7 @@ export default defineStore('product', () => {
     await getProducts().finally(() => isListLoading.value = false)
   }
   const init = async () => {
+    getProductToLastVisitsFromStorage()
     isPageLoading.value = true;
     await getProductCategories()
     await getProductFilters().then(async () => {
@@ -229,5 +256,6 @@ export default defineStore('product', () => {
     getProductRepricingPeriod,
     getProductRepricingFrequency,
     setProductRepricingSettings,
+    addProductToLastVisits,
   };
 });
