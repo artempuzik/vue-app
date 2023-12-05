@@ -2,6 +2,8 @@ import {History} from "./history.types.ts";
 
 export type Product = {
     product_id: number,
+    name?: string,
+    id?: number,
     sku: string,
     product_name: string,
     category_name: string,

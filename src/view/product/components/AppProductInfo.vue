@@ -107,7 +107,7 @@ const clickToStarHandler = () => {
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
 .info_block {
   width: 350px;

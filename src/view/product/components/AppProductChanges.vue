@@ -44,7 +44,7 @@ const activeIndex = ref(0)
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
 .changes_block {
   width: 575px;

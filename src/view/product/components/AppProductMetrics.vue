@@ -88,7 +88,7 @@ const tabs = ['Profit', 'Revenue', 'Sales', 'Margin', 'Traffic']
 </template>
 
 <style scoped lang="scss">
-@import '../../../styles/variables';
+@import '../../../styles/variables.scss';
 
 .chart {
   display: block;

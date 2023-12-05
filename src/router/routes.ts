@@ -1,5 +1,3 @@
-import AppMainDashboard from "../view/main/AppMainDashboard.vue";
-
 const routes = [
   {
     path: '/',
@@ -9,7 +7,7 @@ const routes = [
   },
   {
     path: '/dashboard',
-    component: AppMainDashboard,
+    component: () => import('../view/dashboard/pages/AppDashboard.vue'),
     name: 'dashboard',
     meta: { requiresAuth: true }
   },

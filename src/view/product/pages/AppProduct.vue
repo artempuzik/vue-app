@@ -2,7 +2,7 @@
 import {computed, onMounted, ref, Ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useProductStore} from "../../../store";
-import toastAlert from '../../../app/helpers/toast'
+import toastAlert from '../../../app/helpers/toast.ts'
 import {ProductItem} from '../../../app/types'
 import AppProductLayout from "../layouts/AppProductLayout.vue";
 import AppUiSpinner from "../../UI/AppUiSpinner.vue";
