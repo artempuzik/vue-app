@@ -1,13 +1,25 @@
 <script setup lang="ts">
-import {PropType} from "vue";
+import {PropType, reactive} from "vue";
 import {ProductItem} from "../../../app/types";
 import AppUiSelect from "../../UI/AppUiSelect.vue";
 import AppUiButton from "../../UI/AppUiButton.vue";
-import AppProduct from "../pages/AppProduct.vue";
 import AppProductForecast from "./AppProductForecast.vue";
 
 const props = defineProps({
   product: Object as PropType<ProductItem>
+})
+
+const goal = reactive({
+  value: 'Profit',
+  options: ['Profit']
+})
+
+const params = reactive({
+  cost: props.product?.elasticity.settings.sku_cost,
+  min_price: props.product?.elasticity.settings.min_price,
+  max_price: props.product?.elasticity.settings.max_price,
+  min_sales: props.product?.elasticity.settings.min_sale,
+  max_sales: props.product?.elasticity.settings.max_sale,
 })
 </script>
 
@@ -18,47 +30,62 @@ const props = defineProps({
     <div class="w-100 d-flex flex-row my-2 justify-content-between">
       <div class="me-2 w-50">
         <app-ui-select
+            v-model="goal.value"
             :placeholder="'Optional'"
+            :options="goal.options"
             :label="'Your Goal'"
-        />
-      </div>
-      <div class="ms-2">
-        <app-ui-select
-            :placeholder="'Optional'"
-            :label="'SKU Cost'"
+            :label-font-styles="{fontSize: '16px', fontWeight: 'bold'}"
         />
       </div>
     </div>
     <div class="w-100 d-flex flex-row my-2 justify-content-between">
-      <app-product-forecast />
-      <app-product-forecast />
-      <app-product-forecast />
-    </div>
-    <div class="w-100 d-flex flex-row my-2 justify-content-between">
-      <div class="me-2 w-50">
-        <app-ui-select
+      <div class="me-2">
+        <div class="my-1 fw-bolder">
+          <span>Min. Sales</span>
+        </div>
+        <app-ui-input
+            v-model="params.min_sales"
             :placeholder="'Optional'"
-            :label="'Min. Sales'"
         />
       </div>
       <div class="ms-2">
-        <app-ui-select
+        <div class="my-1 fw-bolder">
+          <span>Max. Sales</span>
+        </div>
+        <app-ui-input
+            v-model="params.max_sales"
             :placeholder="'Optional'"
-            :label="'Max. Sales'"
         />
       </div>
     </div>
     <div class="w-100 d-flex flex-row my-2 justify-content-between">
-      <div class="me-2 w-50">
-        <app-ui-select
+      <div class="me-2">
+        <div class="my-1 fw-bolder">
+          <span>Min. Price</span>
+        </div>
+        <app-ui-input
+            v-model="params.min_price"
             :placeholder="'Optional'"
-            :label="'Min. Price '"
         />
       </div>
       <div class="ms-2">
-        <app-ui-select
+        <div class="my-1 fw-bolder">
+          <span>Max. Price</span>
+        </div>
+        <app-ui-input
+            v-model="params.max_price"
             :placeholder="'Optional'"
-            :label="'Max. Price '"
+        />
+      </div>
+    </div>
+    <div class="w-50 d-flex flex-row my-2 justify-content-between">
+      <div class="me-2">
+        <div class="my-1 fw-bolder">
+          <span>SKU Cost</span>
+        </div>
+        <app-ui-input
+            v-model="params.cost"
+            :placeholder="'Optional'"
         />
       </div>
     </div>
@@ -72,6 +99,26 @@ const props = defineProps({
           :text="'Reprice'"
       />
     </div>
+    <div v-if="props.product" class="w-100 d-flex flex-column my-2 justify-content-between">
+      <span class="my-2 fw-bolder">New price forecast</span>
+      <div class="w-100 d-flex flex-row my-2 justify-content-between">
+        <app-product-forecast
+            :title="'Profit'"
+            :value="`${props.product.elasticity.forecast.profit_forecast.toFixed(2)}$`"
+            :sub="`${props.product.elasticity.forecast.profit_forecast_change.toFixed(2)}$`"
+        />
+        <app-product-forecast
+            :title="'Sales'"
+            :value="`${props.product.elasticity.forecast.sales_forecast.toFixed(2)}$`"
+            :sub="`${props.product.elasticity.forecast.sales_forecast_change.toFixed(2)}$`"
+        />
+        <app-product-forecast
+            :title="'Revenue'"
+            :value="`${props.product.elasticity.forecast.revenue_forecast.toFixed(2)}$`"
+            :sub="`${props.product.elasticity.forecast.revenue_forecast_change.toFixed(2)}$`"
+        />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -81,7 +128,12 @@ const props = defineProps({
 .setup_wrapper {
   margin-left: 70px;
   width: 330px;
-  height: 600px;
+  height: 650px;
+}
+
+.label-class {
+  font-size: 16px;
+  font-weight: bolder;
 }
 
 .button_style {

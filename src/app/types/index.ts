@@ -25,6 +25,7 @@ import {
     Product,
     ProductItem,
     ProductCategory,
+    StarDTO,
 } from './product.types.ts'
 
 import {
@@ -58,4 +59,5 @@ export {
     type HistoryRequestBody,
     type HistoryResponse,
     type History,
+    type StarDTO,
 }

@@ -6,8 +6,11 @@ import {useI18n} from "vue-i18n";
 import AppHistoryRole from "./AppHistoryRole.vue";
 import AppUiCheckbox from "../../UI/AppUiCheckbox.vue";
 import {useCompanyStore} from "../../../store";
+import {useRouter} from "vue-router";
 
 const { locale } = useI18n();
+
+const router = useRouter()
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -46,11 +49,19 @@ const made_by = computed(() => {
   return ''
 })
 
+const clickToItemHandler = () => {
+  router.push({
+    name: 'product',
+    params: {
+      id: props.history?.product_id
+    },
+  })
+}
 
 </script>
 
 <template>
-  <tr class="item">
+  <tr @click="clickToItemHandler" class="item">
     <th style="width: 6%">
       <app-ui-checkbox v-model="checker" :value="history.product_id" :width="20"/>
     </th>

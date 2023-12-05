@@ -33,6 +33,7 @@ onBeforeMount(() => {
 
 <style lang="scss" scoped>
 .app_wrapper {
+  overflow-y: auto;
   min-width: 1000px;
   height: 100vh;
 }

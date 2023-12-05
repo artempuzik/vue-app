@@ -6,7 +6,7 @@ import {
   PointElement,
   LineElement,
   Title,
-  Tooltip,
+  Tooltip, Tick,
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
 import {PropType, computed} from "vue";
@@ -32,6 +32,7 @@ const chartData = computed(() => {
   const result = mapPriceHistory((props.product as ProductItem).price_history.graph)
 return {
   labels: result.labels,
+  yLabels: result.labels,
   datasets: [
     {
       labels: '',
@@ -45,12 +46,23 @@ return {
 </script>
 
 <template>
-  <div class="chart">
+  <div class="chart p-2 py-4">
+    <div class="w-100">
+      <span class="ms-4 category-title">Price History</span>
+    </div>
     <Line
         id="historyPrice"
         :options="{
         responsive: true,
-        maintainAspectRatio: false
+        maintainAspectRatio: false,
+         scales: {
+            y: {
+                ticks: {
+                  //@ts-ignore
+                    callback: (tickValue: string | number, index: number, ticks: Tick[]) =>  tickValue +'$'
+                }
+            }
+        }
       }"
         :data="chartData"
     />
@@ -59,7 +71,14 @@ return {
 
 <style scoped lang="scss">
 .chart {
-  display: block;
-  height: 300px;
+  height: 365px;
+  width: 100%;
+  max-width: 740px;
+  min-width: 240px;
+  background-color: white;
+}
+
+#historyPrice {
+  height: 300px !important;
 }
 </style>

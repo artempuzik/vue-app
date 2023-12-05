@@ -6,12 +6,12 @@ import {
   PointElement,
   LineElement,
   Title,
-  Tooltip,
+  Tooltip, Tick,
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
 import {PropType, computed} from "vue";
 import {ProductItem} from "../../../app/types";
-import {mapProductElasticity} from "../../../app/helpers";
+import {mapPriceHistory} from "../../../app/helpers";
 
 ChartJS.register(
     CategoryScale,
@@ -29,7 +29,7 @@ const props = defineProps({
 
 
 const chartData = computed(() => {
-  const result = mapProductElasticity((props.product as ProductItem).elasticity.graph)
+  const result = mapPriceHistory((props.product as ProductItem).price_history.graph)
 return {
   labels: result.labels,
   datasets: [
@@ -45,41 +45,46 @@ return {
 </script>
 
 <template>
-      <div class="chart rounded p-2">
-        <Line
-            id="elasticity"
-            :options="{
+  <div class="chart">
+    <div class="w-100 mb-3 pb-2">
+      <span class="ms-4 category-title">Key Metrics Overview</span>
+    </div>
+    <Line
+        id="metrics"
+        :options="{
         responsive: true,
         maintainAspectRatio: false,
         //@ts-ignore
         cubicInterpolationMode : 'monotone',
         scales: {
-           x: {
+          x: {
               grid: {
               lineWidth: 0,
               }
            },
-           y: {
+          y: {
               grid: {
               lineWidth: 0,
-              }
-           }
-        },
+              },
+                ticks: {
+                  //@ts-ignore
+                    callback: (tickValue: string | number, index: number, ticks: Tick[]) =>  tickValue +'$'
+                }
+            }
+        }
       }"
-            :data="chartData"
-        />
-      </div>
+        :data="chartData"
+    />
+  </div>
 </template>
 
 <style scoped lang="scss">
 .chart {
-  flex: 1;
   display: block;
-  height: 100%;
-  max-height: 650px;
-  background-color: white;
-  overflow: hidden;
+  height: 300px;
 }
 
-.canvas { border-radius: 16px; }
+#metrics {
+  height: 250px !important;
+}
 </style>

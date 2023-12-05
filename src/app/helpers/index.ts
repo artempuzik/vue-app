@@ -13,6 +13,37 @@ export const convertDate = (date: Date, locale: string) => {
   }).format(new Date(date))
 };
 
+export const getDuration = (date: Date) => {
+  const now = new Date()
+  const difference = now.getTime() - new Date(date).getTime();
+  const seconds = Math.floor((difference) / (1000));
+
+  if (seconds < 60) {
+    return `${seconds}sec.`
+  }
+  const minutes = Math.floor(seconds / 60)
+
+  if (minutes < 60) {
+    return `${minutes}min.`
+  }
+
+  const hours = Math.floor(minutes / 60)
+
+  if (hours < 60) {
+    return `${hours}h.`
+  }
+
+  const days = Math.floor(hours / 24)
+
+
+  if (days < 365) {
+    return `${days}d.`
+  }
+  const years = Math.floor(days / 365)
+
+  return `${years}y.`
+}
+
 export const convertRoles = (roles: Array<{role_id: number, role_name: string}>) => {
   const result: {[key: number]: string} = {}
   roles.forEach(r => result[r.role_id] = r.role_name)
@@ -60,7 +91,8 @@ export const mapPriceHistory = (graph: Array<[number, Date]>) => {
     data: []
   }
   graph.forEach(g => {
-    data.data.push(g[0])
+    const price = Math.floor(g[0])
+    data.data.push(price)
     data.labels.push(
         getDayAndMonth(g[1])
     )

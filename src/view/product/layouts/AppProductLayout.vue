@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div class="layout h-100 p-4 pb-0 overflow-hidden">
+  <div class="layout h-100 p-4 pb-0 overflow-y-auto mb-4">
     <div class="w-100 h-100 slot_wrapper d-flex flex-row align-items-start justify-content-between">
       <div class="w-100 main_wrapper h-100 d-flex flex-column align-items-start justify-content-start">
         <div class="w-100 d-flex flex-row align-items-center justify-content-start my-3">
@@ -15,21 +15,18 @@
         <div class="w-100 d-flex flex-column align-items-center justify-content-start">
           <div class="w-100 d-flex flex-row align-items-center justify-content-start">
             <slot name="info" />
-            <div class="w-100 ms-3 rounded p-2 chart_wrapper">
-              <div class="w-100 mb-3 border-bottom border-1 pb-2">
-                <span class="ms-4 fw-bolder">Price History</span>
-              </div>
-              <slot name="price_history" />
+            <div class="w-100 ms-3 rounded p-4 chart_wrapper">
+              <slot name="price_metrics" />
             </div>
           </div>
           <div class="w-100 d-flex flex-row flex-wrap align-items-center justify-content-start">
             <slot name="stats" />
           </div>
+          <div class="w-100 d-flex flex-row align-items-center justify-content-between my-4">
+            <slot name="history" />
+          </div>
           <div class="w-100 d-flex flex-column align-items-center justify-content-start mt-4">
             <slot name="main" />
-          </div>
-          <div class="w-100 d-flex flex-column flex-wrap align-items-center justify-content-start">
-            <slot name="list" />
           </div>
         </div>
       </div>

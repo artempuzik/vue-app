@@ -1,4 +1,6 @@
 import {History} from "./history.types.ts";
+import _default from "chart.js/dist/plugins/plugin.tooltip";
+import numbers = _default.defaults.animations.numbers;
 
 export type Product = {
     product_id: number,
@@ -98,4 +100,9 @@ export type ProductFilters = {
     category_id: number[],
     limit: number,
     offset: number
+}
+
+export type StarDTO = {
+    product_id: number,
+    status: number,
 }

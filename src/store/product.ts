@@ -2,8 +2,9 @@ import { defineStore } from 'pinia';
 import {productApi} from '../app/api'
 import {useAppStore} from "./";
 import {reactive, Ref, ref, watch} from "vue";
-import {ProductCategory, ProductFilters} from "../app/types";
+import {ProductCategory, ProductFilters, StarDTO} from "../app/types";
 import {PAGINATION_STEP, PRODUCT_FILTERS} from "../app/config/constants.ts";
+import {selectFavoritProduct} from "../app/api/products.api.ts";
 
 export default defineStore('product', () => {
   const isEmptyFilter = ref(true)
@@ -164,6 +165,8 @@ export default defineStore('product', () => {
     await getProductStatus()
   }
 
+  const selectFavoritProduct = (dto: StarDTO) => productApi.selectFavoritProduct(appStore.appConfig.Bearer_Auth, dto)
+
   watch(filters, () => {
     for (const filter in filters.value) {
       if(filter === 'limit' || filter === 'offset') {
@@ -204,5 +207,6 @@ export default defineStore('product', () => {
     getPropertyByFilterName,
     updatePropertyByFilterName,
     getProductById,
+    selectFavoritProduct,
   };
 });

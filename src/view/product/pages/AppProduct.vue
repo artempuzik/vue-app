@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import {onMounted, ref, Ref} from "vue";
+import {computed, onMounted, ref, Ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {useProductStore} from "../../../store";
 import toastAlert from '../../../app/helpers/toast'
 import {ProductItem} from '../../../app/types'
 import AppProductLayout from "../layouts/AppProductLayout.vue";
 import AppUiSpinner from "../../UI/AppUiSpinner.vue";
-import AppUiButton from "../../UI/AppUiButton.vue";
-import AppProductSlider from "../components/slider/AppProductSlider.vue";
-import AppProductPriceHistory from "../components/AppProductPriceHistory.vue";
 import AppProductElasticity from "../components/AppProductElasticity.vue";
 import AppProductSetUp from "../components/AppProductSetUp.vue";
-import AppUiSelect from "../../UI/AppUiSelect.vue";
+import AppProductInfo from "../components/AppProductInfo.vue";
+import AppProductMetrics from "../components/AppProductMetrics.vue";
+import AppProductChanges from "../components/AppProductChanges.vue";
+import AppProductHistory from "../components/AppProductHistory.vue";
 
 const route = useRoute()
 const router = useRouter()
@@ -20,6 +20,16 @@ const productStore = useProductStore()
 const product: Ref<ProductItem | null> = ref(null)
 
 const goBack = () => router.back()
+
+const fromPath = computed(() => {
+  const from = router.options.history.state.back
+  switch (from) {
+    case '/history': return 'History'
+    case '/dashboard': return 'Dashboard'
+    case '/list': return 'List'
+    default: return 'Dashboard'
+  }
+})
 
 onMounted(() => {
   productStore.isProductLoading = true
@@ -51,29 +61,27 @@ onMounted(() => {
   <app-product-layout v-if="!productStore.isProductLoading && product">
     <template #back>
       <div>
-        <span @click="goBack" class="cursor"> &#8592; Back</span>
+        <span @click="goBack" class="cursor">{{ fromPath }} / {{ product.product_name }}</span>
       </div>
     </template>
-    <template #search>
-      <app-ui-button
-          style="width: 150px; height: 40px"
-          :is-in-active="true"
-          :text="$t('buttons.export_bth')"
-      />
-    </template>
+<!--    <template #search>-->
+<!--      <app-ui-button-->
+<!--          style="width: 150px; height: 40px"-->
+<!--          :is-in-active="true"-->
+<!--          :text="$t('buttons.export_bth')"-->
+<!--      />-->
+<!--    </template>-->
     <template #info>
-      <app-product-slider :product="product"/>
+      <app-product-info :product="product"/>
     </template>
-    <template #price_history>
-      <app-product-price-history :product="product"/>
+    <template #price_metrics>
+      <app-product-metrics :product="product"/>
+    </template>
+    <template #history>
+      <app-product-changes :product="product"/>
+      <app-product-history :product="product"/>
     </template>
     <template #main>
-      <div class="w-100 d-flex flex-row align-items-center justify-content-start my-4">
-        <span class="fw-bolder me-2">Choose your platform</span>
-        <div style="width: 200px">
-          <app-ui-select />
-        </div>
-      </div>
       <div class="w-100 d-flex flex-row align-items-start justify-content-between">
         <app-product-elasticity :product="product"/>
         <app-product-set-up :product="product"/>
@@ -83,7 +91,13 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+@import '../../../styles/variables.scss';
+
 .cursor {
   cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+    color: $blue-normal;
+  }
 }
 </style>

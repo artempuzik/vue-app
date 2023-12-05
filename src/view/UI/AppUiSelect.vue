@@ -12,6 +12,10 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  labelFontStyles: {
+    type: Object,
+    default: {}
+  },
   placeholder: {
     type: String,
     default: ''
@@ -43,6 +47,7 @@ const value = computed({
     <label
       v-if="label"
       class="mb-1 main-text"
+      :style="{...labelFontStyles}"
     >{{ label }}</label>
     <div
       class="w-100 d-flex flex-row align-items-center m-1 position-relative app_select"
