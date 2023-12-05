@@ -18,7 +18,7 @@ const clickToStarHandler = () => {
   if(!props.product) {
     return
   }
-  productStore.selectFavoritProduct({
+  productStore.selectFavoriteProduct({
     product_id: props.product.product_id,
     status: status.value === 0 ? 1 : 0,
   }).then(() => status.value = status.value === 0 ? 1 : 0)

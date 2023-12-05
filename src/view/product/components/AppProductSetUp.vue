@@ -1,26 +1,55 @@
 <script setup lang="ts">
 import {PropType, reactive} from "vue";
-import {ProductItem} from "../../../app/types";
+import {ProductItem, RepricingSettings} from "../../../app/types";
 import AppUiSelect from "../../UI/AppUiSelect.vue";
 import AppUiButton from "../../UI/AppUiButton.vue";
 import AppProductForecast from "./AppProductForecast.vue";
+import {useProductStore} from "../../../store";
 
 const props = defineProps({
   product: Object as PropType<ProductItem>
 })
+
+const productStore = useProductStore()
 
 const goal = reactive({
   value: 'Profit',
   options: ['Profit']
 })
 
+const emit = defineEmits(['get-product'])
+
+const getProduct = () => {
+  emit('get-product')
+}
+
 const params = reactive({
-  cost: props.product?.elasticity.settings.sku_cost,
+  sku_cost: props.product?.elasticity.settings.sku_cost,
   min_price: props.product?.elasticity.settings.min_price,
   max_price: props.product?.elasticity.settings.max_price,
-  min_sales: props.product?.elasticity.settings.min_sale,
-  max_sales: props.product?.elasticity.settings.max_sale,
+  min_sale: props.product?.elasticity.settings.min_sale,
+  max_sale: props.product?.elasticity.settings.max_sale,
 })
+
+const repricing = () => {
+  if(!props.product) {
+    return
+  }
+  productStore.setProductRepricingSettings({
+    product_id: props.product.product_id,
+    settings: {
+      sku_cost: params.sku_cost || 0,
+      min_price: params.min_price || 0,
+      max_price: params.max_price || 0,
+      min_sale: params.min_sale || 0,
+      max_sale: params.max_sale || 0,
+    }
+  }).then(response => {
+    if(response.status === 200) {
+      getProduct()
+    }
+  })
+}
 </script>
 
 <template>
@@ -44,7 +73,7 @@ const params = reactive({
           <span>Min. Sales</span>
         </div>
         <app-ui-input
-            v-model="params.min_sales"
+            v-model="params.min_sale"
             :placeholder="'Optional'"
         />
       </div>
@@ -53,7 +82,7 @@ const params = reactive({
           <span>Max. Sales</span>
         </div>
         <app-ui-input
-            v-model="params.max_sales"
+            v-model="params.max_sale"
             :placeholder="'Optional'"
         />
       </div>
@@ -84,7 +113,7 @@ const params = reactive({
           <span>SKU Cost</span>
         </div>
         <app-ui-input
-            v-model="params.cost"
+            v-model="params.sku_cost"
             :placeholder="'Optional'"
         />
       </div>
@@ -95,6 +124,7 @@ const params = reactive({
           :text="'Auto-repricing'"
       />
       <app-ui-button
+          @click="repricing"
           class="ms-2"
           :text="'Reprice'"
       />

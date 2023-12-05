@@ -9,7 +9,7 @@ import {
   Tooltip, Tick,
 } from 'chart.js'
 import { Line } from 'vue-chartjs'
-import {PropType, computed} from "vue";
+import {PropType, computed, ref} from "vue";
 import {ProductItem} from "../../../app/types";
 import {mapPriceHistory} from "../../../app/helpers";
 
@@ -26,7 +26,7 @@ const props = defineProps({
   product: Object as PropType<ProductItem>
 })
 
-
+const activeIndex = ref(0)
 
 const chartData = computed(() => {
   const result = mapPriceHistory((props.product as ProductItem).price_history.graph)
@@ -35,25 +35,34 @@ return {
   datasets: [
     {
       labels: '',
-      borderColor: '#0500FF',
-      backgroundColor: '#0500FF',
+      borderColor: '#000000',
+      backgroundColor: '#000000',
       data: result.data
     },
   ],
 }})
 
+const tabs = ['Profit', 'Revenue', 'Sales', 'Margin', 'Traffic']
+
 </script>
 
 <template>
   <div class="chart">
-    <div class="w-100 mb-3 pb-2">
+    <div class="w-100 pb-1">
       <span class="ms-4 category-title">Key Metrics Overview</span>
+    </div>
+    <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative mb-2">
+      <template v-for="(tab, index) in tabs" :key="index">
+        <span @click="activeIndex = index" class="category" :class="{active: activeIndex === index}">{{ tab }}</span>
+      </template>
+      <div class="w-100 border"></div>
     </div>
     <Line
         id="metrics"
         :options="{
         responsive: true,
         maintainAspectRatio: false,
+        animation: false,
         //@ts-ignore
         cubicInterpolationMode : 'monotone',
         scales: {
@@ -79,6 +88,8 @@ return {
 </template>
 
 <style scoped lang="scss">
+@import '../../../styles/variables';
+
 .chart {
   display: block;
   height: 300px;
@@ -86,5 +97,24 @@ return {
 
 #metrics {
   height: 250px !important;
+}
+
+.category {
+  color: $placeholder;
+  margin-right: 10px;
+  cursor: pointer;
+  &:hover {
+    color: $black-color;
+  };
+}
+.border {
+  position: absolute;
+  bottom: 1px;
+}
+.active {
+  color: $black-color;
+  font-weight: bolder;
+  border-bottom: 4px solid $blue-normal;
+  z-index: 2;
 }
 </style>

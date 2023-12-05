@@ -113,7 +113,7 @@ export const mapProductElasticity = (graph: Array<[number, number]>) => {
 }
 
 export const getDayAndMonth = (date: Date) => {
-  const day = new Date(date).getDay()
+  const day = new Date(date).getDay() + 1
   const month = new Date(date).toDateString().split(' ')[1]
   return `${day} ${month}`
 }

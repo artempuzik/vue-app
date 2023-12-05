@@ -26,6 +26,8 @@ import {
     ProductItem,
     ProductCategory,
     StarDTO,
+    RepricingSettings,
+    RepricingReprice,
 } from './product.types.ts'
 
 import {
@@ -60,4 +62,6 @@ export {
     type HistoryResponse,
     type History,
     type StarDTO,
+    type RepricingSettings,
+    type RepricingReprice,
 }

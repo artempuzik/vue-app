@@ -26,22 +26,29 @@ const props = defineProps({
   product: Object as PropType<ProductItem>
 })
 
-
-
 const chartData = computed(() => {
   const result = mapPriceHistory((props.product as ProductItem).price_history.graph)
 return {
-  labels: result.labels,
-  yLabels: result.labels,
-  datasets: [
-    {
-      labels: '',
-      borderColor: '#0500FF',
-      backgroundColor: '#0500FF',
-      data: result.data
-    },
-  ],
-}})
+        labels: result.labels,
+        datasets: [
+          {
+            labels: result.labels.slice(0, 3),
+            borderColor: '#000000',
+            backgroundColor: '#000000',
+            data: result.data.slice(0, 3),
+            stepped: true,
+          },
+          {
+            labels: result.labels.slice(3),
+            borderColor: '#000000',
+            backgroundColor: '#000000',
+            borderDash: [5, 2],
+            data: result.data,
+            stepped: true,
+          },
+        ],
+      }
+})
 
 </script>
 
@@ -53,16 +60,26 @@ return {
     <Line
         id="historyPrice"
         :options="{
-        responsive: true,
+        responsive: false,
         maintainAspectRatio: false,
-         scales: {
+        animation: false,
+        animations: {
+          tension: {
+            duration: 1000,
+            easing: 'linear',
+            from: 1,
+            to: 0,
+            loop: true
+          }
+        },
+        scales: {
             y: {
-                ticks: {
-                  //@ts-ignore
-                    callback: (tickValue: string | number, index: number, ticks: Tick[]) =>  tickValue +'$'
-                }
-            }
-        }
+               ticks: {
+                 //@ts-ignore
+                   callback: (tickValue: string | number, index: number, ticks: Tick[]) =>  tickValue +'$'
+               }
+           }
+       }
       }"
         :data="chartData"
     />
@@ -80,5 +97,6 @@ return {
 
 #historyPrice {
   height: 300px !important;
+  width: 100% !important;
 }
 </style>

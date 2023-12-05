@@ -2,9 +2,8 @@ import { defineStore } from 'pinia';
 import {productApi} from '../app/api'
 import {useAppStore} from "./";
 import {reactive, Ref, ref, watch} from "vue";
-import {ProductCategory, ProductFilters, StarDTO} from "../app/types";
+import {ProductCategory, ProductFilters, StarDTO, RepricingSettings} from "../app/types";
 import {PAGINATION_STEP, PRODUCT_FILTERS} from "../app/config/constants.ts";
-import {selectFavoritProduct} from "../app/api/products.api.ts";
 
 export default defineStore('product', () => {
   const isEmptyFilter = ref(true)
@@ -21,6 +20,11 @@ export default defineStore('product', () => {
     count: 0,
     list: []
   });
+
+  const repricing = reactive({
+    time_frequencies: [],
+    time_periods: [],
+  })
 
   const appStore = useAppStore()
   const getProductCategories = () => productApi.getProductCategories(appStore.appConfig.Bearer_Auth).then((response) => {
@@ -160,12 +164,26 @@ export default defineStore('product', () => {
     await getProductCategories()
     await getProductFilters().then(async () => {
       await getProducts()
+      await getProductRepricingFrequency()
+      await getProductRepricingPeriod()
       isPageLoading.value = false;
     })
     await getProductStatus()
   }
 
-  const selectFavoritProduct = (dto: StarDTO) => productApi.selectFavoritProduct(appStore.appConfig.Bearer_Auth, dto)
+  const selectFavoriteProduct = (dto: StarDTO) => productApi.selectFavoriteProduct(appStore.appConfig.Bearer_Auth, dto)
+  const getProductRepricingFrequency = () => productApi.getProductRepricingFrequency(appStore.appConfig.Bearer_Auth).then((response) => {
+    if (response.status === 200) {
+      repricing.time_frequencies = response.data
+    }
+  })
+  const getProductRepricingPeriod = () => productApi.getProductRepricingPeriod(appStore.appConfig.Bearer_Auth).then((response) => {
+    if (response.status === 200) {
+      repricing.time_periods = response.data
+    }
+  })
+
+  const setProductRepricingSettings = (dto: RepricingSettings) => productApi.setProductRepricingSettings(appStore.appConfig.Bearer_Auth, dto)
 
   watch(filters, () => {
     for (const filter in filters.value) {
@@ -207,6 +225,9 @@ export default defineStore('product', () => {
     getPropertyByFilterName,
     updatePropertyByFilterName,
     getProductById,
-    selectFavoritProduct,
+    selectFavoriteProduct,
+    getProductRepricingPeriod,
+    getProductRepricingFrequency,
+    setProductRepricingSettings,
   };
 });

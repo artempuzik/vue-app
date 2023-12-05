@@ -31,7 +31,7 @@ const fromPath = computed(() => {
   }
 })
 
-onMounted(() => {
+const gepProductById = () => {
   productStore.isProductLoading = true
   productStore.getProductById(+route.params.id).then(response => {
     if(response.status === 200) {
@@ -47,7 +47,9 @@ onMounted(() => {
         goBack()
       })
       .finally(() => productStore.isProductLoading = false)
-})
+}
+
+onMounted(gepProductById)
 
 </script>
 
@@ -84,7 +86,7 @@ onMounted(() => {
     <template #main>
       <div class="w-100 d-flex flex-row align-items-start justify-content-between">
         <app-product-elasticity :product="product"/>
-        <app-product-set-up :product="product"/>
+        <app-product-set-up :product="product" @get-product="gepProductById"/>
       </div>
     </template>
   </app-product-layout>

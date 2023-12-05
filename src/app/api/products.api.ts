@@ -1,5 +1,5 @@
 import fetch from './axios-dashboard'
-import {ProductFilters, ProductExportRequestBody, StarDTO} from "../types";
+import {ProductFilters, ProductExportRequestBody, StarDTO, RepricingSettings, RepricingReprice} from "../types";
 
 const getProducts = (dto: ProductFilters, token: string) => fetch.post('/products', dto, {
     headers: {
@@ -37,7 +37,43 @@ const getProductCategories = (token: string) => fetch.get(`/products/categories`
     }
 })
 
-const selectFavoritProduct = (token: string, dto: StarDTO) => fetch.post(`/star`, dto, {
+const selectFavoriteProduct = (token: string, dto: StarDTO) => fetch.post(`/star`, dto, {
+    headers: {
+        auth: `Bearer ${token}`
+    }
+})
+
+const getProductRepricingPeriod = (token: string) => fetch.get(`/product/repricing/time_periods`, {
+    headers: {
+        auth: `Bearer ${token}`
+    }
+})
+
+const getProductRepricingFrequency = (token: string) => fetch.get(`/product/repricing/frequency`, {
+    headers: {
+        auth: `Bearer ${token}`
+    }
+})
+
+const setProductRepricingSettings = (token: string, dto: RepricingSettings) => fetch.post(`/product/repricing/settings`, dto,{
+    headers: {
+        auth: `Bearer ${token}`
+    }
+})
+
+const setProductRepricingReprice = (token: string, dto: RepricingReprice) => fetch.post(`/product/repricing/reprice`, dto, {
+    headers: {
+        auth: `Bearer ${token}`
+    }
+})
+
+const setProductRepricingAutoReprice = (token: string, dto: RepricingReprice) => fetch.post(`/product/repricing/auto_reprice`, dto, {
+    headers: {
+        auth: `Bearer ${token}`
+    }
+})
+
+const setProductRepricingAutoRepriceOff = (token: string, dto: RepricingReprice) => fetch.post(`/product/repricing/auto_reprice/off`, dto, {
     headers: {
         auth: `Bearer ${token}`
     }
@@ -51,5 +87,11 @@ export {
     getProductById,
     getProductStatus,
     getProductCategories,
-    selectFavoritProduct,
+    selectFavoriteProduct,
+    getProductRepricingPeriod,
+    getProductRepricingFrequency,
+    setProductRepricingSettings,
+    setProductRepricingReprice,
+    setProductRepricingAutoReprice,
+    setProductRepricingAutoRepriceOff,
 }

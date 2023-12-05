@@ -1,6 +1,4 @@
 import {History} from "./history.types.ts";
-import _default from "chart.js/dist/plugins/plugin.tooltip";
-import numbers = _default.defaults.animations.numbers;
 
 export type Product = {
     product_id: number,
@@ -105,4 +103,22 @@ export type ProductFilters = {
 export type StarDTO = {
     product_id: number,
     status: number,
+}
+
+export type RepricingSettings = {
+    product_id: number,
+    settings: {
+        min_sale: number,
+        max_sale: number,
+        min_price: number,
+        max_price: number,
+        sku_cost: number
+    }
+}
+
+export type RepricingReprice = {
+    product_id: number,
+    date_id: number,
+    frequency_id: number,
+    auto_repice: number,
 }
