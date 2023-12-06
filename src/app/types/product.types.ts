@@ -9,7 +9,13 @@ export type Product = {
     category_name: string,
     status_id: number,
     product_price: number,
-    product_potential: number
+    product_potential: number,
+    old_price?: number,
+    new_price?: number,
+    status?: string,
+    date?: Date,
+    category?: string,
+    user_id?: number,
 }
 
 export type ProductCategory = {
@@ -123,4 +129,26 @@ export type RepricingReprice = {
     date_id: number,
     frequency_id: number,
     auto_repice: number,
+}
+
+export type ProductPrice = {
+    name: string,
+    id: number,
+    sku: string,
+    old_price: number,
+    new_price: number,
+    status: string,
+    date: Date,
+    category: string,
+    user_id: number,
+}
+
+export type ProductRecommended = {
+    name: string,
+    id: number,
+    sku: string,
+    potential: number,
+    status: string,
+    category: string,
+    price: number,
 }

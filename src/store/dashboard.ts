@@ -3,20 +3,21 @@ import {dashboardApi} from '../app/api'
 import {useAppStore} from "./";
 import {Ref, ref} from "vue";
 import {Product} from "../app/types";
+import {ProductPrice, ProductRecommended} from "../app/types/product.types.ts";
 
 export default defineStore('dashboard', () => {
   const appStore = useAppStore()
   const isPageLoading = ref(false)
 
-  const best: Ref<Product[]> = ref([])
+  const best: Ref<ProductRecommended[]> = ref([])
   const expires: Ref<Product[]> = ref([])
-  const last_viewed: Ref<Product[]> = ref([])
+  const last_viewed: Ref<ProductPrice[]> = ref([])
   const need_action: Ref<Product[]> = ref([])
   const overview: Ref<Product[]> = ref([])
-  const potentials: Ref<Product[]> = ref([])
+  const potentials: Ref<ProductRecommended[]> = ref([])
   const started_product: Ref<Product[]> = ref([])
-  const last_auto_repriced: Ref<Product[]> = ref([])
-  const last_manual_repriced: Ref<Product[]> = ref([])
+  const last_auto_repriced: Ref<ProductPrice[]> = ref([])
+  const last_manual_repriced: Ref<ProductPrice[]> = ref([])
 
   const getDashboard = () => dashboardApi.getDashboard(appStore.appConfig.Bearer_Auth).then((response) => {
     if(response.status === 200) {

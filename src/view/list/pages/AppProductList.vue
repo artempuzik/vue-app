@@ -10,10 +10,13 @@ import {PAGINATION_STEP} from "../../../app/config/constants.ts";
 import AppUiButton from "../../UI/AppUiButton.vue";
 import {Product} from "../../../app/types";
 import AppUiCheckbox from "../../UI/AppUiCheckbox.vue";
+import {useRoute} from "vue-router";
 
 const productStore = useProductStore()
 
 const query = ref('')
+
+const route = useRoute()
 
 const currentPage = ref(0)
 
@@ -58,6 +61,9 @@ const selectAll = () => {
 }
 
 onMounted(() => {
+  if(typeof route.query.search === 'string') {
+    query.value = route.query.search
+  }
   if(productStore.filters) {
     productStore.isPageLoading = true
     productStore.getProducts().finally(() => productStore.isPageLoading = false)

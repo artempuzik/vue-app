@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'enter', 'escape']);
 
 const props = defineProps({
   isInActive: {
@@ -61,6 +61,7 @@ const setIsFocused = (value: boolean) => isFocused.value = value;
         v-model.trim="value"
         @focusin="setIsFocused(true)"
         @focusout="setIsFocused(false)"
+        @keydown.enter="emit('enter')"
         style="width: 100%"
         :placeholder="placeholder"
         class="app_input"

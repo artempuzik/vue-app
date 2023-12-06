@@ -34,7 +34,7 @@ const logOut = () => {
     v-if="appStore.appConfig.isAuth"
     class="d-flex flex-column align-items-center justify-content-start position-relative"
   >
-    <div class="header_wrapper d-flex flex-row align-items-center justify-content-between p-2">
+    <div class="header_wrapper d-flex flex-row align-items-center justify-content-between p-2 position-relative">
       <div class="d-flex flex-row align-items-center justify-content-start">
         <div class="me-4 second-title">
           <router-link
