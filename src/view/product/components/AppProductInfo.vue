@@ -30,7 +30,7 @@ const clickToStarHandler = () => {
   <div class="info_block p-4">
     <div class="my-1 d-flex flex-row align-items-center justify-content-between">
       <span class="fw-bolder category-title">General info</span>
-      <svg @click="clickToStarHandler" width="25" height="23" viewBox="0 0 25 23"
+      <svg @click="clickToStarHandler" style="cursor: pointer" width="25" height="23" viewBox="0 0 25 23"
            :fill="starColor" xmlns="http://www.w3.org/2000/svg">
         <path d="M12.5 1.61804L14.8309 8.7918L14.9432 9.13729H15.3064H22.8494L16.747 13.5709L16.4531 13.7844L16.5654 14.1299L18.8963 21.3037L12.7939 16.8701L12.5 16.6565L12.2061 16.8701L6.10374 21.3037L8.43464 14.1299L8.54689 13.7844L8.253 13.5709L2.15064 9.13729H9.69357H10.0568L10.1691 8.7918L12.5 1.61804Z"
               :stroke="strokeColor"/>

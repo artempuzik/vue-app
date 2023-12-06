@@ -15,7 +15,7 @@ export default defineStore('dashboard', () => {
   const need_action: Ref<Product[]> = ref([])
   const overview: Ref<Product[]> = ref([])
   const potentials: Ref<ProductRecommended[]> = ref([])
-  const started_product: Ref<Product[]> = ref([])
+  const stared_product: Ref<Product[]> = ref([])
   const last_auto_repriced: Ref<ProductPrice[]> = ref([])
   const last_manual_repriced: Ref<ProductPrice[]> = ref([])
 
@@ -27,7 +27,7 @@ export default defineStore('dashboard', () => {
       need_action.value = response.data.need_action
       overview.value = response.data.overview
       potentials.value = response.data.potentials
-      started_product.value = response.data.started_product
+      stared_product.value = response.data.stared_product
       last_auto_repriced.value = response.data.last_auto_repriced
       last_manual_repriced.value = response.data.last_manual_repriced
     }
@@ -49,7 +49,7 @@ export default defineStore('dashboard', () => {
     need_action,
     overview,
     potentials,
-    started_product,
+    stared_product,
     last_auto_repriced,
     last_manual_repriced,
   };

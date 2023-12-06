@@ -11,8 +11,6 @@ const goToProductPage = (id: number) => router.push(`/product/${id}`)
 const goToListPage = () => router.push({ name: "list"})
 
 const list = computed(() => activeIndex.value === 0 ? dashboardStore.need_action : [])
-
-console.log(dashboardStore.need_action)
 </script>
 
 <template>
