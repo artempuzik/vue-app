@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {getDuration} from "../../../app/helpers";
+import {cutTitle, getDuration} from "../../../app/helpers";
 import {computed, ref} from "vue";
 import {useDashboardStore} from "../../../store";
 import {useRouter} from "vue-router";
@@ -48,7 +48,7 @@ const list = computed(() => activeIndex.value === 0 ? dashboardStore.last_auto_r
               </svg>
             </td>
             <td style="width: 15%">{{ item.sku }}</td>
-            <td style="width: 40%">{{ item.name }}</td>
+            <td style="width: 40%">{{ cutTitle(item.name) }}</td>
             <td style="width: 20%">{{item.old_price.toFixed(2)}} &#8594; {{item.new_price.toFixed(2)}}</td>
             <td style="width: 7%">
               Profit

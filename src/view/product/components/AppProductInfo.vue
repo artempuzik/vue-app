@@ -2,6 +2,7 @@
 import {computed, PropType, ref} from "vue";
 import {ProductItem} from '../../../app/types'
 import {useProductStore} from "../../../store";
+import {cutTitle} from "../../../app/helpers";
 
 const props = defineProps({
   product: Object as PropType<ProductItem>
@@ -62,7 +63,7 @@ const clickToStarHandler = () => {
             </defs>
           </svg>
         </div>
-        <span class="link-text">{{props.product?.product_name}}</span>
+        <span class="link-text">{{cutTitle(props.product?.product_name)}}</span>
       </div>
       <div class="d-flex flex-row align-items-center justify-content-start my-1">
         <div class="block_icon me-4">

@@ -44,7 +44,6 @@ const gepProductById = () => {
         product_name: product.value.product_name,
         product_id: product.value.product_id,
       })
-      console.log(product.value)
     } else {
       toastAlert('Product not found', 'error', 2000)
       goBack()

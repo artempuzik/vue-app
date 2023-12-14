@@ -117,3 +117,9 @@ export const getDayAndMonth = (date: Date) => {
   const month = new Date(date).toDateString().split(' ')[1]
   return `${day} ${month}`
 }
+
+export const cutTitle = (title: string | undefined, length = 22, separator = ' ') => {
+  if(!title) return ''
+  if (title.length <= length) return title;
+  return title.substring(0, title.lastIndexOf(separator, length));
+}

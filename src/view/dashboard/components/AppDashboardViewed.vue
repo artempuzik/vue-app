@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useDashboardStore} from "../../../store";
 import {useRouter} from "vue-router";
+import {cutTitle} from "../../../app/helpers";
 
 const dashboardStore = useDashboardStore()
 const router = useRouter()
@@ -21,7 +22,7 @@ const goToProductPage = (id: number) => router.push(`/product/${id}`)
             <span class="sku">{{item.sku}}</span>
           </div>
           <div>
-            <span>{{item.name}}</span>
+            <span>{{ cutTitle(item.name)}}</span>
           </div>
         </div>
       </template>

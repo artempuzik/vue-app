@@ -1,5 +1,6 @@
 <script setup lang="ts">
 
+import AppEmptyBlock from "./AppEmptyBlock.vue";
 </script>
 
 <template>
@@ -7,7 +8,7 @@
     <div class="mb-3">
       <span class="category-title">Key metric overview</span>
     </div>
-
+    <app-empty-block />
   </div>
 </template>
 

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useDashboardStore} from "../../../store";
 import {useRouter} from "vue-router";
+import {cutTitle} from "../../../app/helpers";
 
 const dashboardStore = useDashboardStore()
 
@@ -40,7 +41,7 @@ const goToListPage = () => router.push({ name: "list"})
               </svg>
             </td>
             <td style="width: 15%">{{ item.sku }}</td>
-            <td style="width: 47%">{{ item.name }}</td>
+            <td style="width: 47%">{{ cutTitle(item.name) }}</td>
             <td style="width: 15%">{{item.price.toFixed(2)}}$</td>
             <td style="width: 18%" class="text-end">
               <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
