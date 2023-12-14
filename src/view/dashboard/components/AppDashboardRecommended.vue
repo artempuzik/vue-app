@@ -41,9 +41,9 @@ const goToListPage = () => router.push({ name: "list"})
               </svg>
             </td>
             <td style="width: 15%">{{ item.sku }}</td>
-            <td style="width: 47%">{{ cutTitle(item.name) }}</td>
-            <td style="width: 15%">{{item.price.toFixed(2)}}$</td>
-            <td style="width: 18%" class="text-end">
+            <td style="width: 42%">{{ cutTitle(item.name) }}</td>
+            <td style="width: 18%">{{item.price.toFixed(2)}}$</td>
+            <td style="width: 20%" class="text-end">
               <svg width="12" height="10" viewBox="0 0 12 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1 0.371872V9.14574M1 9.14574H11.5M1 9.14574L4.5 5.73368L7.5 6.70856L10.5 2.32162" stroke="black"/>
               </svg>
@@ -117,6 +117,7 @@ td{
 }
 
 .item {
+  height: 54px;
   cursor: pointer;
   &:hover {
     background-color: $placeholder;

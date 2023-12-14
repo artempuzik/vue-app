@@ -48,8 +48,8 @@ const list = computed(() => activeIndex.value === 0 ? dashboardStore.last_auto_r
               </svg>
             </td>
             <td style="width: 15%">{{ item.sku }}</td>
-            <td style="width: 40%">{{ cutTitle(item.name) }}</td>
-            <td style="width: 20%">{{item.old_price.toFixed(2)}} &#8594; {{item.new_price.toFixed(2)}}</td>
+            <td style="width: 35%">{{ cutTitle(item.name) }}</td>
+            <td style="width: 25%">{{item.old_price.toFixed(2)}} &#8594; {{item.new_price.toFixed(2)}}</td>
             <td style="width: 7%">
               Profit
             </td>
@@ -122,6 +122,7 @@ td{
 }
 
 .item {
+  height: 54px;
   cursor: pointer;
   &:hover {
     background-color: $placeholder;
