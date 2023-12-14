@@ -13,7 +13,7 @@ const isShowed = ref(true)
       </div>
       <div style="flex: 1">
         <div class="title">
-          <span>{{ userStore.user.surname }}, do you like using Relu?</span>
+          <span>{{ userStore.user.surname }}, {{ $t('dashboard.question') }}</span>
         </div>
         <div class="w-100 d-flex flex-row justify-content-between mt-2">
           <app-ui-button

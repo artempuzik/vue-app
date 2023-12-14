@@ -15,11 +15,11 @@ const goToListPage = () => router.push({ name: "list"})
 <template>
   <div class="block p-3 mt-4">
     <div class="d-flex justify-content-between align-items-center">
-      <span class="category-title">Recommended products</span>
-      <span @click="goToListPage" class="view-all">View all</span>
+      <span class="category-title">{{ $t('dashboard.recommended') }}</span>
+      <span @click="goToListPage" class="view-all">{{ $t('dashboard.all') }}</span>
     </div>
     <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative">
-      <span class="sub-title">sorted by the largest profit potential</span>
+      <span class="sub-title">{{ $t('dashboard.recommended_sub') }}</span>
     </div>
     <div class="table_block mt-2">
       <div v-if="!dashboardStore.best.length" class="mt-4 d-flex flex-column align-items-center justify-content-start">

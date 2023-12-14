@@ -22,13 +22,13 @@ const resultSearchHandler = () => {
 <template>
   <div class="block p-3">
     <div class="mb-3">
-      <span class="category-title">Quick search</span>
+      <span class="category-title">{{ $t('dashboard.search') }}</span>
     </div>
     <app-ui-input
         v-model="query"
         @enter="resultSearchHandler"
         class="w-100"
-        :placeholder="'Search by SKU or product name ...'"
+        :placeholder="$t('dashboard.search_placeholder')"
         :with-icon="true"
     />
   </div>

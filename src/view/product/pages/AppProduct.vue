@@ -73,13 +73,6 @@ onMounted(gepProductById)
         <span @click="goBack" class="cursor">{{ fromPath }} / {{ product.product_name }}</span>
       </div>
     </template>
-<!--    <template #search>-->
-<!--      <app-ui-button-->
-<!--          style="width: 150px; height: 40px"-->
-<!--          :is-in-active="true"-->
-<!--          :text="$t('buttons.export_bth')"-->
-<!--      />-->
-<!--    </template>-->
     <template #info>
       <app-product-info :product="product"/>
     </template>

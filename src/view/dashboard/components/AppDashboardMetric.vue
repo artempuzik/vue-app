@@ -6,7 +6,7 @@ import AppEmptyBlock from "./AppEmptyBlock.vue";
 <template>
   <div class="block p-3 mt-4">
     <div class="mb-3">
-      <span class="category-title">Key metric overview</span>
+      <span class="category-title">{{ $t('dashboard.metric') }}</span>
     </div>
     <app-empty-block />
   </div>

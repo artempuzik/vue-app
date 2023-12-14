@@ -6,7 +6,7 @@ import AppEmptyBlock from "./AppEmptyBlock.vue";
 <template>
   <div class="block p-3">
     <div class="mb-3">
-      <span class="category-title">Stock overview</span>
+      <span class="category-title">{{ $t('dashboard.stock') }}</span>
     </div>
     <app-empty-block />
   </div>

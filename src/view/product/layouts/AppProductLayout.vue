@@ -6,16 +6,13 @@
   <div class="layout h-100 p-4 pb-0 overflow-y-auto mb-4">
     <div class="w-100 h-100 slot_wrapper d-flex flex-row align-items-start justify-content-between">
       <div class="w-100 main_wrapper h-100 d-flex flex-column align-items-start justify-content-start">
-        <div class="w-100 d-flex flex-row align-items-center justify-content-start my-3">
+        <div class="w-100 d-flex flex-row align-items-center justify-content-start mt-2 mb-4">
           <slot name="back" />
         </div>
-        <div class="w-100 d-flex flex-row align-items-center justify-content-end my-3">
-          <slot name="search" />
-        </div>
         <div class="w-100 d-flex flex-column align-items-center justify-content-start">
-          <div class="w-100 d-flex flex-row align-items-center justify-content-start">
+          <div class="w-100 d-flex flex-row align-items-center justify-content-start mb-4">
             <slot name="info" />
-            <div class="w-100 ms-3 rounded p-4 chart_wrapper">
+            <div class="rounded p-4 chart_wrapper">
               <slot name="price_metrics" />
             </div>
           </div>
@@ -57,7 +54,7 @@
 }
 
 .chart_wrapper {
-  flex: 1;
+  width: 100%;
   height: 100%;
   background-color: white;
 }

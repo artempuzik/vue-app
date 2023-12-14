@@ -14,7 +14,7 @@ const activeIndex = ref(0)
 <template>
   <div class="changes_block p-4 overflow-hidden">
     <div class="my-1 d-flex flex-row align-items-center justify-content-between">
-      <span class="fw-bolder category-title">Changes</span>
+      <span class="fw-bolder category-title">{{$t('product.changes')}}</span>
     </div>
     <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative">
       <span @click="activeIndex = 0" class="category" :class="{active: activeIndex === 0}">Price</span>

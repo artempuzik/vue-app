@@ -42,18 +42,18 @@ return {
   ],
 }})
 
-const tabs = ['Profit', 'Revenue', 'Sales', 'Margin', 'Traffic']
+const tabs = ['product.profit', 'product.revenue', 'product.sales', 'product.margin', 'product.traffic']
 
 </script>
 
 <template>
   <div class="chart">
     <div class="w-100 pb-1">
-      <span class="ms-4 category-title">Key Metrics Overview</span>
+      <span class="ms-4 category-title">{{$t('product.metric')}}</span>
     </div>
     <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative mb-2">
       <template v-for="(tab, index) in tabs" :key="index">
-        <span @click="activeIndex = index" class="category" :class="{active: activeIndex === index}">{{ tab }}</span>
+        <span @click="activeIndex = index" class="category" :class="{active: activeIndex === index}">{{ $t(tab) }}</span>
       </template>
       <div class="w-100 border"></div>
     </div>

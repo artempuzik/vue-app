@@ -17,12 +17,12 @@ const list = computed(() => activeIndex.value === 0 ? dashboardStore.need_action
 <template>
   <div class="block p-3 mt-4">
     <div class="d-flex justify-content-between align-items-center">
-      <span class="category-title">Need Action</span>
-      <span @click="goToListPage" class="view-all">View all</span>
+      <span class="category-title">{{ $t('dashboard.action') }}</span>
+      <span @click="goToListPage" class="view-all">{{ $t('dashboard.all') }}</span>
     </div>
     <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative">
-      <span @click="activeIndex = 0" class="category" :class="{active: activeIndex === 0}">Error</span>
-      <span @click="activeIndex = 1" class="category" :class="{active: activeIndex === 1}">Expiring Strategy <span style="color: #FF9900">(!)</span></span>
+      <span @click="activeIndex = 0" class="category" :class="{active: activeIndex === 0}">{{ $t('dashboard.error') }}</span>
+      <span @click="activeIndex = 1" class="category" :class="{active: activeIndex === 1}">{{ $t('dashboard.strategy') }} <span style="color: #FF9900">(!)</span></span>
       <div class="w-100 border-category border"></div>
     </div>
     <div class="table_block d-flex flex-row align-items-center justify-content-between">

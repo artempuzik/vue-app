@@ -54,15 +54,15 @@ const repricing = () => {
 
 <template>
   <div class="setup_wrapper">
-    <h4 class="category-title">Set up</h4>
-    <span class="sub-title">All metrics are used as a monthly ones.</span>
+    <h4 class="category-title">{{$t('product.set_up')}}</h4>
+    <span class="sub-title">{{$t('product.set_up_sub')}}</span>
     <div class="w-100 d-flex flex-row my-2 justify-content-between">
       <div class="me-2 w-50">
         <app-ui-select
             v-model="goal.value"
             :placeholder="'Optional'"
             :options="goal.options"
-            :label="'Your Goal'"
+            :label="$t('product.goal')"
             :label-font-styles="{fontSize: '16px', fontWeight: 'bold'}"
         />
       </div>
@@ -70,7 +70,7 @@ const repricing = () => {
     <div class="w-100 d-flex flex-row my-2 justify-content-between">
       <div class="me-2">
         <div class="my-1 fw-bolder">
-          <span>Min. Sales</span>
+          <span>{{ $t('product.min_sales') }}</span>
         </div>
         <app-ui-input
             v-model="params.min_sale"
@@ -79,7 +79,7 @@ const repricing = () => {
       </div>
       <div class="ms-2">
         <div class="my-1 fw-bolder">
-          <span>Max. Sales</span>
+          <span>{{ $t('product.max_sales') }}</span>
         </div>
         <app-ui-input
             v-model="params.max_sale"
@@ -90,7 +90,7 @@ const repricing = () => {
     <div class="w-100 d-flex flex-row my-2 justify-content-between">
       <div class="me-2">
         <div class="my-1 fw-bolder">
-          <span>Min. Price</span>
+          <span>{{ $t('product.min_price') }}</span>
         </div>
         <app-ui-input
             v-model="params.min_price"
@@ -99,7 +99,7 @@ const repricing = () => {
       </div>
       <div class="ms-2">
         <div class="my-1 fw-bolder">
-          <span>Max. Price</span>
+          <span>{{ $t('product.max_price') }}</span>
         </div>
         <app-ui-input
             v-model="params.max_price"
@@ -110,7 +110,7 @@ const repricing = () => {
     <div class="w-50 d-flex flex-row my-2 justify-content-between">
       <div class="me-2">
         <div class="my-1 fw-bolder">
-          <span>SKU Cost</span>
+          <span>{{ $t('product.sku') }}</span>
         </div>
         <app-ui-input
             v-model="params.sku_cost"
@@ -121,29 +121,29 @@ const repricing = () => {
     <div class="w-100 d-flex flex-row my-2 justify-content-between">
       <app-ui-button
           class="me-2 button_style"
-          :text="'Auto-repricing'"
+          :text="$t('buttons.auto_reprice')"
       />
       <app-ui-button
           @click="repricing"
           class="ms-2"
-          :text="'Reprice'"
+          :text="$t('buttons.reprice')"
       />
     </div>
     <div v-if="props.product" class="w-100 d-flex flex-column my-2 justify-content-between">
       <span class="my-2 fw-bolder">New price forecast</span>
       <div class="w-100 d-flex flex-row my-2 justify-content-between">
         <app-product-forecast
-            :title="'Profit'"
+            :title="$t('product.profit')"
             :value="`${props.product.elasticity.forecast.profit_forecast.toFixed(2)}$`"
             :sub="`${props.product.elasticity.forecast.profit_forecast_change.toFixed(2)}$`"
         />
         <app-product-forecast
-            :title="'Sales'"
+            :title="$t('product.sales')"
             :value="`${props.product.elasticity.forecast.sales_forecast.toFixed(2)}$`"
             :sub="`${props.product.elasticity.forecast.sales_forecast_change.toFixed(2)}$`"
         />
         <app-product-forecast
-            :title="'Revenue'"
+            :title="$t('product.revenue')"
             :value="`${props.product.elasticity.forecast.revenue_forecast.toFixed(2)}$`"
             :sub="`${props.product.elasticity.forecast.revenue_forecast_change.toFixed(2)}$`"
         />

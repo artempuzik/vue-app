@@ -6,7 +6,7 @@ import AppEmptyBlock from "./AppEmptyBlock.vue";
 <template>
   <div class="block p-3 mt-4">
     <div class="mb-3">
-      <span class="category-title">Favourite</span>
+      <span class="category-title">{{ $t('dashboard.favorite') }}</span>
     </div>
     <app-empty-block />
   </div>

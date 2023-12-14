@@ -20,12 +20,12 @@ const list = computed(() => activeIndex.value === 0 ? dashboardStore.last_auto_r
 <template>
   <div class="block p-3 mt-4">
     <div class="mb-3 d-flex justify-content-between align-items-center">
-      <span class="category-title">Price changes</span>
-      <span @click="goToListPage" class="view-all">View all</span>
+      <span class="category-title">{{ $t('dashboard.price') }}</span>
+      <span @click="goToListPage" class="view-all">{{ $t('dashboard.all') }}</span>
     </div>
     <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative">
-      <span @click="activeIndex = 0" class="category" :class="{active: activeIndex === 0}">Automative</span>
-      <span @click="activeIndex = 1" class="category" :class="{active: activeIndex === 1}">Manual</span>
+      <span @click="activeIndex = 0" class="category" :class="{active: activeIndex === 0}">{{ $t('dashboard.avtomative') }}</span>
+      <span @click="activeIndex = 1" class="category" :class="{active: activeIndex === 1}">{{ $t('dashboard.manual') }}</span>
       <div class="w-100 border"></div>
     </div>
     <div class="table_block mt-2">

@@ -55,7 +55,7 @@ return {
 <template>
   <div class="chart p-2 py-4">
     <div class="w-100">
-      <span class="ms-4 category-title">Price History</span>
+      <span class="ms-4 category-title">{{$t('product.history')}}</span>
     </div>
     <Line
         id="historyPrice"
