@@ -20,7 +20,7 @@ const list = computed(() => activeIndex.value === 0 ? dashboardStore.last_auto_r
 <template>
   <div class="block p-3 mt-4">
     <div class="mb-3 d-flex justify-content-between align-items-center">
-      <span class="category-title">{{ $t('dashboard.price') }}</span>
+      <span class="dashboard-category-title">{{ $t('dashboard.price') }}</span>
       <span @click="goToListPage" class="view-all">{{ $t('dashboard.all') }}</span>
     </div>
     <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative">
@@ -28,7 +28,7 @@ const list = computed(() => activeIndex.value === 0 ? dashboardStore.last_auto_r
       <span @click="activeIndex = 1" class="category" :class="{active: activeIndex === 1}">{{ $t('dashboard.manual') }}</span>
       <div class="w-100 border"></div>
     </div>
-    <div class="table_block mt-2">
+    <div class="table_block mt-3">
       <div v-if="!list.length" class="mt-4 d-flex flex-column align-items-center justify-content-start">
         <span class="category-title" style="opacity: 0.5">List is empty</span>
       </div>
@@ -101,6 +101,7 @@ td{
 .category {
   color: $placeholder;
   margin-right: 10px;
+  font-size: 12px;
   cursor: pointer;
   &:hover {
     color: $black-color;

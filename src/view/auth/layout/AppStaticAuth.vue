@@ -57,9 +57,9 @@
 
   &_img {
     width: 80%;
-    height: 35vh;
+    height: 45vh;
     max-height: 514px;
-    margin: 87px 0 0 0;
+    margin: 60px 0 0 0;
     background-image: url("../../../assets/png/auth_image.png");
     background-size: contain;
     background-repeat: no-repeat;

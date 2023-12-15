@@ -13,7 +13,7 @@ const goToProductPage = (id: number) => router.push(`/product/${id}`)
 <template>
   <div class="block p-3">
     <div class="mb-2">
-      <span class="category-title">{{ $t('dashboard.views') }}</span>
+      <span class="dashboard-category-title">{{ $t('dashboard.views') }}</span>
     </div>
     <div class="container_items w-100">
       <template v-for="item in dashboardStore.last_viewed" :key="item.product_id">

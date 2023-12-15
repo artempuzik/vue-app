@@ -1,14 +1,14 @@
 <script setup lang="ts">
 
-import AppEmptyBlock from "./AppEmptyBlock.vue";
+import AppFavoriteCard from "./AppFavoriteCard.vue";
 </script>
 
 <template>
   <div class="block p-3 mt-4">
     <div class="mb-3">
-      <span class="category-title">{{ $t('dashboard.favorite') }}</span>
+      <span class="dashboard-category-title">{{ $t('dashboard.favorite') }} <span class="fw-normal">(1/1)</span></span>
     </div>
-    <app-empty-block />
+    <app-favorite-card sku="1234567890" title="Apple MacBook M1"/>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ import AppEmptyBlock from "./AppEmptyBlock.vue";
 
 .block {
   width: 100%;
-  height: 480px;
+  height: 280px;
   background-color: $white-color;
   border-radius: $block-border-radius;
 }

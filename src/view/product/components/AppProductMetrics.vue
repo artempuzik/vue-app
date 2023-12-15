@@ -51,7 +51,7 @@ const tabs = ['product.profit', 'product.revenue', 'product.sales', 'product.mar
     <div class="w-100 pb-1">
       <span class="ms-4 category-title">{{$t('product.metric')}}</span>
     </div>
-    <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative mb-2">
+    <div class="my-1 d-flex flex-row align-items-center justify-content-start position-relative mb-3">
       <template v-for="(tab, index) in tabs" :key="index">
         <span @click="activeIndex = index" class="category" :class="{active: activeIndex === index}">{{ $t(tab) }}</span>
       </template>
@@ -92,7 +92,7 @@ const tabs = ['product.profit', 'product.revenue', 'product.sales', 'product.mar
 
 .chart {
   display: block;
-  height: 300px;
+  height: 320px;
 }
 
 #metrics {

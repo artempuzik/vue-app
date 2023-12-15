@@ -31,18 +31,25 @@ const chartData = computed(() => {
 return {
         labels: result.labels,
         datasets: [
+          // {
+          //   labels: result.labels.slice(0, 3),
+          //   borderColor: '#000000',
+          //   backgroundColor: '#000000',
+          //   data: result.data.slice(0, 3),
+          //   stepped: true,
+          // },
+          // {
+          //   labels: result.labels.slice(3),
+          //   borderColor: '#000000',
+          //   backgroundColor: '#000000',
+          //   borderDash: [5, 2],
+          //   data: result.data,
+          //   stepped: true,
+          // },
           {
-            labels: result.labels.slice(0, 3),
+            labels: result.labels,
             borderColor: '#000000',
             backgroundColor: '#000000',
-            data: result.data.slice(0, 3),
-            stepped: true,
-          },
-          {
-            labels: result.labels.slice(3),
-            borderColor: '#000000',
-            backgroundColor: '#000000',
-            borderDash: [5, 2],
             data: result.data,
             stepped: true,
           },

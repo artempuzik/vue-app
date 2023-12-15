@@ -20,13 +20,13 @@ const isShowed = ref(true)
               size="small"
               style="height: 25px"
               class="me-2 button_style"
-              :text="'No really'"
+              :text="$t('buttons.no_really')"
           />
           <app-ui-button
               size="small"
               style="height: 25px"
               class="button_style"
-              :text="'Yes!'"
+              :text="$t('buttons.yes')"
           />
         </div>
       </div>

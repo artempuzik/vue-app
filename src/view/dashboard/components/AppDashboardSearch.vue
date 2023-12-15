@@ -22,7 +22,7 @@ const resultSearchHandler = () => {
 <template>
   <div class="block p-3">
     <div class="mb-3">
-      <span class="category-title">{{ $t('dashboard.search') }}</span>
+      <span class="dashboard-category-title">{{ $t('dashboard.search') }}</span>
     </div>
     <app-ui-input
         v-model="query"

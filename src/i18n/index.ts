@@ -120,7 +120,7 @@ const messages = {
       error: 'Error',
       strategy: 'Expiring Strategy',
       manual: 'Manual',
-      favorite: 'Favourite',
+      favorite: 'Favourites',
       views: 'Last viewed',
       more: 'View more',
       all: 'View all',
